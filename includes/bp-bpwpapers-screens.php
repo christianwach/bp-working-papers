@@ -346,6 +346,7 @@ function bpwpapers_signup_blog( $blogname = '', $blog_title = '', $errors = '' )
 /**
  * Validate the BuddyPress Working Papers create form content
  * copied from bp_blogs_validate_blog_signup and amended
+ * @return bool True if successful, false otherwise
  */
 function bpwpapers_validate_signup() {
 	
@@ -360,13 +361,14 @@ function bpwpapers_validate_signup() {
 		die();
 
 	$result = bp_blogs_validate_blog_form();
-	extract($result);
-
+	extract( $result );
+	
+	// do we have an error?
 	if ( $errors->get_error_code() ) {
 	
-		unset($_POST['submit']);
+		unset( $_POST['submit'] );
 		
-		// this is the only amend needed
+		// this amend is needed because there's no way to override the text
 		bpwpapers_show_working_paper_create_form( $blogname, $blog_title, $errors );
 		
 		return false;
@@ -378,14 +380,24 @@ function bpwpapers_validate_signup() {
 	$meta = apply_filters( 'signup_create_blog_meta', array( 'lang_id' => 1, 'public' => $public ) ); // deprecated
 	$meta = apply_filters( 'add_signup_meta', $meta );
 	
-	// If this is a subdomain install, set up the site inside the root domain.
+	// if this is a subdomain install, set up the site inside the root domain
 	if ( is_subdomain_install() ) {
 		$domain = $blogname . '.' . preg_replace( '|^www\.|', '', $current_site->domain );
 	}
 	
-	wpmu_create_blog( $domain, $path, $blog_title, $current_user->ID, $meta, $wpdb->siteid );
+	// create new site
+	$new_blog_id = wpmu_create_blog( $domain, $path, $blog_title, $current_user->ID, $meta, $wpdb->siteid );
+	
+	// create new group
+	$new_group_id = bpwpapers_create_group( $blog_title, $description );
+	
+	// create linkage
+	bpwpapers_link_blog_and_group( $new_blog_id, $new_group_id );
+	
+	// show confirmation markup
 	bpwpapers_confirm_signup( $domain, $path, $blog_title, $current_user->user_login, $current_user->user_email, $meta );
 	
+	// --<
 	return true;
 	
 }
@@ -395,6 +407,7 @@ function bpwpapers_validate_signup() {
 /**
  * Confirm BuddyPress Working Papers creation
  * copied from bp_blogs_confirm_blog_signup and amended
+ * @return nothing
  */
 function bpwpapers_confirm_signup( $domain, $path, $blog_title, $user_name, $user_email = '', $meta = '' ) {
 

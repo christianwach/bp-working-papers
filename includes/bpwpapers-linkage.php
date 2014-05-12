@@ -15,7 +15,8 @@ Logic functions which don't need to be in the loop.
 
 
 /**
- * @description: creates a BuddyPress Group given a title and description
+ * Creates a BuddyPress Group given a title and description
+ *
  * @param string $title the title of the BP group
  * @param string $description the description of the BP group
  * @return nothing
@@ -65,7 +66,8 @@ function bpwpapers_create_group( $title, $description, $user_id = null ) {
 
 
 /*
- * @description: creates a BuddyPress Group Membership given a title and description
+ * Creates a BuddyPress Group Membership given a title and description
+ *
  * @param int $group_id the numeric ID of the BP group
  * @param int $user_id the numeric ID of the WP user
  * @param bool $is_admin makes this member a group admin
@@ -97,7 +99,8 @@ function bpwpapers_create_group_member( $group_id, $user_id, $is_admin = 0 ) {
 
 
 /** 
- * @description: for a given blog ID, get the array of group IDs
+ * For a given blog ID, get the array of group IDs
+ *
  * @param int $blog_id the numeric ID of the blog
  */
 function bpwpapers_get_group_by_blog_id( $blog_id ) {
@@ -113,7 +116,8 @@ function bpwpapers_get_group_by_blog_id( $blog_id ) {
 
 
 /** 
- * @description: for a given group ID, add a given group ID
+ * For a given group ID, add a given group ID
+ *
  * @param int $group_id the numeric ID of the group
  */
 function bpwpapers_get_blog_by_group_id( $group_id ) {
@@ -132,7 +136,8 @@ function bpwpapers_get_blog_by_group_id( $group_id ) {
 
 
 /**
- * @description: reciprocal addition of IDs
+ * Reciprocal addition of IDs
+ *
  * @param int $group_id the numeric ID of the group
  * @param int $blog_id the numeric ID of the blog
  */
@@ -152,7 +157,8 @@ function bpwpapers_link_blog_and_group( $blog_id, $group_id ) {
 
 
 /**
- * @description: reciprocal deletion of IDs
+ * Reciprocal deletion of IDs
+ *
  * @param int $group_id the numeric ID of the group
  * @param int $blog_id the numeric ID of the blog
  */
@@ -172,7 +178,8 @@ function bpwpapers_unlink_blog_and_group( $blog_id, $group_id ) {
 
 
 /**
- * @description: set comment registration
+ * Set comment registration
+ *
  * @param int $blog_id the numeric ID of the blog
  */
 function bpwpapers_configure_blog_options( $blog_id ) {
@@ -206,7 +213,8 @@ function bpwpapers_configure_blog_options( $blog_id ) {
 
 
 /**
- * @description: unset comment registration
+ * Unset comment registration
+ *
  * @param int $blog_id the numeric ID of the blog
  */
 function bpwpapers_reset_blog_options( $blog_id ) {
@@ -234,7 +242,8 @@ function bpwpapers_reset_blog_options( $blog_id ) {
 
 
 /** 
- * @description: for a given blog ID, add a given group ID
+ * For a given blog ID, add a given group ID
+ *
  * @param int $blog_id the numeric ID of the blog
  * @param int $group_id the numeric ID of the group
  */
@@ -256,7 +265,8 @@ function bpwpapers_add_group_to_blog( $blog_id, $group_id ) {
 
 
 /** 
- * @description: for a given group ID, add a given blog ID
+ * For a given group ID, add a given blog ID
+ *
  * @param int $group_id the numeric ID of the group
  * @param int $blog_id the numeric ID of the blog
  */
@@ -278,7 +288,8 @@ function bpwpapers_add_blog_to_group( $group_id, $blog_id ) {
 
 
 /** 
- * @description: for a given blog ID, remove a given group ID
+ * For a given blog ID, remove a given group ID
+ *
  * @param int $blog_id the numeric ID of the blog
  * @param int $group_id the numeric ID of the group
  */
@@ -292,7 +303,8 @@ function bpwpapers_remove_group_from_blog( $blog_id, $group_id ) {
 
 
 /** 
- * @description: for a given group ID, remove a given blog ID
+ * For a given group ID, remove a given blog ID
+ *
  * @param int $group_id the numeric ID of the group
  * @param int $blog_id the numeric ID of the blog
  */
@@ -306,7 +318,8 @@ function bpwpapers_remove_blog_from_group( $group_id, $blog_id ) {
 
 
 /**
- * @description sever link and delete group when a site gets deleted
+ * Sever link and delete group when a site gets deleted
+ *
  * @param int $blog_id the numeric ID of the blog
  */
 function bpwpapers_blog_deleted( $blog_id, $drop = false ) {
@@ -335,7 +348,8 @@ add_action( 'delete_blog', 'bpwpapers_blog_deleted', 10, 1 );
 
 
 /**
- * @description sever link and delete blog before a group gets deleted so we can still access meta
+ * Sever link and delete blog before a group gets deleted so we can still access meta
+ *
  * @param int $group_id the numeric ID of the group
  */
 function bpwpapers_group_deleted( $group_id ) {
@@ -364,7 +378,8 @@ add_action( 'groups_before_delete_group', 'bpwpapers_group_deleted', 10, 1 );
 
 
 /** 
- * @description: check if blog is a groupblog
+ * Check if blog is a groupblog
+ *
  * @param int $blog_id the numeric ID of the blog
  */
 function bpwpapers_is_groupblog( $blog_id ) {
@@ -391,7 +406,8 @@ function bpwpapers_is_groupblog( $blog_id ) {
 
 
 /** 
- * @description: check if blog is a working paper
+ * Check if blog is a working paper
+ *
  * @param int $blog_id the numeric ID of the blog
  */
 function bpwpapers_is_working_paper( $blog_id ) {
