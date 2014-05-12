@@ -118,8 +118,8 @@ class BP_Group_Sites_Admin {
 		
 		// we'll delete our options in 'uninstall.php'
 		// but for testing let's delete them here
-		delete_site_option( 'bpwpapers_options' );
-		delete_site_option( 'bpwpapers_installed' );
+		//delete_site_option( 'bpwpapers_options' );
+		//delete_site_option( 'bpwpapers_installed' );
 
 	}
 	
@@ -698,17 +698,21 @@ function bpwpapers_get_visit_site_button( $button ) {
 		
 		// access object
 		global $bp_working_papers;
+		
+		// set sensible default
+		$label = __( 'Visit Working Paper', 'bpwpapers' );
 	
 		// are we overriding?
 		if ( $bp_working_papers->admin->option_get( 'bpwpapers_overrides' ) ) {
 	
 			// override with our option
 			$label = $bp_working_papers->admin->option_get( 'bpwpapers_overrides_button' );
-			$button['link_text'] = apply_filters( 'bpwpapers_visit_site_button_text', $label );
-			$button['link_title'] = apply_filters( 'bpwpapers_visit_site_button_title', $label );
 		
 		}
 	
+		$button['link_text'] = apply_filters( 'bpwpapers_visit_site_button_text', $label );
+		$button['link_title'] = apply_filters( 'bpwpapers_visit_site_button_title', $label );
+		
 	}
 	
 	// --<

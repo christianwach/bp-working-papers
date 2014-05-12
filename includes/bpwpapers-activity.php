@@ -53,20 +53,12 @@ class BP_Working_Papers_Activity {
 	public function register_hooks() {
 	
 		// hooks that always need to be present...
-		
-		// add our posts filter
-		add_action( 'bp_activity_filter_options', array( $this, 'posts_filter_option' ) );
-		add_action( 'bp_group_activity_filter_options', array( $this, 'posts_filter_option' ) );
-		add_action( 'bp_member_activity_filter_options', array( $this, 'posts_filter_option' ) );
-		
-		// add our comments filter
-		add_action( 'bp_activity_filter_options', array( $this, 'comments_filter_option' ) );
-		add_action( 'bp_group_activity_filter_options', array( $this, 'comments_filter_option' ) );
-		add_action( 'bp_member_activity_filter_options', array( $this, 'comments_filter_option' ) );
+		add_action( 'bp_setup_globals', array( $this, 'add_filter_options' ) );
 		
 		// if the current blog is a group site...
 		if ( bpwpapers_is_working_paper( get_current_blog_id() ) ) {
 			
+			/*
 			// add custom post activity (disabled until later)
 			add_action( 'bp_activity_before_save', array( $this, 'custom_post_activity' ), 10, 1 );
 			
@@ -123,6 +115,7 @@ class BP_Working_Papers_Activity {
 			
 			// show group at top of comment content
 			//add_filter( 'get_comment_text', array( $this, 'show_comment_group' ), 10, 3 );
+			*/
 			
 		}
 		
@@ -130,6 +123,28 @@ class BP_Working_Papers_Activity {
 	
 	
 		
+	/**
+	 * @description: add actions for filter options on group activity stream
+	 */
+	function add_filter_options() {
+		
+		// kick out if this is a group and it does not have a working paper
+		if ( !bpwpapers_group_has_working_paper() ) return;
+		
+		// add our posts filter
+		add_action( 'bp_activity_filter_options', array( $this, 'posts_filter_option' ) );
+		add_action( 'bp_group_activity_filter_options', array( $this, 'posts_filter_option' ) );
+		add_action( 'bp_member_activity_filter_options', array( $this, 'posts_filter_option' ) );
+		
+		// add our comments filter
+		add_action( 'bp_activity_filter_options', array( $this, 'comments_filter_option' ) );
+		add_action( 'bp_group_activity_filter_options', array( $this, 'comments_filter_option' ) );
+		add_action( 'bp_member_activity_filter_options', array( $this, 'comments_filter_option' ) );
+		
+	}
+	
+	
+	
 	//##########################################################################
 	
 	

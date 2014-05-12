@@ -95,7 +95,7 @@ class BP_Working_Papers {
 	public function activate() {
 	
 		// pass through to admin
-		//$this->admin->activate();
+		$this->admin->activate();
 
 	}
 	
@@ -108,7 +108,7 @@ class BP_Working_Papers {
 	public function deactivate() {
 		
 		// pass through to admin
-		//$this->admin->deactivate();
+		$this->admin->deactivate();
 
 	}
 	
@@ -155,25 +155,23 @@ class BP_Working_Papers {
 		// load our display functions file
 		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-display.php' );
 	
+		// load our group functions file
+		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-groups.php' );
+	
 		// load our admin class file
 		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-admin.php' );
 		
 		// init object, sending reference to this class
 		$this->admin = new BP_Group_Sites_Admin( $this );
 		
-		/*
 		// load our activity functions file
-		require( BPGSITES_PATH . 'includes/bpwpapers-activity.php' );
+		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-activity.php' );
 		
 		// init object
 		$this->activity = new BP_Working_Papers_Activity;
-		*/
 		
 		// load our blogs extension
 		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-blogs-extension.php' );
-	
-		// load our group extension
-		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-group-extension.php' );
 	
 		// load our component file
 		require( BP_WORKING_PAPERS_PATH . 'includes/bp-bpwpapers-component.php' );
@@ -190,7 +188,7 @@ class BP_Working_Papers {
 	
 		// hooks that always need to be present...
 		$this->admin->register_hooks();
-		//$this->activity->register_hooks();
+		$this->activity->register_hooks();
 		
 	}
 	
