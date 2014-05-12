@@ -64,23 +64,19 @@ get_header( 'buddypress' );
 							
 					?></a></li>
 
-					<?php 
-					
-					/*
-					------------------------------------------------------------
-					Implement "My Working Papers" below
-					------------------------------------------------------------
-					*/
-					
-					/*
-					if ( is_user_logged_in() && bp_get_total_blog_count_for_user( bp_loggedin_user_id() ) ) : ?>
+					<?php if ( is_user_logged_in() && bpwpapers_get_total_blog_count_for_user( bp_loggedin_user_id() ) ) : ?>
 
-						<li id="bpwpapers-personal"><a href="<?php echo bp_loggedin_user_domain() . bp_get_blogs_slug(); ?>"><?php printf( __( 'My Working Papers <span>%s</span>', 'bpwpapers' ), bp_get_total_blog_count_for_user( bp_loggedin_user_id() ) ); ?></a></li>
+						<li id="bpwpapers-personal"><a href="<?php echo bp_loggedin_user_domain() . bpwpapers_get_slug(); ?>"><?php 
+						
+						printf( 
+							__( 'My %1$s <span>%2$s</span>', 'bpwpapers' ), 
+							apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ),
+							bpwpapers_get_total_blog_count_for_user( bp_loggedin_user_id() ) 
+						); 
+						
+						?></a></li>
 
-					<?php endif; 
-					*/
-					
-					?>
+					<?php endif; ?>
 
 					<?php do_action( 'bp_blogs_directory_blog_types' ); ?>
 

@@ -377,3 +377,76 @@ function bpwpapers_root_slug() {
 	}
 
 
+
+/**
+ * Get the total number of working papers for a user
+ * copied from bp_blogs_total_blogs_for_user() and amended
+ *
+ * @return int $count Total blog count for a user
+ */
+function bpwpapers_total_blogs_for_user( $user_id = 0 ) {
+	
+	// get user ID if none passed
+	if ( empty( $user_id ) ) {
+		$user_id = ( bp_displayed_user_id() ) ? bp_displayed_user_id() : bp_loggedin_user_id();
+	}
+	
+	//if ( !$count = wp_cache_get( 'bpwpapers_total_blogs_for_user_' . $user_id, 'bpwpapers' ) ) {
+
+		// access blogs template
+		global $blogs_template;
+		
+		// create one
+		bpwpapers_has_blogs( array( 'user_id' => $user_id ) );
+		
+		// get count
+		$count = bp_core_number_format( $blogs_template->total_blog_count );
+		
+		// stash it
+		//wp_cache_set( 'bpwpapers_total_blogs_for_user_' . $user_id, $count, 'bpwpapers' );
+		
+	//}
+	
+	// --<
+	return $count;
+	
+}
+
+
+
+/**
+ * Output the total number of working papers for a user
+ */
+function bpwpapers_total_blog_count_for_user( $user_id = 0 ) {
+	echo bpwpapers_get_total_blog_count_for_user( $user_id );
+}
+
+	/**
+	 * Return the total number of working papers for this user
+	 * @return int Total number of working papers for this user
+	 */
+	function bpwpapers_get_total_blog_count_for_user( $user_id = 0 ) {
+		return apply_filters( 'bpwpapers_get_total_blog_count_for_user', bpwpapers_total_blogs_for_user( $user_id ) );
+	}
+	add_filter( 'bpwpapers_get_total_blog_count_for_user', 'bp_core_number_format' );
+
+
+
+/**
+ * Output the working papers slug
+ * @uses bpwpapers_get_slug()
+ */
+function bpwpapers_slug() {
+	echo bpwpapers_get_slug();
+}
+
+	/**
+	 * Return the working papers slug
+	 * @return string The 'blogs' slug.
+	 */
+	function bpwpapers_get_slug() {
+		return apply_filters( 'bpwpapers_get_slug', buddypress()->bpwpapers->slug );
+	}
+
+
+
