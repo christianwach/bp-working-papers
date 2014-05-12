@@ -249,16 +249,8 @@ function bpwpapers_reset_blog_options( $blog_id ) {
  */
 function bpwpapers_add_group_to_blog( $blog_id, $group_id ) {
 
-	// get existing group ID
-	$group_id = bpwpapers_get_group_by_blog_id( $blog_id );
-	
-	// if we don't already have one...
-	if ( $group_id !== false ) {
-	
-		// save option
-		update_site_option( BP_WORKING_PAPERS_PREFIX . $blog_id, $group_id );
-	
-	}
+	// save option
+	update_site_option( BP_WORKING_PAPERS_PREFIX . $blog_id, $group_id );
 	
 }
 
@@ -272,16 +264,8 @@ function bpwpapers_add_group_to_blog( $blog_id, $group_id ) {
  */
 function bpwpapers_add_blog_to_group( $group_id, $blog_id ) {
 
-	// get existing blog ID
-	$blog_id = bpwpapers_get_blog_by_group_id( $group_id );
-	
-	// if we don't already have one...
-	if ( $blog_id !== false ) {
-	
-		// save updated option
-		groups_update_groupmeta( $group_id, BP_WORKING_PAPERS_OPTION, $blog_id );
-	
-	}
+	// save updated option
+	groups_update_groupmeta( $group_id, BP_WORKING_PAPERS_OPTION, $blog_id );
 	
 }
 

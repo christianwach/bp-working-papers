@@ -426,10 +426,18 @@ function bpwpapers_confirm_signup( $domain, $path, $blog_title, $user_name, $use
 	<p><?php 
 	
 	printf(
-		__( '<a href="%1$s">%2$s</a> is your new %3$s. <a href="%4$s">Login</a> as "%5$s" using your existing password.', 'bpwpapers' ), 
-		$blog_url, 
-		$blog_url,
+		__( 'The URL for your new %1$s is <a href="%2$s">%3$s</a>.', 'bpwpapers' ), 
 		apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ),
+		$blog_url, 
+		$blog_url
+	);
+	
+	?></p>
+
+	<p><?php 
+	
+	printf(
+		__( '<a href="%1$s">Login</a> as "%2$s" using your existing password.', 'bpwpapers' ), 
 		$blog_url . "wp-login.php",
 		$user_name 
 	);

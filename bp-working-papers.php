@@ -36,7 +36,7 @@ define( 'BP_WORKING_PAPERS_PREFIX', 'bpwpapers_blog_group_' );
 // set linked groups option name
 define( 'BP_WORKING_PAPERS_LINKED', 'bpwpapers_linked_groups' );
 
-// set group blogs option name
+// set working papers option name
 define( 'BP_WORKING_PAPERS_OPTION', 'bpwpapers_group_blogs' );
 
 
