@@ -90,7 +90,15 @@ if ( bpwpapers_has_blogs( bp_ajax_querystring( 'bpwpapers' ) ) ) {
 	?>
 
 	<div id="message" class="info">
-		<p><?php _e( 'Sorry, there were no Working Papers found.', 'bpwpapers' ); ?></p>
+		<p><?php 
+		
+		// show nothing found message
+		echo sprintf( 
+			__( 'Sorry, there were no %s found.', 'bpwpapers' ), 
+			apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
+		);
+		
+		?></p>
 	</div>
 
 	<?php

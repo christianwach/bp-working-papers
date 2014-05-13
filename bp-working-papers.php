@@ -173,8 +173,14 @@ class BP_Working_Papers {
 		// load our blogs extension
 		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-blogs-extension.php' );
 	
-		// load our component file
+		// load our sites component file
 		require( BP_WORKING_PAPERS_PATH . 'includes/bp-bpwpapers-component.php' );
+		
+		// load our members extension
+		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-members-extension.php' );
+	
+		// load our members component file
+		require( BP_WORKING_PAPERS_PATH . 'includes/bp-bppaperauthors-component.php' );
 		
 	}
 	

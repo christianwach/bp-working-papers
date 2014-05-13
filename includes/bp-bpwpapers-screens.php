@@ -394,6 +394,9 @@ function bpwpapers_validate_signup() {
 	// create linkage
 	bpwpapers_link_blog_and_group( $new_blog_id, $new_group_id );
 	
+	// store user ID in list of authors...
+	bpwpapers_grant_authorship( $current_user->ID );
+	
 	// show confirmation markup
 	bpwpapers_confirm_signup( $domain, $path, $blog_title, $current_user->user_login, $current_user->user_email, $meta );
 	
