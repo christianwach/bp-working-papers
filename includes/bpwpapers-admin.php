@@ -100,6 +100,9 @@ class BP_Group_Sites_Admin {
 		// default slug to "working-papers"
 		$this->option_set( 'bpwpapers_overrides_slug', $defaults['slug'] );
 	
+		// default authors to empty array
+		$this->option_set( 'bpwpapers_authors', $defaults['authors'] );
+	
 		// save options array
 		$this->options_save();
 		
@@ -118,8 +121,8 @@ class BP_Group_Sites_Admin {
 		
 		// we'll delete our options in 'uninstall.php'
 		// but for testing let's delete them here
-		//delete_site_option( 'bpwpapers_options' );
-		//delete_site_option( 'bpwpapers_installed' );
+		delete_site_option( 'bpwpapers_options' );
+		delete_site_option( 'bpwpapers_installed' );
 
 	}
 	
@@ -549,6 +552,9 @@ class BP_Group_Sites_Admin {
 	
 		// default group slug to "working-paper"
 		$defaults['slug'] = 'working-paper';
+		
+		// default author list
+		$defaults['authors'] = array();
 		
 		// --<
 		return $defaults;

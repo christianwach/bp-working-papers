@@ -5,7 +5,7 @@
  * Querystring is set via AJAX in _inc/ajax.php - bp_dtheme_object_filter()
  */
 
-
+//print_r( bpwpapers_site_option_get( 'bpwpapers_options' ) ); die();
 
 do_action( 'bp_before_members_loop' );
 

@@ -165,6 +165,35 @@ function bpwpapers_has_members( $args = '' ) {
 		}
 	}
 	
+	// get our authors
+	$authors = bpwpapers_get_authors();
+	
+	// if we have an authors array...
+	if ( $authors !== false ) {
+
+		// if we have an include array...
+		if ( $include !== false ) {
+		
+			// clean it up
+			$include = wp_parse_id_list( $include );
+		
+			// intersect this with our list of authors
+			$include = array_intersect( $authors, $include );
+		
+		} else {
+	
+			// set include
+			$include = $authors;
+	
+		}
+	
+	} else {
+	
+		// set to empty
+		$include = 0;
+		
+	}
+	
 	$members_template = new BP_Working_Paper_Authors_Template( 
 		$type, $page, $per_page, $max, $user_id, $search_terms, $include, 
 		(bool)$populate_extras, $exclude, $meta_key, $meta_value, $page_arg 
@@ -315,10 +344,35 @@ function bppaperauthors_directory_members_search_form() {
 
 
 /** 
- * Check if a user is a white paper author
+ * Get all working paper author IDs
+ *
+ * @return bool True if the user is a working paper author, false otherwise
+ */
+function bpwpapers_get_authors() {
+
+	// access plugin
+	global $bp_working_papers;
+	
+	// get current list
+	$authors = $bp_working_papers->admin->option_get( 'bpwpapers_authors' );
+	
+	// if not present, 
+	if ( is_array( $authors ) AND count( $authors ) > 0 ) {
+		return array_keys( $authors );
+	}
+	
+	// fallback
+	return false;
+	
+}
+
+
+
+/** 
+ * Check if a user is a working paper author
  *
  * @param int $author_id the numeric ID of the user
- * @return bool True if the user is a white paper author, false otherwise
+ * @return bool True if the user is a working paper author, false otherwise
  */
 function bpwpapers_is_author( $author_id ) {
 
@@ -326,9 +380,9 @@ function bpwpapers_is_author( $author_id ) {
 	global $bp_working_papers;
 	
 	// get current list
-	$authors = $bp_working_papers->admin->option_get( 'authors' );
+	$authors = $bp_working_papers->admin->option_get( 'bpwpapers_authors' );
 	
-	// if not present, 
+	// if present, user is author
 	if ( array_key_exists( $author_id, $authors ) ) return true;
 	
 	// --<
@@ -352,7 +406,7 @@ function bpwpapers_grant_authorship( $author_id, $blog_id, $save = true ) {
 	global $bp_working_papers;
 	
 	// get current list
-	$authors = $bp_working_papers->admin->option_get( 'authors' );
+	$authors = $bp_working_papers->admin->option_get( 'bpwpapers_authors' );
 	
 	// if not already present
 	if ( ! array_key_exists( $author_id, $authors ) ) {
@@ -368,7 +422,7 @@ function bpwpapers_grant_authorship( $author_id, $blog_id, $save = true ) {
 	}
 		
 	// overwrite option
-	$bp_working_papers->admin->option_set( $authors );
+	$bp_working_papers->admin->option_set( 'bpwpapers_authors', $authors );
 	
 	// optionally save
 	if ( $save === true ) $bp_working_papers->admin->options_save();
@@ -390,7 +444,7 @@ function bpwpapers_revoke_authorship( $author_id, $blog_id, $save = true ) {
 	global $bp_working_papers;
 	
 	// get current list
-	$authors = $bp_working_papers->admin->option_get( 'authors' );
+	$authors = $bp_working_papers->admin->option_get( 'bpwpapers_authors' );
 	
 	// kick out if not present
 	if ( ! array_key_exists( $author_id, $authors ) ) return;
@@ -412,7 +466,7 @@ function bpwpapers_revoke_authorship( $author_id, $blog_id, $save = true ) {
 	}
 
 	// overwrite option
-	$bp_working_papers->admin->option_set( $authors );
+	$bp_working_papers->admin->option_set( 'bpwpapers_authors', $authors );
 	
 	// optionally save
 	if ( $save === true ) $bp_working_papers->admin->options_save();

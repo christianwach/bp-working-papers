@@ -69,6 +69,12 @@ class BP_Working_Papers {
 	 */
 	function __construct() {
 	
+		// load our admin class file
+		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-admin.php' );
+		
+		// init object, sending reference to this class
+		$this->admin = new BP_Group_Sites_Admin( $this );
+		
 		// use translation files
 		add_action( 'plugins_loaded', array( $this, 'enable_translation' ) );
 		
@@ -158,12 +164,6 @@ class BP_Working_Papers {
 		// load our group functions file
 		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-groups.php' );
 	
-		// load our admin class file
-		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-admin.php' );
-		
-		// init object, sending reference to this class
-		$this->admin = new BP_Group_Sites_Admin( $this );
-		
 		// load our activity functions file
 		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-activity.php' );
 		
