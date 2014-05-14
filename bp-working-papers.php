@@ -180,7 +180,7 @@ class BP_Working_Papers {
 		require( BP_WORKING_PAPERS_PATH . 'includes/bp-bpwpapers-component.php' );
 		
 		// load our members extension
-		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-members.php' );
+		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-authors.php' );
 	
 		// load our members component file
 		require( BP_WORKING_PAPERS_PATH . 'includes/bp-bppaperauthors-component.php' );
