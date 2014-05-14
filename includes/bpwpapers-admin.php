@@ -194,7 +194,19 @@ class BP_Group_Sites_Admin {
 		// check that we trust the source of the data
 		check_admin_referer( 'bpwpapers_admin_action', 'bpwpapers_nonce' );
 		
-		// okay, we're through - get variables
+		
+		
+		// debugging switch for admins and network admins - if set, triggers do_debug() below
+		if ( is_super_admin() AND isset( $_POST['bpwpapers_debug'] ) ) {
+			$settings_debug = absint( $_POST['bpwpapers_debug'] );
+			$debug = $settings_debug ? 1 : 0;
+			if ( $debug ) { $this->do_debug(); }
+			return;
+		}
+		
+		
+		
+		// okay, we're through - get variables (remove this!)
 		extract( $_POST );
 		
 		
@@ -375,6 +387,35 @@ class BP_Group_Sites_Admin {
 	
 	
 	
+	/** 
+	 * General debugging utility
+	 * @return nothing
+	 */
+	public function do_debug() {
+		
+		// get authors
+		$authors = $this->option_get( 'bpwpapers_authors' );
+		
+		// loop
+		if ( count( $authors ) > 0 ) {
+			foreach( $authors AS $user_id => $blogs ) {
+				
+				// get user
+				$user = new WP_User( $user_id );
+				print_r( ( $user->get( BP_WORKING_PAPERS_AUTHOR_META_KEY ) ? 'yes' : 'no' ) );
+				
+				// add author meta
+				//update_user_meta( $user_id, BP_WORKING_PAPERS_AUTHOR_META_KEY, true );
+				
+			}
+		}
+		
+		die();
+		
+	}
+	
+	
+	
 	/**
 	 * @description: show our admin page
 	 */
@@ -503,7 +544,29 @@ class BP_Group_Sites_Admin {
 		
 		
 		
-		// close form
+		if ( is_super_admin() ) {
+			
+			// show debugger
+			echo '
+			<h3>'.__( 'Developer Testing', 'bpwpapers' ).'</h3> 
+
+			<table class="form-table">
+
+				<tr>
+					<th scope="row">'.__( 'Debug', 'bpwpapers' ).'</th>
+					<td>
+						<input type="checkbox" class="settings-checkbox" name="bpwpapers_debug" id="bpwpapers_debug" value="1" />
+						<label class="civi_wp_member_sync_settings_label" for="bpwpapers_debug">'.__( 'Check this to trigger do_debug().', 'bpwpapers' ).'</label>
+					</td>
+				</tr>
+			
+			</table>'."\n\n";
+		
+		}
+		
+		
+		
+		// close #bpwpapers_admin_options
 		echo '</div>'."\n\n";
 
 		

@@ -39,6 +39,9 @@ define( 'BP_WORKING_PAPERS_LINKED', 'bpwpapers_linked_groups' );
 // set working papers option name
 define( 'BP_WORKING_PAPERS_OPTION', 'bpwpapers_group_blogs' );
 
+// set working paper author meta key name
+define( 'BP_WORKING_PAPERS_AUTHOR_META_KEY', 'bpwpapers_author' );
+
 
 
 /*
@@ -177,7 +180,7 @@ class BP_Working_Papers {
 		require( BP_WORKING_PAPERS_PATH . 'includes/bp-bpwpapers-component.php' );
 		
 		// load our members extension
-		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-members-extension.php' );
+		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-members.php' );
 	
 		// load our members component file
 		require( BP_WORKING_PAPERS_PATH . 'includes/bp-bppaperauthors-component.php' );

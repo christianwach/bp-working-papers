@@ -16,7 +16,7 @@ get_header( 'buddypress' );
 
 		<?php do_action( 'bp_before_directory_members' ); ?>
 
-		<form action="" method="post" id="bppaperauthors-directory-form" class="dir-form">
+		<form action="" method="post" id="members-directory-form" class="dir-form">
 
 			<h3><?php 
 			
@@ -39,7 +39,7 @@ get_header( 'buddypress' );
 			<div class="item-list-tabs" role="navigation">
 				<ul>
 					
-					<li class="selected" id="bppaperauthors-all"><a href="<?php 
+					<li class="selected" id="members-all"><a href="<?php 
 						echo trailingslashit( bp_get_root_domain() . '/' . bppaperauthors_get_root_slug() ); 
 					?>"><?php 
 					
@@ -47,10 +47,16 @@ get_header( 'buddypress' );
 						printf( 
 							__( 'All %1$s <span>%2$s</span>', 'bpwpapers' ), 
 							apply_filters( 'bppaperauthors_extension_plural', __( 'Working Paper Authors', 'bpwpapers' ) ),
-							bpwpapers_get_total_paper_count()
+							bp_get_total_member_count()
 						); 
 						
 					?></a></li>
+
+					<?php /* if ( is_user_logged_in() && bp_is_active( 'friends' ) && bp_get_total_friend_count( bp_loggedin_user_id() ) ) : ?>
+
+						<li id="members-personal"><a href="<?php echo bp_loggedin_user_domain() . bp_get_friends_slug() . '/my-friends/' ?>"><?php printf( __( 'My Friends <span>%s</span>', 'commentpress-core' ), bp_get_total_friend_count( bp_loggedin_user_id() ) ); ?></a></li>
+
+					<?php endif; */ ?>
 
 					<?php do_action( 'bp_members_directory_member_types' ); ?>
 

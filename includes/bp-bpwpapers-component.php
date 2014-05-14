@@ -223,3 +223,39 @@ add_action( 'wp_ajax_nopriv_bpwpapers_filter', 'bpwpapers_object_template_loader
 
 
 
+/**
+ * Output the working papers slug
+ * @uses bpwpapers_get_slug()
+ */
+function bpwpapers_slug() {
+	echo bpwpapers_get_slug();
+}
+
+	/**
+	 * Return the working papers slug
+	 * @return string The 'blogs' slug.
+	 */
+	function bpwpapers_get_slug() {
+		return apply_filters( 'bpwpapers_get_slug', buddypress()->bpwpapers->slug );
+	}
+
+
+
+/**
+ * Output the working papers component root slug.
+ * @uses bpwpapers_get_root_slug()
+ */
+function bpwpapers_root_slug() {
+	echo bpwpapers_get_root_slug();
+}
+
+	/**
+	 * Return the working papers component root slug.
+	 * @return string The 'blogs' root slug.
+	 */
+	function bpwpapers_get_root_slug() {
+		return apply_filters( 'bpwpapers_get_root_slug', buddypress()->bpwpapers->root_slug );
+	}
+
+
+

@@ -5,12 +5,12 @@
  * Querystring is set via AJAX in _inc/ajax.php - bp_dtheme_object_filter()
  */
 
-//print_r( bpwpapers_site_option_get( 'bpwpapers_options' ) ); die();
+//print_r( ( bp_is_bppaperauthors_component() ? 'yes' : 'no' ) ); die();
 
 do_action( 'bp_before_members_loop' );
 
 // search for them - TODO: add AJAX query string compatibility
-if ( bpwpapers_has_members( bp_ajax_querystring( 'bppaperauthors' ) ) ) {
+if ( bp_has_members( bp_ajax_querystring( 'members' ) ) ) {
 
 	?>
 
@@ -18,7 +18,7 @@ if ( bpwpapers_has_members( bp_ajax_querystring( 'bppaperauthors' ) ) ) {
 
 		<div class="pag-count" id="member-dir-count-top">
 
-			<?php bpwpapers_members_pagination_count(); ?>
+			<?php bp_members_pagination_count(); ?>
 
 		</div>
 
@@ -47,7 +47,7 @@ if ( bpwpapers_has_members( bp_ajax_querystring( 'bppaperauthors' ) ) ) {
 
 					<?php if ( bp_get_member_latest_update() ) : ?>
 
-						<span class="update"> <?php bp_member_latest_update(); ?></span>
+						<span class="update"><?php bp_member_latest_update(); ?></span>
 
 					<?php endif; ?>
 
@@ -89,7 +89,7 @@ if ( bpwpapers_has_members( bp_ajax_querystring( 'bppaperauthors' ) ) ) {
 
 		<div class="pag-count" id="member-dir-count-bottom">
 
-			<?php bpwpapers_members_pagination_count(); ?>
+			<?php bp_members_pagination_count(); ?>
 
 		</div>
 

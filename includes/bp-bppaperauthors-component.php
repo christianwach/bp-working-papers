@@ -223,3 +223,21 @@ add_action( 'wp_ajax_nopriv_bppaperauthors_filter', 'bppaperauthors_object_templ
 
 
 
+/**
+ * Output the working paper authors component root slug.
+ * @uses bppaperauthors_get_root_slug()
+ */
+function bppaperauthors_root_slug() {
+	echo bppaperauthors_get_root_slug();
+}
+
+	/**
+	 * Return the working paper authors component root slug.
+	 * @return string The 'authors' root slug.
+	 */
+	function bppaperauthors_get_root_slug() {
+		return apply_filters( 'bppaperauthors_get_root_slug', buddypress()->bppaperauthors->root_slug );
+	}
+
+
+
