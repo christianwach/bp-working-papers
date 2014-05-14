@@ -239,10 +239,15 @@ function bpwpapers_grant_authorship( $author_id, $blog_id, $save = true ) {
 		// add to array, keyed by user ID, value is an array of working paper site IDs
 		$authors[$author_id] = array( $blog_id );
 		
+		// add user meta
+		update_user_meta( $user_id, BP_WORKING_PAPERS_AUTHOR_META_KEY, true );
+		
 	} else {
 		
 		// add a paper to the current array for this user
 		$authors[$author_id][] = $blog_id;
+		
+		// user meta will already exist, no need to add
 	
 	}
 		
@@ -283,10 +288,15 @@ function bpwpapers_revoke_authorship( $author_id, $blog_id, $save = true ) {
 		// remove from array
 		unset( $authors[$author_id] );
 		
+		// delete user meta
+		delete_user_meta( $user_id, BP_WORKING_PAPERS_AUTHOR_META_KEY );
+		
 	} else {
 	
 		// remove paper from the current array for this user
 		$authors[$author_id] = array_merge( array_diff( $papers, array( $blog_id ) ) );
+		
+		// still an author, so don't remove meta key
 	
 	}
 
