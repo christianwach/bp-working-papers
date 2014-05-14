@@ -16,7 +16,7 @@ get_header( 'buddypress' );
 
 		<?php do_action( 'bp_before_directory_members' ); ?>
 
-		<form action="" method="post" id="members-directory-form" class="dir-form">
+		<form action="" method="post" id="bppaperauthors-directory-form" class="dir-form">
 
 			<h3><?php 
 			
@@ -30,16 +30,16 @@ get_header( 'buddypress' );
 
 			<?php do_action( 'bp_before_directory_members_content' ); ?>
 
-			<div id="members-dir-search" class="dir-search" role="search">
+			<div id="bppaperauthors-dir-search" class="dir-search" role="search">
 
 				<?php bppaperauthors_directory_members_search_form(); ?>
 
-			</div><!-- #members-dir-search -->
+			</div><!-- #bppaperauthors-dir-search -->
 
 			<div class="item-list-tabs" role="navigation">
 				<ul>
 					
-					<li class="selected" id="members-all"><a href="<?php 
+					<li class="selected" id="bppaperauthors-all"><a href="<?php 
 						echo trailingslashit( bp_get_root_domain() . '/' . bppaperauthors_get_root_slug() ); 
 					?>"><?php 
 					
@@ -54,7 +54,7 @@ get_header( 'buddypress' );
 
 					<?php /* if ( is_user_logged_in() && bp_is_active( 'friends' ) && bp_get_total_friend_count( bp_loggedin_user_id() ) ) : ?>
 
-						<li id="members-personal"><a href="<?php echo bp_loggedin_user_domain() . bp_get_friends_slug() . '/my-friends/' ?>"><?php printf( __( 'My Friends <span>%s</span>', 'commentpress-core' ), bp_get_total_friend_count( bp_loggedin_user_id() ) ); ?></a></li>
+						<li id="bppaperauthors-personal"><a href="<?php echo bp_loggedin_user_domain() . bp_get_friends_slug() . '/my-friends/' ?>"><?php printf( __( 'My Friends <span>%s</span>', 'commentpress-core' ), bp_get_total_friend_count( bp_loggedin_user_id() ) ); ?></a></li>
 
 					<?php endif; */ ?>
 
@@ -68,10 +68,10 @@ get_header( 'buddypress' );
 
 					<?php do_action( 'bp_members_directory_member_sub_types' ); ?>
 
-					<li id="members-order-select" class="last filter">
+					<li id="bppaperauthors-order-select" class="last filter">
 
-						<label for="members-order-by"><?php _e( 'Order By:', 'bpwpapers' ); ?></label>
-						<select id="members-order-by">
+						<label for="bppaperauthors-order-by"><?php _e( 'Order By:', 'bpwpapers' ); ?></label>
+						<select id="bppaperauthors-order-by">
 							<option value="active"><?php _e( 'Last Active', 'bpwpapers' ); ?></option>
 							<option value="newest"><?php _e( 'Newest Registered', 'bpwpapers' ); ?></option>
 
@@ -88,11 +88,11 @@ get_header( 'buddypress' );
 				</ul>
 			</div>
 
-			<div id="members-dir-list" class="members dir-list">
+			<div id="bppaperauthors-dir-list" class="bppaperauthors dir-list">
 
 				<?php bp_locate_template( array( 'bppaperauthors/bppaperauthors-loop.php' ), true, false ); ?>
 
-			</div><!-- #members-dir-list -->
+			</div><!-- #bppaperauthors-dir-list -->
 
 			<?php do_action( 'bp_directory_members_content' ); ?>
 
@@ -100,7 +100,7 @@ get_header( 'buddypress' );
 
 			<?php do_action( 'bp_after_directory_members_content' ); ?>
 
-		</form><!-- #members-directory-form -->
+		</form><!-- #bppaperauthors-directory-form -->
 
 		<?php do_action( 'bp_after_directory_members' ); ?>
 

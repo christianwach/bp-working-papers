@@ -7,7 +7,9 @@
 
 
 
-do_action( 'bp_before_blogs_loop' );
+do_action( 'bp_before_blogs_loop' ); ?>
+<!-- bpwpapers/bpwpapers-loop.php -->
+<?php
 
 // search for them - TODO: add AJAX query string compatibility
 if ( bpwpapers_has_blogs( bp_ajax_querystring( 'bpwpapers' ) ) ) {
@@ -28,11 +30,12 @@ if ( bpwpapers_has_blogs( bp_ajax_querystring( 'bpwpapers' ) ) ) {
 
 	<?php do_action( 'bp_before_directory_blogs_list' ); ?>
 
+	<!-- bpwpapers blogs list -->
 	<ul id="blogs-list" class="item-list" role="main">
 
 	<?php while ( bp_blogs() ) : bp_the_blog(); ?>
 
-		<li>
+		<li class="clearfix">
 			<div class="item-avatar">
 				<a href="<?php bp_blog_permalink(); ?>"><?php bp_blog_avatar( 'type=thumb' ); ?></a>
 			</div>

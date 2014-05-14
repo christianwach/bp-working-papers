@@ -1,6 +1,6 @@
 <?php /*
 ================================================================================
-BuddyPress Working Papers Members Template
+BuddyPress Working Papers Authors Template
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
@@ -24,6 +24,12 @@ function bpwpapers_authors_core_get_users( $retval, $params ) {
 	// is this our component?
 	if ( ! bp_is_bppaperauthors_component() ) return $retval;
 	
+	if ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) {
+		//trigger_error( print_r( $params, true ), E_USER_ERROR ); die();
+	} else {
+		//print_r( $params ); die();
+	}
+	
 	// do we have our meta query?
 	if ( empty( $params['meta_key'] ) ) {
 		
@@ -35,7 +41,7 @@ function bpwpapers_authors_core_get_users( $retval, $params ) {
 		remove_filter( 'bp_core_get_users', 20 );
 		
 		// re-query with our params
-		return bp_core_get_users( $params );
+		$retval = bp_core_get_users( $params );
 		
 	}
 	

@@ -194,7 +194,7 @@ class BP_Group_Sites_Admin {
 		// check that we trust the source of the data
 		check_admin_referer( 'bpwpapers_admin_action', 'bpwpapers_nonce' );
 		
-		
+		// ---------------------------------------------------------------------
 		
 		// debugging switch for admins and network admins - if set, triggers do_debug() below
 		if ( is_super_admin() AND isset( $_POST['bpwpapers_debug'] ) ) {
@@ -204,29 +204,25 @@ class BP_Group_Sites_Admin {
 			return;
 		}
 		
-		
+		// ---------------------------------------------------------------------
 		
 		// okay, we're through - get variables (remove this!)
 		extract( $_POST );
 		
-		
-		
 		// get defaults
 		$defaults = $this->_get_defaults();
 		
-
+		// ---------------------------------------------------------------------
 
 		// set public comments visibility on/off option
 		$bpwpapers_public = absint( $bpwpapers_public );
 		$this->option_set( 'bpwpapers_public', ( $bpwpapers_public ? 1 : 0 ) );
 		
-		
+		// ---------------------------------------------------------------------
 		
 		// set name change on/off option
 		$bpwpapers_overrides = absint( $bpwpapers_overrides );
 		$this->option_set( 'bpwpapers_overrides', ( $bpwpapers_overrides ? 1 : 0 ) );
-		
-		
 		
 		// get plugin title option
 		$bpwpapers_overrides_title = esc_sql( $bpwpapers_overrides_title );
@@ -239,8 +235,6 @@ class BP_Group_Sites_Admin {
 		// set title option
 		$this->option_set( 'bpwpapers_overrides_title', $bpwpapers_overrides_title );
 		
-		
-		
 		// get name option
 		$bpwpapers_overrides_name = esc_sql( $bpwpapers_overrides_name );
 		
@@ -251,8 +245,6 @@ class BP_Group_Sites_Admin {
 		
 		// set name option
 		$this->option_set( 'bpwpapers_overrides_name', $bpwpapers_overrides_name );
-		
-		
 		
 		// get plural option
 		$bpwpapers_overrides_plural = esc_sql( $bpwpapers_overrides_plural );
@@ -265,8 +257,6 @@ class BP_Group_Sites_Admin {
 		// set plural option
 		$this->option_set( 'bpwpapers_overrides_plural', $bpwpapers_overrides_plural );
 		
-		
-		
 		// get button option
 		$bpwpapers_overrides_button = esc_sql( $bpwpapers_overrides_button );
 		
@@ -278,11 +268,50 @@ class BP_Group_Sites_Admin {
 		// set button option
 		$this->option_set( 'bpwpapers_overrides_button', $bpwpapers_overrides_button );
 		
-		
-		
 		// set slug option
 		$bpwpapers_overrides_slug = sanitize_title( $bpwpapers_overrides_plural );
 		$this->option_set( 'bpwpapers_overrides_slug', $bpwpapers_overrides_slug );
+		
+		// ---------------------------------------------------------------------
+		
+		// set author name change on/off option
+		$bppaperauthors_overrides = absint( $bppaperauthors_overrides );
+		$this->option_set( 'bppaperauthors_overrides', ( $bppaperauthors_overrides ? 1 : 0 ) );
+		
+		// get plugin title option
+		$bppaperauthors_overrides_title = esc_sql( $bppaperauthors_overrides_title );
+		
+		// revert to default if we didn't get one...
+		if ( $bppaperauthors_overrides_title == '' ) {
+			$bppaperauthors_overrides_title = $defaults['author_title'];
+		}
+		
+		// set author title option
+		$this->option_set( 'bppaperauthors_overrides_title', $bppaperauthors_overrides_title );
+		
+		// get name option
+		$bppaperauthors_overrides_name = esc_sql( $bppaperauthors_overrides_name );
+		
+		// revert to default if we didn't get one...
+		if ( $bppaperauthors_overrides_name == '' ) {
+			$bppaperauthors_overrides_name = $defaults['author_name'];
+		}
+		
+		// set author name option
+		$this->option_set( 'bppaperauthors_overrides_name', $bppaperauthors_overrides_name );
+		
+		// get plural option
+		$bppaperauthors_overrides_plural = esc_sql( $bppaperauthors_overrides_plural );
+		
+		// revert to default if we didn't get one...
+		if ( $bppaperauthors_overrides_plural == '' ) {
+			$bppaperauthors_overrides_plural = $defaults['author_plural'];
+		}
+
+		// set author plural option
+		$this->option_set( 'bppaperauthors_overrides_plural', $bppaperauthors_overrides_plural );
+		
+		// ---------------------------------------------------------------------
 		
 		
 		
@@ -393,6 +422,8 @@ class BP_Group_Sites_Admin {
 	 */
 	public function do_debug() {
 		
+		return;
+		
 		// get authors
 		$authors = $this->option_get( 'bpwpapers_authors' );
 		
@@ -443,30 +474,6 @@ class BP_Group_Sites_Admin {
 		// get defaults
 		$defaults = $this->_get_defaults();
 		
-		// init public comments checkbox
-		$bpwpapers_public = '';
-		if ( $this->option_get( 'bpwpapers_public' ) == '1' ) $bpwpapers_public = ' checked="checked"';
-		
-		// init name change checkbox
-		$bpwpapers_overrides = '';
-		if ( $this->option_get( 'bpwpapers_overrides' ) == '1' ) $bpwpapers_overrides = ' checked="checked"';
-		
-		// init plugin title
-		$bpwpapers_overrides_title = $this->option_get( 'bpwpapers_overrides_title' );
-		if ( $bpwpapers_overrides_title == '' ) $bpwpapers_overrides_title = esc_attr( $defaults['title'] );
-		
-		// init name
-		$bpwpapers_overrides_name = $this->option_get( 'bpwpapers_overrides_name' );
-		if ( $bpwpapers_overrides_name == '' ) $bpwpapers_overrides_name = esc_attr( $defaults['name'] );
-		
-		// init plural
-		$bpwpapers_overrides_plural = $this->option_get( 'bpwpapers_overrides_plural' );
-		if ( $bpwpapers_overrides_plural == '' ) $bpwpapers_overrides_plural = esc_attr( $defaults['plural'] );
-		
-		// init button
-		$bpwpapers_overrides_button = $this->option_get( 'bpwpapers_overrides_button' );
-		if ( $bpwpapers_overrides_button == '' ) $bpwpapers_overrides_button = esc_attr( $defaults['button'] );
-		
 		
 		
 		// open admin page
@@ -488,15 +495,18 @@ class BP_Group_Sites_Admin {
 		echo '
 		<div id="bpwpapers_admin_options">
 
-		<h3>'.__( 'BuddyPress Working Papers Settings', 'bpwpapers' ).'</h3>
-
 		<p>'.__( 'Configure how BuddyPress Working Papers behaves.', 'bpwpapers' ).'</p>'."\n\n";
 		
 		
 		
+		// init public comments checkbox
+		$bpwpapers_public = '';
+		if ( $this->option_get( 'bpwpapers_public' ) == '1' ) $bpwpapers_public = ' checked="checked"';
+		
 		// add global options
 		echo '
-		<h4>'.__( 'Global Options', 'bpwpapers' ).'</h4>
+		<hr>
+		<h3>'.__( 'Global Options', 'bpwpapers' ).'</h3>
 
 		<table class="form-table">
 
@@ -509,19 +519,40 @@ class BP_Group_Sites_Admin {
 		
 		
 		
-		// add global options
+		// init name change checkbox
+		$bpwpapers_overrides = '';
+		if ( $this->option_get( 'bpwpapers_overrides' ) == '1' ) $bpwpapers_overrides = ' checked="checked"';
+		
+		// init plugin title
+		$bpwpapers_overrides_title = $this->option_get( 'bpwpapers_overrides_title' );
+		if ( $bpwpapers_overrides_title == '' ) $bpwpapers_overrides_title = esc_attr( $defaults['title'] );
+		
+		// init name
+		$bpwpapers_overrides_name = $this->option_get( 'bpwpapers_overrides_name' );
+		if ( $bpwpapers_overrides_name == '' ) $bpwpapers_overrides_name = esc_attr( $defaults['name'] );
+		
+		// init plural
+		$bpwpapers_overrides_plural = $this->option_get( 'bpwpapers_overrides_plural' );
+		if ( $bpwpapers_overrides_plural == '' ) $bpwpapers_overrides_plural = esc_attr( $defaults['plural'] );
+		
+		// init button
+		$bpwpapers_overrides_button = $this->option_get( 'bpwpapers_overrides_button' );
+		if ( $bpwpapers_overrides_button == '' ) $bpwpapers_overrides_button = esc_attr( $defaults['button'] );
+		
+		// add working paper naming options
 		echo '
-		<h4>'.__( 'Naming Options', 'bpwpapers' ).'</h4>
+		<hr>
+		<h3>'.__( 'Working Paper Component Options', 'bpwpapers' ).'</h3>
 
 		<table class="form-table">
 
 			<tr valign="top">
-				<th scope="row"><label for="bpwpapers_overrides">'.__( 'Enable name changes?', 'bpwpapers' ).'</label></th>
+				<th scope="row"><label for="bpwpapers_overrides">'.__( 'Enable component changes?', 'bpwpapers' ).'</label></th>
 				<td><input id="bpwpapers_overrides" name="bpwpapers_overrides" value="1" type="checkbox"'.$bpwpapers_overrides.' /></td>
 			</tr>
 
 			<tr valign="top">
-				<th scope="row"><label for="bpwpapers_overrides_name">'.__( 'Plugin Title', 'bpwpapers' ).'</label></th>
+				<th scope="row"><label for="bpwpapers_overrides_title">'.__( 'Component Title', 'bpwpapers' ).'</label></th>
 				<td><input id="bpwpapers_overrides_title" name="bpwpapers_overrides_title" value="'.$bpwpapers_overrides_title.'" type="text" /></td>
 			</tr>
 
@@ -544,10 +575,62 @@ class BP_Group_Sites_Admin {
 		
 		
 		
+		// init name change checkbox
+		$bppaperauthors_overrides = '';
+		if ( $this->option_get( 'bppaperauthors_overrides' ) == '1' ) $bppaperauthors_overrides = ' checked="checked"';
+		
+		// init plugin title
+		$bppaperauthors_overrides_title = $this->option_get( 'bppaperauthors_overrides_title' );
+		if ( $bppaperauthors_overrides_title == '' ) $bppaperauthors_overrides_title = esc_attr( $defaults['author_title'] );
+		
+		// init name
+		$bppaperauthors_overrides_name = $this->option_get( 'bppaperauthors_overrides_name' );
+		if ( $bppaperauthors_overrides_name == '' ) $bppaperauthors_overrides_name = esc_attr( $defaults['author_name'] );
+		
+		// init plural
+		$bppaperauthors_overrides_plural = $this->option_get( 'bppaperauthors_overrides_plural' );
+		if ( $bppaperauthors_overrides_plural == '' ) $bppaperauthors_overrides_plural = esc_attr( $defaults['author_plural'] );
+		
+		// init button
+		$bppaperauthors_overrides_button = $this->option_get( 'bppaperauthors_overrides_button' );
+		if ( $bppaperauthors_overrides_button == '' ) $bppaperauthors_overrides_button = esc_attr( $defaults['author_button'] );
+		
+		// add working paper author naming options
+		echo '
+		<hr>
+		<h3>'.__( 'Working Paper Author Component Options', 'bpwpapers' ).'</h3>
+
+		<table class="form-table">
+
+			<tr valign="top">
+				<th scope="row"><label for="bppaperauthors_overrides">'.__( 'Enable component changes?', 'bpwpapers' ).'</label></th>
+				<td><input id="bppaperauthors_overrides" name="bppaperauthors_overrides" value="1" type="checkbox"'.$bppaperauthors_overrides.' /></td>
+			</tr>
+
+			<tr valign="top">
+				<th scope="row"><label for="bppaperauthors_overrides_title">'.__( 'Component Title', 'bpwpapers' ).'</label></th>
+				<td><input id="bppaperauthors_overrides_title" name="bppaperauthors_overrides_title" value="'.$bppaperauthors_overrides_title.'" type="text" /></td>
+			</tr>
+
+			<tr valign="top">
+				<th scope="row"><label for="bppaperauthors_overrides_name">'.__( 'Singular name for a Working Paper Author', 'bpwpapers' ).'</label></th>
+				<td><input id="bppaperauthors_overrides_name" name="bppaperauthors_overrides_name" value="'.$bppaperauthors_overrides_name.'" type="text" /></td>
+			</tr>
+
+			<tr valign="top">
+				<th scope="row"><label for="bppaperauthors_overrides_plural">'.__( 'Plural name for Working Paper Authors', 'bpwpapers' ).'</label></th>
+				<td><input id="bppaperauthors_overrides_plural" name="bppaperauthors_overrides_plural" value="'.$bppaperauthors_overrides_plural.'" type="text" /></td>
+			</tr>
+
+		</table>'."\n\n";
+		
+		
+		
 		if ( is_super_admin() ) {
 			
 			// show debugger
 			echo '
+			<hr>
 			<h3>'.__( 'Developer Testing', 'bpwpapers' ).'</h3> 
 
 			<table class="form-table">
@@ -598,7 +681,7 @@ class BP_Group_Sites_Admin {
 		// default visibility of public group comments to off
 		$defaults['public'] = 0;
 	
-		// default to off
+		// default working papers component changes to off
 		$defaults['overrides'] = 0;
 	
 		// default plugin title to "Working Papers"
@@ -619,6 +702,18 @@ class BP_Group_Sites_Admin {
 		// default author list
 		$defaults['authors'] = array();
 		
+		// default working paper authors component changes to off
+		$defaults['author_overrides'] = 0;
+	
+		// default plugin title to "Working Paper Authors"
+		$defaults['author_title'] = __( 'Working Paper Authors', 'bpwpapers' );
+	
+		// default singular to "Working Paper Author"
+		$defaults['author_name'] = __( 'Working Paper Author', 'bpwpapers' );
+	
+		// default plural to "Working Paper Authors"
+		$defaults['author_plural'] = __( 'Working Paper Authors', 'bpwpapers' );
+	
 		// --<
 		return $defaults;
 	
@@ -791,6 +886,88 @@ function bpwpapers_get_visit_site_button( $button ) {
 
 // add fliter for the above
 add_filter( 'bp_get_blogs_visit_blog_button', 'bpwpapers_get_visit_site_button', 30, 1 );
+
+
+
+// -----------------------------------------------------------------------------
+
+
+
+/** 
+ * @description: override author component title
+ */
+function bppaperauthors_override_extension_title( $title ) {
+	
+	// access object
+	global $bp_working_papers;
+	
+	// are we overriding?
+	if ( $bp_working_papers->admin->option_get( 'bppaperauthors_overrides' ) ) {
+	
+		// override with our option
+		$title = $bp_working_papers->admin->option_get( 'bppaperauthors_overrides_title' );
+		
+	}
+	
+	// --<
+	return $title;
+	
+}
+
+// add filter for the above
+add_filter( 'bppaperauthors_extension_title', 'bppaperauthors_override_extension_title', 10, 1 );
+
+
+
+/** 
+ * @description: override author component singular name
+ */
+function bppaperauthors_override_extension_name( $name ) {
+	
+	// access object
+	global $bp_working_papers;
+	
+	// are we overriding?
+	if ( $bp_working_papers->admin->option_get( 'bppaperauthors_overrides' ) ) {
+	
+		// override with our option
+		$name = $bp_working_papers->admin->option_get( 'bppaperauthors_overrides_name' );
+		
+	}
+	
+	// --<
+	return $name;
+	
+}
+
+// add filter for the above
+add_filter( 'bppaperauthors_extension_name', 'bppaperauthors_override_extension_name', 10, 1 );
+
+
+
+/** 
+ * @description: override author component plural
+ */
+function bppaperauthors_override_extension_plural( $plural ) {
+	
+	// access object
+	global $bp_working_papers;
+	
+	// are we overriding?
+	if ( $bp_working_papers->admin->option_get( 'bppaperauthors_overrides' ) ) {
+	
+		// override with our option
+		$plural = $bp_working_papers->admin->option_get( 'bppaperauthors_overrides_plural' );
+		
+	}
+	
+	// --<
+	return $plural;
+	
+}
+
+// add filter for the above
+add_filter( 'bppaperauthors_extension_plural', 'bppaperauthors_override_extension_plural', 10, 1 );
 
 
 

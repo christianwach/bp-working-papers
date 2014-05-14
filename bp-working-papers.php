@@ -211,9 +211,6 @@ class BP_Working_Papers {
 	
 		// add our templates to the theme compatibility layer
 		add_action( 'bp_register_theme_packages', array( $this, 'theme_compat' ) );
-		//add_filter( 'pre_option__bp_theme_package_id', array( $this, 'package_id' ) );
-		//add_filter( 'bp_get_template_part', array( $this, 'template_part' ), 10, 3 );
-		//add_filter( 'bp_get_template_stack', array( $this, 'template_stack' ), 10, 1 );
 		
 	}
 	
@@ -225,69 +222,8 @@ class BP_Working_Papers {
 	 */
 	public function theme_compat() {
 	
-		//print_r( 'theme_compat' ); die();
-		
-		/*
-		bp_register_theme_package( array(
-			'id'      => 'bpwpapers',
-			'name'    => __( 'BuddyPress Default', 'buddypress' ),
-			'version' => bp_get_version(),
-			'dir'     => trailingslashit( $this->themes_dir . '/bp-legacy' ),
-			'url'     => trailingslashit( $this->themes_url . '/bp-legacy' )
-		) );
-		*/
-		
 		// add templates dir to BuddyPress
 		bp_register_template_stack( 'bpwpapers_templates_dir',  16 );
-		
-	}
-	
-	
-	
-	/**
-	 * @description: returns the unique package ID for our plugin's templates
-	 * @return str $package_id unique package ID
-	 */
-	public function package_id( $package_id ) {
-		
-		// return unique package ID
-		return 'bpwpapers';
-		
-	}
-	
-	
-	
-	/**
-	 * @description: returns our template part
-	 * @return array $template path to required template
-	 */
-	public function template_part( $templates, $slug, $name ) {
-		
-		print_r( 'template_part' ); die();
-		
-		// kick out if not our slug
-		if ( 'texts' != $slug ) { return $templates; }
-		
-		// --<
-		return array( 'bp-working-papers/index.php' );
-		
-	}
-	
-	
-	
-	/**
-	 * @description: returns our template stack
-	 * @return array $template path to required template
-	 */
-	public function template_stack( $template_stack ) {
-		
-		print_r( array( 'template_stack' => $template_stack ) ); die();
-		
-		// kick out if not our slug
-		if ( 'texts' != $slug ) { return $templates; }
-		
-		// --<
-		return array( 'bp-working-papers/index.php' );
 		
 	}
 	

@@ -7,10 +7,12 @@
 
 //print_r( ( bp_is_bppaperauthors_component() ? 'yes' : 'no' ) ); die();
 
-do_action( 'bp_before_members_loop' );
+do_action( 'bp_before_members_loop' ); ?>
+<!-- bppaperauthors/bppaperauthors-loop.php -->
+<?php
 
 // search for them - TODO: add AJAX query string compatibility
-if ( bp_has_members( bp_ajax_querystring( 'members' ) ) ) {
+if ( bp_has_members( bp_ajax_querystring( 'bppaperauthors' ) ) ) {
 
 	?>
 
@@ -62,42 +64,13 @@ if ( bp_has_members( bp_ajax_querystring( 'members' ) ) ) {
 				  * (only one regardless of the number of fields you show):
 				  *
 				  * bp_member_profile_data( 'field=the field name' );
+				  * 
+				  * If you don't want to copy the template to your theme, you can use 
+				  * the bpwpapers_authors_directory_profile_fields action to display them 
 				  */
 				?>
 				
-				<?php
-				
-				// get affiliation data
-				$data = bp_get_member_profile_data( array( 'field' => 'Affiliation' ) );
-				
-				// if we get some
-				if ( ! empty( $data ) ) { 
-				
-					?><div class="user-meta">
-						<span class="affiliation-label"><?php _e( 'Affiliation:', 'bpwpapers' ); ?></span> 
-						<span class="affiliation"><?php echo $data; ?></span>
-					</div><?php 
-				
-				}
-				
-				?>
-				
-				<?php
-				
-				// get interests data
-				$data = bp_get_member_profile_data( array( 'field' => 'Interests' ) );
-				
-				// if we get some
-				if ( ! empty( $data ) ) { 
-				
-					?><div class="user-meta">
-						<span class="interests-label"><?php _e( 'Interests:', 'bpwpapers' ); ?></span> 
-						<span class="interests"><?php echo $data; ?></span>
-					</div><?php 
-				
-				}
-				
-				?>
+				<?php do_action( 'bpwpapers_authors_directory_profile_fields' ); ?>
 				
 			</div>
 
