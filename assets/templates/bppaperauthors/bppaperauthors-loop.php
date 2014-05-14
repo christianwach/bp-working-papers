@@ -36,9 +36,9 @@ if ( bp_has_members( bp_ajax_querystring( 'members' ) ) ) {
 
 	<?php while ( bp_members() ) : bp_the_member(); ?>
 
-		<li>
+		<li class="clearfix">
 			<div class="item-avatar">
-				<a href="<?php bp_member_permalink(); ?>"><?php bp_member_avatar(); ?></a>
+				<a href="<?php bp_member_permalink(); ?>"><?php bp_member_avatar( 'type=full&width=150&height=150' ); ?></a>
 			</div>
 
 			<div class="item">
@@ -46,9 +46,7 @@ if ( bp_has_members( bp_ajax_querystring( 'members' ) ) ) {
 					<a href="<?php bp_member_permalink(); ?>"><?php bp_member_name(); ?></a>
 
 					<?php if ( bp_get_member_latest_update() ) : ?>
-
 						<span class="update"><?php bp_member_latest_update(); ?></span>
-
 					<?php endif; ?>
 
 				</div>
@@ -66,6 +64,41 @@ if ( bp_has_members( bp_ajax_querystring( 'members' ) ) ) {
 				  * bp_member_profile_data( 'field=the field name' );
 				  */
 				?>
+				
+				<?php
+				
+				// get affiliation data
+				$data = bp_get_member_profile_data( array( 'field' => 'Affiliation' ) );
+				
+				// if we get some
+				if ( ! empty( $data ) ) { 
+				
+					?><div class="user-meta">
+						<span class="affiliation-label"><?php _e( 'Affiliation:', 'bpwpapers' ); ?></span> 
+						<span class="affiliation"><?php echo $data; ?></span>
+					</div><?php 
+				
+				}
+				
+				?>
+				
+				<?php
+				
+				// get interests data
+				$data = bp_get_member_profile_data( array( 'field' => 'Interests' ) );
+				
+				// if we get some
+				if ( ! empty( $data ) ) { 
+				
+					?><div class="user-meta">
+						<span class="interests-label"><?php _e( 'Interests:', 'bpwpapers' ); ?></span> 
+						<span class="interests"><?php echo $data; ?></span>
+					</div><?php 
+				
+				}
+				
+				?>
+				
 			</div>
 
 			<div class="action">
@@ -108,7 +141,15 @@ if ( bp_has_members( bp_ajax_querystring( 'members' ) ) ) {
 	?>
 
 	<div id="message" class="info">
-		<p><?php _e( "Sorry, no members were found.", 'buddypress' ); ?></p>
+		<p><?php 
+		
+		// show nothing found message
+		echo sprintf( 
+			__( 'Sorry, there were no %s found.', 'bpwpapers' ), 
+			apply_filters( 'bppaperauthors_extension_plural', __( 'Working Paper Authors', 'bpwpapers' ) )
+		);
+		
+		?></p>
 	</div>
 	
 	<?php 
