@@ -247,6 +247,9 @@ function bpwpapers_show_working_paper_create_form( $blogname = '', $blog_title =
 		$blogname = $filtered_results['blogname'];
 		$blog_title = $filtered_results['blog_title'];
 		$errors = $filtered_results['errors'];
+		
+		$singular = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+		$plural = apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) );
 
 		if ( $errors->get_error_code() ) {
 			echo '<p>' . __( 'There was a problem, please correct the form below and try again.', 'bpwpapers' ) . '</p>';
@@ -255,9 +258,19 @@ function bpwpapers_show_working_paper_create_form( $blogname = '', $blog_title =
 		<p><?php 
 		
 		echo sprintf( 
-			__( 'By filling out the form below, you can <strong>add a %s to your account</strong>. There is no limit to the number of %s that you can have, so create to your heart&#8217;s content.', 'bpwpapers' ), 
-			apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ),
-			apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
+			__( 'By filling out the form below, you can <strong>add a %s to your account</strong>.', 'bpwpapers' ), 
+			$singular,
+			$plural
+		);
+
+		?></p>
+
+		<p><?php 
+		
+		echo sprintf( 
+			__( 'There is no limit to the number of %s that you can have, so create to your heart&#8217;s content.', 'bpwpapers' ), 
+			$singular,
+			$plural
 		);
 
 		?></p>

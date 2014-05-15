@@ -18,6 +18,8 @@ get_header( 'buddypress' );
 		
 		<?php do_action( 'bp_before_create_blog_content_template' ); ?>
 
+		<div class="dir-form">
+
 		<?php do_action( 'template_notices' ); ?>
 
 			<h3><?php 
@@ -37,6 +39,8 @@ get_header( 'buddypress' );
 			);
 
 			?></a></h3>
+			
+		</div>
 
 		<?php do_action( 'bp_before_create_blog_content' ); ?>
 

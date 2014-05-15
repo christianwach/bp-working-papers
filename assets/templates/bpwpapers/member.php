@@ -28,16 +28,16 @@ get_header( 'buddypress' );
 			// if not my papers
 			if ( !is_user_logged_in() OR bp_displayed_user_id() != bp_loggedin_user_id() ) {
 			
-				// show title
+				// show title for other users
 				echo sprintf( 
-					__( '%s&#8217;s %s', 'bpwpapers' ),
-					bp_get_displayed_user_fullname(),
-					apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
+					__( '%1$s by %2$s', 'bpwpapers' ),
+					apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ),
+					bp_get_displayed_user_fullname()
 				);
 			
 			} else {
 			
-				// show title
+				// show "my working papers" title
 				echo sprintf( 
 					__( 'My %s', 'bpwpapers' ),
 					apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
