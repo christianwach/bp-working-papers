@@ -21,6 +21,8 @@ Class Name
 ================================================================================
 */
 
+// TODO: this class may not be necessary if we can filter bp_has_blogs instead
+
 class BP_Working_Papers_Blogs_Template extends BP_Blogs_Template {
 
 
@@ -216,6 +218,17 @@ class BP_Working_Papers_Blogs_Template extends BP_Blogs_Template {
 		// store total
 		$this->total_blog_count = count( $filtered['blogs'] );
 		
+		/*
+		print_r( array(
+			'user_id' => $user_id, 
+			'user' => new WP_User( $user_id ), 
+			'all' => $all, 
+			'filtered' => $filtered,
+			'total_blog_count' => $this->total_blog_count,
+			'debug_backtrace' => debug_backtrace( 0 )
+		) ); //die();
+		*/
+	
 	}
 
 
