@@ -99,6 +99,32 @@ class BP_Working_Papers_Component extends BP_Component {
 	
 	
 	
+	/**
+	 * Create component navigation (Member > Working Papers)
+	 */
+	function setup_nav( $main_nav = array(), $sub_nav = array() ) {
+		
+		// construct name
+		$name = sprintf( 
+			__( '%s <span>%d</span>', 'bpwpapers' ), 
+			apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ),
+			bpwpapers_get_total_paper_count_for_user( bp_displayed_user_id() )
+		);
+		
+		// show a link in the member's profile
+		$main_nav = array(
+			'name' 		      => $name,
+			'slug' 		      => bpwpapers_get_slug(),
+			'position' 	      => 30
+		);
+		
+		// set parent
+		parent::setup_nav( $main_nav, $sub_nav );
+		
+	}
+	
+	
+	
 } // class ends
 
 
