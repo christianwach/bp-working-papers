@@ -148,11 +148,13 @@ function bpwpapers_screen_index() {
 		// make sure BP knows that it's our directory
 		bp_update_is_directory( true, 'bpwpapers' );
 		
+		//print_r( ( bp_is_user() ? 'yes' : 'no' ) ); die();
+		
 		// allow plugins to handle this
 		do_action( 'bpwpapers_screen_index' );
 		
 		// load our directory template
-		bp_core_load_template( apply_filters( 'bpwpapers_screen_index', 'bpwpapers/index' ) );
+		bp_core_load_template( apply_filters( 'bpwpapers_template_index', 'bpwpapers/index' ) );
 
 	}
 	
@@ -183,6 +185,33 @@ function bpwpapers_screen_create_a_blog() {
 
 // add action for the above
 add_action( 'bp_screens', 'bpwpapers_screen_create_a_blog', 3 );
+
+
+
+/**
+ * Load the BuddyPress Working Papers Members screen.
+ */
+function bpwpapers_screen_member() {
+
+	// is this our target page?
+	if ( is_multisite() && bp_is_bpwpapers_component() && bp_is_user() ) {
+		
+		//print_r( ( bp_is_user() ? 'yes' : 'no' ) ); die();
+		// make sure BP knows that it's our directory
+		bp_update_is_directory( true, 'bpwpapers' );
+		
+		// allow plugins to handle this
+		do_action( 'bpwpapers_screen_member' );
+
+		// load our create template
+		bp_core_load_template( apply_filters( 'bpwpapers_template_member', 'bpwpapers/member' ) );
+	
+	}
+	
+}
+
+// add action for the above
+add_action( 'bp_screens', 'bpwpapers_screen_member', 3 );
 
 
 
@@ -452,6 +481,73 @@ function bpwpapers_confirm_signup( $domain, $path, $blog_title, $user_name, $use
 	do_action('signup_finished');
 	
 }
+
+
+
+/**
+ * Output button for visiting a group in the working papers loop.
+ *
+ * @see bp_get_blogs_visit_blog_button() for description of arguments.
+ *
+ * @param array $args See {@link bp_get_blogs_visit_blog_button()}.
+ */
+function bpwpapers_visit_group_button( $args = '' ) {
+	echo bpwpapers_get_visit_group_button( $args );
+}
+
+// add after "visit working paper" button
+add_action( 'bp_directory_blogs_actions',  'bpwpapers_visit_group_button', 20 );
+
+	/**
+	 * Return button for visiting a group in the working papers loop.
+	 *
+	 * @see BP_Button for a complete description of arguments and return
+	 *      value.
+	 *
+	 * @param array $args {
+	 *     Arguments are listed below, with their default values. For a
+	 *     complete description of arguments, see {@link BP_Button}.
+	 *     @type string $id Default: 'visit_blog'.
+	 *     @type string $component Default: 'blogs'.
+	 *     @type bool $must_be_logged_in Default: false.
+	 *     @type bool $block_self Default: false.
+	 *     @type string $wrapper_class Default: 'blog-button visit'.
+	 *     @type string $link_href Permalink of the current blog in the loop.
+	 *     @type string $link_class Default: 'blog-button visit'.
+	 *     @type string $link_text Default: 'Visit Site'.
+	 *     @type string $link_title Default: 'Visit Site'.
+	 * }
+	 * @return string The HTML for the Visit button.
+	 */
+	function bpwpapers_get_visit_group_button( $args = '' ) {
+		
+		// get group ID
+		$group_id = bpwpapers_get_group_by_blog_id( bp_get_blog_id() );
+		
+		// get group
+		$group = groups_get_group( array( 'group_id' => $group_id ) );
+	
+		// get group permalink
+		$group_link = bp_get_group_permalink( $group );
+	
+		$defaults = array(
+			'id'                => 'visit_bpwpgroup',
+			'component'         => 'bpwpapers',
+			'must_be_logged_in' => false,
+			'block_self'        => false,
+			'wrapper_class'     => 'bpwpgroup-button visit',
+			'link_href'         => $group_link,
+			'link_class'        => 'bpwpgroup-button visit',
+			'link_text'         => __( 'Visit Group', 'bpwpapers' ),
+			'link_title'        => __( 'Visit Group', 'bpwpapers' ),
+		);
+		
+		$button = wp_parse_args( $args, $defaults );
+		
+		// Filter and return the HTML button
+		return bp_get_button( apply_filters( 'bpwpapers_get_visit_group_button', $button ) );
+		
+	}
 
 
 

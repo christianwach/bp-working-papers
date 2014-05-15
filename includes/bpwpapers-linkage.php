@@ -99,7 +99,7 @@ function bpwpapers_create_group_member( $group_id, $user_id, $is_admin = 0 ) {
 
 
 /** 
- * For a given blog ID, get the array of group IDs
+ * For a given blog ID, get the group ID
  *
  * @param int $blog_id the numeric ID of the blog
  */
@@ -116,7 +116,7 @@ function bpwpapers_get_group_by_blog_id( $blog_id ) {
 
 
 /** 
- * For a given group ID, add a given group ID
+ * For a given group ID, get the blog ID
  *
  * @param int $group_id the numeric ID of the group
  */
