@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BuddyPress Working Papers 0.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/bp-working-papers\n"
-"POT-Creation-Date: 2014-05-12 16:02:38+00:00\n"
+"POT-Creation-Date: 2014-05-15 14:12:13+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,326 +12,409 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: assets/templates/bpwpapers/bpwpapers-loop.php:93
-msgid "Sorry, there were no Working Papers found."
+#: assets/templates/bppaperauthors/bppaperauthors-loop.php:121
+#: assets/templates/bpwpapers/bpwpapers-loop.php:100
+msgid "Sorry, there were no %s found."
 msgstr ""
 
-#: assets/templates/bpwpapers/create.php:27
-#: assets/templates/bpwpapers/index.php:40
-msgid "Create a %s"
+#: assets/templates/bppaperauthors/bppaperauthors-loop.php:122
+#: assets/templates/bppaperauthors/index.php:26
+#: assets/templates/bppaperauthors/index.php:49
+#: includes/bp-bppaperauthors-component.php:35
+#: includes/bp-bppaperauthors-component.php:84
+#: includes/bp-bppaperauthors-screens.php:100 includes/bpwpapers-admin.php:709
+#: includes/bpwpapers-admin.php:715
+msgid "Working Paper Authors"
 msgstr ""
 
-#: assets/templates/bpwpapers/create.php:28
-#: assets/templates/bpwpapers/index.php:41
-#: includes/bp-bpwpapers-screens.php:230 includes/bp-bpwpapers-screens.php:249
-#: includes/bp-bpwpapers-screens.php:281 includes/bp-bpwpapers-screens.php:308
-#: includes/bp-bpwpapers-screens.php:313 includes/bp-bpwpapers-screens.php:408
-#: includes/bp-bpwpapers-screens.php:419 includes/bpwpapers-activity.php:2028
-#: includes/bpwpapers-admin.php:542 includes/bpwpapers-group-extension.php:72
-msgid "Working Paper"
-msgstr ""
-
-#: assets/templates/bpwpapers/create.php:35
+#: assets/templates/bppaperauthors/index.php:25
+#: assets/templates/bpwpapers/create.php:37
 #: assets/templates/bpwpapers/index.php:27
 msgid "%s Directory"
 msgstr ""
 
-#: assets/templates/bpwpapers/create.php:36
-#: assets/templates/bpwpapers/index.php:28
-#: assets/templates/bpwpapers/index.php:61
-#: includes/bp-bpwpapers-component.php:35
-#: includes/bp-bpwpapers-component.php:84 includes/bp-bpwpapers-screens.php:100
-#: includes/bp-bpwpapers-screens.php:231 includes/bpwpapers-activity.php:1889
-#: includes/bpwpapers-activity.php:1900 includes/bpwpapers-activity.php:1945
-#: includes/bpwpapers-admin.php:539 includes/bpwpapers-admin.php:545
-msgid "Working Papers"
-msgstr ""
-
+#: assets/templates/bppaperauthors/index.php:48
 #: assets/templates/bpwpapers/index.php:60
 msgid "All %1$s <span>%2$s</span>"
 msgstr ""
 
-#: assets/templates/bpwpapers/index.php:97
+#: assets/templates/bppaperauthors/index.php:73
+#: assets/templates/bpwpapers/index.php:93
+#: assets/templates/bpwpapers/member.php:81
 msgid "Order By:"
 msgstr ""
 
-#: assets/templates/bpwpapers/index.php:99
+#: assets/templates/bppaperauthors/index.php:75
+#: assets/templates/bpwpapers/index.php:95
+#: assets/templates/bpwpapers/member.php:83
 msgid "Last Active"
 msgstr ""
 
-#: assets/templates/bpwpapers/index.php:100
-msgid "Newest"
+#: assets/templates/bppaperauthors/index.php:76
+msgid "Newest Registered"
 msgstr ""
 
-#: assets/templates/bpwpapers/index.php:101
+#: assets/templates/bppaperauthors/index.php:80
+#: assets/templates/bpwpapers/index.php:97
+#: assets/templates/bpwpapers/member.php:85
 msgid "Alphabetical"
 msgstr ""
 
+#: assets/templates/bpwpapers/bpwpapers-loop.php:101
+#: assets/templates/bpwpapers/create.php:38
+#: assets/templates/bpwpapers/index.php:28
+#: assets/templates/bpwpapers/index.php:61
+#: assets/templates/bpwpapers/index.php:73
+#: assets/templates/bpwpapers/member.php:34
+#: assets/templates/bpwpapers/member.php:43
+#: includes/bp-bpwpapers-component.php:35
+#: includes/bp-bpwpapers-component.php:84
+#: includes/bp-bpwpapers-component.php:113
+#: includes/bp-bpwpapers-screens.php:100 includes/bp-bpwpapers-screens.php:252
+#: includes/bpwpapers-activity.php:1052 includes/bpwpapers-activity.php:1063
+#: includes/bpwpapers-activity.php:1108 includes/bpwpapers-admin.php:688
+#: includes/bpwpapers-admin.php:694
+msgid "Working Papers"
+msgstr ""
+
+#: assets/templates/bpwpapers/create.php:29
+#: assets/templates/bpwpapers/index.php:40
+#: assets/templates/bpwpapers/member.php:60
+msgid "Create a %s"
+msgstr ""
+
+#: assets/templates/bpwpapers/create.php:30
+#: assets/templates/bpwpapers/index.php:41
+#: assets/templates/bpwpapers/member.php:61
+#: includes/bp-bpwpapers-screens.php:251 includes/bp-bpwpapers-screens.php:291
+#: includes/bp-bpwpapers-screens.php:323 includes/bp-bpwpapers-screens.php:350
+#: includes/bp-bpwpapers-screens.php:355 includes/bp-bpwpapers-screens.php:466
+#: includes/bp-bpwpapers-screens.php:475 includes/bpwpapers-activity.php:1145
+#: includes/bpwpapers-admin.php:691 includes/bpwpapers-groups.php:35
+msgid "Working Paper"
+msgstr ""
+
+#: assets/templates/bpwpapers/index.php:72
+msgid "My %1$s <span>%2$s</span>"
+msgstr ""
+
+#: assets/templates/bpwpapers/index.php:96
+#: assets/templates/bpwpapers/member.php:84
+msgid "Newest"
+msgstr ""
+
+#: assets/templates/bpwpapers/member.php:33
+msgid "%1$s by %2$s"
+msgstr ""
+
+#: assets/templates/bpwpapers/member.php:42
+msgid "My %s"
+msgstr ""
+
+#: includes/bp-bppaperauthors-component.php:83
 #: includes/bp-bpwpapers-component.php:83
 msgid "Search %s..."
 msgstr ""
 
-#: includes/bp-bpwpapers-screens.php:223
+#: includes/bp-bpwpapers-component.php:112
+msgid "%s <span>%d</span>"
+msgstr ""
+
+#: includes/bp-bpwpapers-screens.php:255
 msgid "There was a problem, please correct the form below and try again."
 msgstr ""
 
-#: includes/bp-bpwpapers-screens.php:229
-msgid "By filling out the form below, you can <strong>add a %s to your account</strong>. There is no limit to the number of %s that you can have, so create to your heart&#8217;s content."
+#: includes/bp-bpwpapers-screens.php:261
+msgid "By filling out the form below, you can <strong>add a %s to your account</strong>."
 msgstr ""
 
-#: includes/bp-bpwpapers-screens.php:248
+#: includes/bp-bpwpapers-screens.php:271
+msgid "There is no limit to the number of %s that you can have, so create to your heart&#8217;s content."
+msgstr ""
+
+#: includes/bp-bpwpapers-screens.php:290
 msgid "Create %s"
 msgstr ""
 
-#: includes/bp-bpwpapers-screens.php:280
+#: includes/bp-bpwpapers-screens.php:322
 msgid "%s Title:"
 msgstr ""
 
-#: includes/bp-bpwpapers-screens.php:307
+#: includes/bp-bpwpapers-screens.php:349
 msgid "%s Name"
 msgstr ""
 
-#: includes/bp-bpwpapers-screens.php:312
+#: includes/bp-bpwpapers-screens.php:354
 msgid "%s Domain:"
 msgstr ""
 
-#: includes/bp-bpwpapers-screens.php:407
+#: includes/bp-bpwpapers-screens.php:465
 msgid "Congratulations! You have successfully created a new %s"
 msgstr ""
 
-#: includes/bp-bpwpapers-screens.php:416
-msgid "<a href=\"%1$s\">%2$s</a> is your new %3$s. <a href=\"%4$s\">Login</a> as \"%5$s\" using your existing password."
+#: includes/bp-bpwpapers-screens.php:474
+msgid "The URL for your new %1$s is <a href=\"%2$s\">%3$s</a>."
 msgstr ""
 
-#: includes/bpwpapers-activity.php:165
-msgid "Posted in: %s"
+#: includes/bp-bpwpapers-screens.php:485
+msgid "<a href=\"%1$s\">Login</a> as \"%2$s\" using your existing password."
 msgstr ""
 
-#: includes/bpwpapers-activity.php:193
-msgid "BuddyPress Comment Group"
+#: includes/bp-bpwpapers-screens.php:554 includes/bp-bpwpapers-screens.php:555
+msgid "Visit Group"
 msgstr ""
 
-#: includes/bpwpapers-activity.php:225
-msgid "This comment is a reply. It appears in the same group as the comment it is in reply to. If there is a deeper thread of replies, then the original comment determines the group in which it appears."
-msgstr ""
-
-#: includes/bpwpapers-activity.php:235
-msgid "This comment appears in the group %1$s."
-msgstr ""
-
-#: includes/bpwpapers-activity.php:288
-msgid "You are not allowed to edit comments on this post."
-msgstr ""
-
-#: includes/bpwpapers-activity.php:373
-msgid "Anonymous"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:380 includes/bpwpapers-activity.php:2118
-msgid "post"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:392
-msgid "%s left a %s on a %s %s in the group %s:"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:395
-msgid "comment"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:439
-msgid "Working Paper Comments"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:633
-msgid "Join group to reply"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:713
-msgid "Join a group to leave a comment on %s"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:894
-msgid "Groups reading this %s"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:895
-msgid "site"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:952 includes/bpwpapers-activity.php:1251
-#: includes/bpwpapers-activity.php:1486
-msgid "My Groups"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:987 includes/bpwpapers-activity.php:1267
-#: includes/bpwpapers-activity.php:1517
-msgid "Linked Groups"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:1022 includes/bpwpapers-activity.php:1283
-msgid "Public Groups"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:1054
-msgid "Group Home Page"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:1144
-msgid "Filter comments by group"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:1293
-msgid "Filter"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:1473
-msgid "Post in"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:1888
-msgid "All Recent Activity in your %s"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:1899
-msgid "Recent Activity in Public %s"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:1944
-msgid "Friends Activity in your %s"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:2027
-msgid "Recent Comments in this %s"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:2156
-msgid " &amp; "
-msgstr ""
-
-#: includes/bpwpapers-activity.php:2186
-msgid "%s updated a %s %s in the group %s:"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:2200
-msgid "%s wrote a new %s %s in the group %s:"
-msgstr ""
-
-#: includes/bpwpapers-activity.php:2243
+#: includes/bpwpapers-activity.php:139
 msgid "Working Paper Posts"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:142 includes/bpwpapers-admin.php:143
+#: includes/bpwpapers-activity.php:160
+msgid "Working Paper Comments"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:243 includes/bpwpapers-activity.php:452
+msgid "post"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:281
+msgid " &amp; "
+msgstr ""
+
+#: includes/bpwpapers-activity.php:311
+msgid "%s updated a %s %s in the group %s:"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:325
+msgid "%s wrote a new %s %s in the group %s:"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:445
+msgid "Anonymous"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:464
+msgid "%s left a %s on a %s %s in the group %s:"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:467
+msgid "comment"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:613
+msgid "Join the group to reply"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:725
+msgid "Join the group to leave a comment on %s"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:834
+msgid "Groups reading this %s"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:835
+msgid "site"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:892
+msgid "My Groups"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:927
+msgid "Linked Groups"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:962
+msgid "Public Groups"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:994
+msgid "Group Home Page"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:1051
+msgid "All Recent Activity in your %s"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:1062
+msgid "Recent Activity in Public %s"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:1107
+msgid "Friends Activity in your %s"
+msgstr ""
+
+#: includes/bpwpapers-activity.php:1144
+msgid "Recent Comments in this %s"
+msgstr ""
+
+#: includes/bpwpapers-admin.php:145 includes/bpwpapers-admin.php:146
 msgid "BuddyPress Working Papers"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:303
+#: includes/bpwpapers-admin.php:347
 msgid "You must supply an option to option_exists()"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:323
+#: includes/bpwpapers-admin.php:367
 msgid "You must supply an option to option_get()"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:342
+#: includes/bpwpapers-admin.php:386
 msgid "You must supply an option to option_set()"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:347
+#: includes/bpwpapers-admin.php:391
 msgid "You must supply the option as a string to option_set()"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:365
+#: includes/bpwpapers-admin.php:409
 msgid "You must supply an option to option_delete()"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:382
+#: includes/bpwpapers-admin.php:457
 msgid "You do not have permission to access this page."
 msgstr ""
 
-#: includes/bpwpapers-admin.php:387
+#: includes/bpwpapers-admin.php:462
 msgid "Options saved."
 msgstr ""
 
-#: includes/bpwpapers-admin.php:434 includes/bpwpapers-admin.php:447
+#: includes/bpwpapers-admin.php:485
 msgid "BuddyPress Working Papers Settings"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:449
+#: includes/bpwpapers-admin.php:498
 msgid "Configure how BuddyPress Working Papers behaves."
 msgstr ""
 
-#: includes/bpwpapers-admin.php:455
+#: includes/bpwpapers-admin.php:509
 msgid "Global Options"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:460
+#: includes/bpwpapers-admin.php:514
 msgid "Should comments in public groups be visible to readers who are not members of those groups?"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:470
-msgid "Naming Options"
+#: includes/bpwpapers-admin.php:545
+msgid "Working Paper Component Options"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:475
-msgid "Enable name changes?"
+#: includes/bpwpapers-admin.php:550 includes/bpwpapers-admin.php:606
+msgid "Enable component changes?"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:480
-msgid "Plugin Title"
+#: includes/bpwpapers-admin.php:555 includes/bpwpapers-admin.php:611
+msgid "Component Title"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:485
+#: includes/bpwpapers-admin.php:560
 msgid "Singular name for a Working Paper"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:490
+#: includes/bpwpapers-admin.php:565
 msgid "Plural name for Working Papers"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:495
+#: includes/bpwpapers-admin.php:570
 msgid "Visit Working Paper button text"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:511
+#: includes/bpwpapers-admin.php:601
+msgid "Working Paper Author Component Options"
+msgstr ""
+
+#: includes/bpwpapers-admin.php:616
+msgid "Singular name for a Working Paper Author"
+msgstr ""
+
+#: includes/bpwpapers-admin.php:621
+msgid "Plural name for Working Paper Authors"
+msgstr ""
+
+#: includes/bpwpapers-admin.php:634
+msgid "Developer Testing"
+msgstr ""
+
+#: includes/bpwpapers-admin.php:639
+msgid "Debug"
+msgstr ""
+
+#: includes/bpwpapers-admin.php:642
+msgid "Check this to trigger do_debug()."
+msgstr ""
+
+#: includes/bpwpapers-admin.php:660
 msgid "Save Changes"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:548
+#: includes/bpwpapers-admin.php:697 includes/bpwpapers-admin.php:867
 msgid "Visit Working Paper"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:739
+#: includes/bpwpapers-admin.php:712
+msgid "Working Paper Author"
+msgstr ""
+
+#: includes/bpwpapers-admin.php:989
 msgid "You must supply an option to bpwpapers_option_wpms_exists()"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:760
+#: includes/bpwpapers-admin.php:1010
 msgid "You must supply an option to bpwpapers_site_option_get()"
 msgstr ""
 
-#: includes/bpwpapers-admin.php:777
+#: includes/bpwpapers-admin.php:1027
 msgid "You must supply an option to bpwpapers_site_option_set()"
 msgstr ""
 
-#: includes/bpwpapers-blogs-extension.php:183
+#: includes/bpwpapers-authors.php:95
+msgid "Viewing member %1$s to %2$s (of %3$s active member)"
+msgid_plural "Viewing member %1$s to %2$s (of %3$s active members)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/bpwpapers-authors.php:109
+msgid "Viewing member %1$s to %2$s (of %3$s member with friends)"
+msgid_plural "Viewing member %1$s to %2$s (of %3$s members with friends)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/bpwpapers-authors.php:123
+msgid "Viewing member %1$s to %2$s (of %3$s member online)"
+msgid_plural "Viewing member %1$s to %2$s (of %3$s members online)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/bpwpapers-authors.php:137
+msgid "Viewing member %1$s to %2$s (of %3$s member)"
+msgid_plural "Viewing member %1$s to %2$s (of %3$s members)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/bpwpapers-authors.php:168
+msgid "Search"
+msgstr ""
+
+#: includes/bpwpapers-blogs-extension.php:185
 msgctxt "Blog pagination previous text"
 msgid "&larr;"
 msgstr ""
 
-#: includes/bpwpapers-blogs-extension.php:184
+#: includes/bpwpapers-blogs-extension.php:186
 msgctxt "Blog pagination next text"
 msgid "&rarr;"
 msgstr ""
 
-#: includes/bpwpapers-blogs-extension.php:292
+#: includes/bpwpapers-blogs-extension.php:315
 msgid "working paper"
 msgstr ""
 
-#: includes/bpwpapers-blogs-extension.php:295
+#: includes/bpwpapers-blogs-extension.php:318
 msgid "working papers"
 msgstr ""
 
-#: includes/bpwpapers-blogs-extension.php:299
+#: includes/bpwpapers-blogs-extension.php:322
 msgid "Viewing %1$s %2$s to %3$s (of %4$s %5$s)"
 msgstr ""
 #. Plugin Name of the plugin/theme
