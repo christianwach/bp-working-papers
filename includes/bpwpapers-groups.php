@@ -13,6 +13,120 @@ NOTES
 
 
 /**
+ * Parse the query
+ * 
+ * @param bool $has_groups Whether or not this query has found groups
+ * @param object $groups_template BuddyPress groups template object
+ * @param array $params Array of arguments with which the query was configured
+ * @return bool $has_groups Whether or not our modified query has found groups
+ */
+function bpwpapers_has_groups( $has_groups, $groups_template, $params ) {
+	
+	/*
+	print_r( array(
+		'has_groups' => $has_groups, 
+		'groups_template' => $groups_template, 
+		'params' => $params, 
+	) ); die();
+	*/
+	
+	// do we have our exclude array?
+	if ( empty( $params['exclude'] ) ) {
+	
+		// always exclude working paper groups
+		$params['exclude'] = bpwpapers_get_all_groups();
+		
+		// remove this filter to avoid recursion
+		remove_filter( 'bp_has_groups', 'bpwpapers_has_groups', 20 );
+		
+		// re-query with our params
+		$has_groups = bp_has_groups( $params );
+		
+		global $groups_template;
+	
+		/*
+		print_r( array(
+			'params' => $params,
+			'groups_template' => $groups_template,
+		) ); die();
+		*/
+		
+	}
+	
+	// fallback
+	return $has_groups;
+	
+}
+
+// add filter for the above
+add_filter( 'bp_has_groups', 'bpwpapers_has_groups', 20, 3 );
+
+
+
+/**
+ * Get all BuddyPress Groups that are working paper groups
+ *
+ * @return array $groups The full array of working paper groups
+ */
+function bpwpapers_get_all_groups() {
+	
+	// init return
+	$groups = array();
+	
+	// remove this filter to avoid recursion
+	remove_filter( 'bp_has_groups', 'bpwpapers_has_groups', 20 );
+	
+	// init with unlikely value so we get all
+	$params = array(
+		'per_page' => 100000,
+	);
+	
+	// construct meta query
+	$params['meta_query'] = array(
+		'relation' => 'AND',
+		array(
+			'key' => BP_WORKING_PAPERS_OPTION,
+			'value' => 1,
+			'type' => 'numeric',
+			'compare' => '>'
+		)
+	);
+	
+	// get our groups
+	$has_groups = bp_has_groups( $params );
+	
+	global $groups_template;
+	
+	// did we get any?
+	if ( $has_groups ) {
+		foreach( $groups_template->groups AS $group ) {
+			
+			// add it to our array
+			$groups[] = $group->id;
+			
+		}
+	}
+	
+	// add filter back in
+	add_filter( 'bp_has_groups', 'bpwpapers_has_groups', 20, 3 );
+	
+	/*
+	print_r( array(
+		'params' => $params,
+		'has_groups' => $has_groups,
+		'groups_template' => $groups_template,
+		'groups' => $groups,
+	) ); die();
+	*/
+	
+	// --<
+	return $groups;
+	
+}
+
+
+	
+/**
  * Creates a BuddyPress Group given a title and description
  *
  * @param string $title the title of the BP group
@@ -83,12 +197,10 @@ function bpwpapers_group_deleted( $group_id ) {
 	
 	// our option will be deleted by groups_delete_group()
 
-	// TODO: delete the blog
-
 }
 	
 // sever links just before group is deleted, while meta still exists
-add_action( 'groups_before_delete_group', 'bpwpapers_group_deleted', 10, 1 );
+//add_action( 'groups_before_delete_group', 'bpwpapers_group_deleted', 10, 1 );
 
 
 
