@@ -391,6 +391,7 @@ function bpwpapers_signup_blog( $blogname = '', $blog_title = '', $errors = '' )
 
 	<input type="hidden" id="blog_public_on" name="blog_public" value="1" />
 	<input type="hidden" value="1" id="cpmu-new-blog" name="cpmu-new-blog" />
+	<input type="hidden" value="1" id="bpwpapers-new-blog" name="bpwpapers-new-blog" />
 
 	<?php
 	

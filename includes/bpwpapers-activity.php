@@ -57,11 +57,11 @@ class BP_Working_Papers_Activity {
 		// hooks that always need to be present...
 		add_action( 'bp_setup_globals', array( $this, 'add_filter_options' ) );
 		
+		// add custom site activity (outside the working paper check, since there's no group yet)
+		add_action( 'bp_activity_before_save', array( $this, 'custom_site_activity' ), 10, 1 );
+		
 		// if the current blog is a working paper...
 		if ( bpwpapers_is_working_paper( get_current_blog_id() ) ) {
-			
-			// add custom site activity
-			//add_action( 'bp_activity_before_save', array( $this, 'custom_site_activity' ), 10, 1 );
 			
 			// add custom post activity
 			add_action( 'bp_activity_before_save', array( $this, 'custom_post_activity' ), 10, 1 );
@@ -115,28 +115,57 @@ class BP_Working_Papers_Activity {
 	 */
 	function add_filter_options() {
 		
+		// add our sites filter
+		add_action( 'bp_activity_filter_options', array( $this, 'filter_option_sites' ) );
+		add_action( 'bp_member_activity_filter_options', array( $this, 'filter_option_sites' ) );
+		
 		// add our posts filter
-		add_action( 'bp_activity_filter_options', array( $this, 'posts_filter_option' ) );
-		if ( bpwpapers_group_has_working_paper() ) {
-			add_action( 'bp_group_activity_filter_options', array( $this, 'posts_filter_option' ) );
-		}
-		add_action( 'bp_member_activity_filter_options', array( $this, 'posts_filter_option' ) );
+		add_action( 'bp_activity_filter_options', array( $this, 'filter_option_posts' ) );
+		add_action( 'bp_member_activity_filter_options', array( $this, 'filter_option_posts' ) );
 		
 		// add our comments filter
-		add_action( 'bp_activity_filter_options', array( $this, 'comments_filter_option' ) );
+		add_action( 'bp_activity_filter_options', array( $this, 'filter_option_comments' ) );
+		add_action( 'bp_member_activity_filter_options', array( $this, 'filter_option_comments' ) );
+		
+		// optionally add post and comment filters to groups that have working papers
 		if ( bpwpapers_group_has_working_paper() ) {
-			add_action( 'bp_group_activity_filter_options', array( $this, 'comments_filter_option' ) );
+			add_action( 'bp_group_activity_filter_options', array( $this, 'filter_option_posts' ) );
+			add_action( 'bp_group_activity_filter_options', array( $this, 'filter_option_comments' ) );
 		}
-		add_action( 'bp_member_activity_filter_options', array( $this, 'comments_filter_option' ) );
 		
 	}
 	
 	
 	
 	/** 
-	 * Add a filter option to the filter select box on group activity pages
+	 * Add a filter option to the filter select box on activity pages
+	 *
+	 * @return void
 	 */
-	function posts_filter_option( $slug ) {
+	function filter_option_sites( $slug ) {
+		
+		// default name, but allow plugins to override
+		$post_name = apply_filters( 
+			'bpwpapers_site_name', 
+			__( 'New Working Papers', 'bpwpapers' )
+		);
+		
+		// construct option
+		$option = '<option value="new_working_paper">'.$post_name.'</option>'."\n";
+		
+		// print
+		echo $option;
+
+	}
+	
+	
+	
+	/** 
+	 * Add a filter option to the filter select box on activity pages
+	 *
+	 * @return void
+	 */
+	function filter_option_posts( $slug ) {
 		
 		// default name, but allow plugins to override
 		$post_name = apply_filters( 
@@ -155,9 +184,11 @@ class BP_Working_Papers_Activity {
 	
 	
 	/**
-	 * Add a filter option to the filter select box on group activity pages
+	 * Add a filter option to the filter select box on activity pages
+	 *
+	 * @return void
 	 */
-	function comments_filter_option() { 
+	function filter_option_comments() { 
 		
 		// default name, but allow plugins to override
 		$comment_name = apply_filters( 
@@ -182,7 +213,116 @@ class BP_Working_Papers_Activity {
 	/**
 	 * Record the blog post activity for the group
 	 * 
-	 * @see: bp_groupblog_set_group_to_post_activity( $activity )
+	 * @see bp_blogs_record_blog()
+	 * @see bp_blogs_record_activity()
+	 * 
+	 * @return object $activity The new activity item
+	 */
+	function custom_site_activity( $activity ) {
+		
+		/*
+		trigger_error( print_r( array( 
+			'site activity BEFORE' => $activity,
+			'POST' => $_POST, 
+		), true ), E_USER_ERROR ); //die();
+		//print_r( array( 'site activity BEFORE' => $activity ) ); //die();
+		*/
+		
+		// only on new blog posts
+		if ( ( $activity->type != 'new_blog' ) ) return $activity;
+		
+		// only on working papers as they are being created
+		if ( ! isset( $_POST['bpwpapers-new-blog'] ) ) return $activity;
+		if ( $_POST['bpwpapers-new-blog'] != 1 ) return $activity;
+		
+		// set activity type
+		$type = 'new_working_paper';
+		
+		// get blog ID
+		$blog_id = $activity->item_id;
+
+		// see if we already have the modified activity for this blog (unlikely)
+		$id = bp_activity_get_activity_id( array(
+	
+			'user_id' => $activity->user_id,
+			'type' => $type,
+			'item_id' => $blog_id
+		
+		) );
+
+		// if we don't find a modified item...
+		if ( !$id ) {
+	
+			// see if we have an unmodified activity item (also unlikely)
+			$id = bp_activity_get_activity_id( array(
+		
+				'user_id' => $activity->user_id,
+				'type' => $activity->type,
+				'item_id' => $activity->item_id
+			
+			) );
+		
+		}
+
+		// If we found an activity for this blog then overwrite that to avoid 
+		// having multiple activities for every blog edit
+		if ( $id ) { $activity->id = $id; }
+		
+		// get site name
+		$name = get_blog_option( $blog_id, 'blogname' );
+	
+		// if we're replacing an item, show different message...
+		if ( $id ) {
+		
+			// replace the necessary values to display in group activity stream
+			$activity->action = sprintf( 
+				
+				__( '%s updated the %s %s', 'bpwpapers' ), 
+				bp_core_get_userlink( $activity->user_id ), 
+				strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) ),
+				'<a href="' . get_home_url( $blog_id ) . '">' . esc_attr( $name ) . '</a>'
+				
+			);
+		
+		} else {
+		
+			// replace the necessary values to display in group activity stream
+			$activity->action = sprintf( 
+				
+				__( '%s created the %s %s', 'bpwpapers' ), 
+				bp_core_get_userlink( $activity->user_id ), 
+				strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) ),
+				'<a href="' . get_home_url( $blog_id ) . '">' . esc_attr( $name ) . '</a>'
+				
+			);
+			
+		}
+		
+		// set to relevant custom type
+		$activity->type = $type;
+		
+		/*
+		trigger_error( print_r( array( 
+			'site activity AFTER' => $activity,
+			'POST' => $_POST, 
+		), true ), E_USER_ERROR ); //die();
+		//print_r( array( 'site activity AFTER' => $activity ) ); //die();
+		*/
+		
+		// prevent from firing again
+		remove_action( 'bp_activity_before_save', array( $this, 'custom_site_activity' ) );
+		
+		// --<
+		return $activity;
+	}
+	
+	
+	
+	/**
+	 * Record the blog post activity for the group
+	 * 
+	 * @see bp_groupblog_set_group_to_post_activity( $activity )
+	 * 
 	 * @return object $activity The new activity item
 	 */
 	function custom_post_activity( $activity ) {
@@ -356,7 +496,7 @@ class BP_Working_Papers_Activity {
 		//print_r( array( 'post activity AFTER' => $activity ) ); die();
 		
 		// prevent from firing again
-		remove_action( 'bp_activity_before_save', 'bpwpapers_group_custom_post_activity' );
+		remove_action( 'bp_activity_before_save', array( $this, 'custom_post_activity' ) );
 		
 		// --<
 		return $activity;
@@ -370,7 +510,8 @@ class BP_Working_Papers_Activity {
 	 * site, then this method will be dropped in favour of the one internal to
 	 * CommentPress, because CommentPress needs to know the subpage of a comment
 	 * 
-	 * @see: bp_groupblog_set_group_to_post_activity()
+	 * @see bp_groupblog_set_group_to_post_activity()
+	 * 
 	 * @return object $activity The new activity item
 	 */
 	function custom_comment_activity( $activity ) {
@@ -550,6 +691,7 @@ class BP_Working_Papers_Activity {
 	 * 
 	 * @param int $approved the comment status
 	 * @param array $commentdata the comment data
+	 * @return bool $approved True if un-moderated commenting is allowed, false otherwise
 	 */
 	function check_comment_approval( $approved, $commentdata ) {
 	
@@ -778,6 +920,8 @@ class BP_Working_Papers_Activity {
 	
 	/** 
 	 * Adds links to the Special Pages menu in CommentPress themes
+	 * 
+	 * @return void
 	 */
 	function get_group_navigation_links() {
 	
@@ -1036,6 +1180,8 @@ class BP_Working_Papers_Activity {
 	
 	/** 
 	 * Show working papers activity in sidebar
+	 * 
+	 * @return void
 	 */
 	function get_activity_sidebar_section() {
 	
@@ -1164,6 +1310,8 @@ class BP_Working_Papers_Activity {
 	
 	/** 
 	 * Show working papers activity in sidebar
+	 * 
+	 * @return void
 	 */
 	function get_activity_item() {
 		
