@@ -542,7 +542,7 @@ add_action( 'delete_blog', 'bpwpapers_blog_deleted', 10, 1 );
 
 
 /**
- * Set comment registration
+ * Configure blog options
  *
  * @param int $blog_id the numeric ID of the blog
  * @return void
@@ -570,6 +570,13 @@ function bpwpapers_configure_blog_options( $blog_id ) {
 	// update option
 	update_option( 'comment_registration', $anon_comments );
 	
+	// set new, more descriptive tagline
+	update_option( 'blogdescription', sprintf(
+		__( 'A %1$s by %2$s', 'bpwpapers' ),
+		apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ),
+		bp_get_loggedin_user_fullname()
+	) );
+	
 	// switch back
 	restore_current_blog();
 	
@@ -578,7 +585,7 @@ function bpwpapers_configure_blog_options( $blog_id ) {
 
 
 /**
- * Unset comment registration
+ * Unset blog options
  *
  * @param int $blog_id the numeric ID of the blog
  * @return void
