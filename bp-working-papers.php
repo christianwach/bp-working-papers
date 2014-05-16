@@ -67,7 +67,8 @@ class BP_Working_Papers {
 	
 	
 	/** 
-	 * @description: initialises this object
+	 * Initialises this object
+	 * 
 	 * @return object
 	 */
 	function __construct() {
@@ -93,13 +94,14 @@ class BP_Working_Papers {
 	
 	
 	
-	//##########################################################################
+	//==========================================================================
 	
 	
 	
 	/**
-	 * @description: actions to perform on plugin activation
-	 * @return nothing
+	 * Actions to perform on plugin activation
+	 * 
+	 * @return void
 	 */
 	public function activate() {
 	
@@ -111,8 +113,9 @@ class BP_Working_Papers {
 	
 	
 	/**
-	 * @description: actions to perform on plugin deactivation (NOT deletion)
-	 * @return nothing
+	 * Actions to perform on plugin deactivation (NOT deletion)
+	 * 
+	 * @return void
 	 */
 	public function deactivate() {
 		
@@ -123,14 +126,17 @@ class BP_Working_Papers {
 	
 	
 		
-	//##########################################################################
+	//==========================================================================
 	
 	
 	
 	/** 
-	 * @description: load translation files
+	 * Load translation files
+	 * 
 	 * A good reference on how to implement translation in WordPress:
 	 * http://ottopress.com/2012/internationalization-youre-probably-doing-it-wrong/
+	 * 
+	 * @return void
 	 */
 	public function enable_translation() {
 	
@@ -153,8 +159,9 @@ class BP_Working_Papers {
 	
 	
 	/**
-	 * @description: do stuff on plugin init
-	 * @return nothing
+	 * Do stuff on plugin init
+	 * 
+	 * @return void
 	 */
 	public function initialise() {
 		
@@ -190,8 +197,9 @@ class BP_Working_Papers {
 	
 		
 	/**
-	 * @description: register hooks on plugin init
-	 * @return nothing
+	 * Register hooks on plugin init
+	 * 
+	 * @return void
 	 */
 	public function register_hooks() {
 	
@@ -204,8 +212,9 @@ class BP_Working_Papers {
 	
 		
 	/**
-	 * @description: register theme hooks on bp include
-	 * @return nothing
+	 * Register theme hooks on bp include
+	 * 
+	 * @return void
 	 */
 	public function register_theme_hooks() {
 	
@@ -217,8 +226,9 @@ class BP_Working_Papers {
 	
 	
 	/**
-	 * @description: add our templates to the theme stack
-	 * @return nothing
+	 * Add our templates to the theme stack
+	 * 
+	 * @return void
 	 */
 	public function theme_compat() {
 	
@@ -229,11 +239,11 @@ class BP_Working_Papers {
 	
 	
 	
-	//##########################################################################
-	
-	
-	
 } // class ends
+
+
+
+//==============================================================================
 
 
 
@@ -253,8 +263,9 @@ register_deactivation_hook( __FILE__, array( $bp_working_papers, 'deactivate' ) 
 
 
 /**
- * @description: returns the path to our templates directory
- * @return str $path path to this plugin's templates directory
+ * Returns the path to our templates directory
+ * 
+ * @return string $path Path to this plugin's templates directory
  */
 function bpwpapers_templates_dir() {
 	

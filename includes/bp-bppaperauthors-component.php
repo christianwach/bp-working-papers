@@ -20,6 +20,8 @@ class BP_Working_Papers_Author_Component extends BP_Component {
 	
 	/**
 	 * Start the component creation process.
+	 * 
+	 * @return void
 	 */
 	function __construct() {
 		
@@ -57,6 +59,8 @@ class BP_Working_Papers_Author_Component extends BP_Component {
 	
 	/**
 	 * Include our component's files
+	 * 
+	 * @return void
 	 */
 	public function includes() {
 		
@@ -72,6 +76,7 @@ class BP_Working_Papers_Author_Component extends BP_Component {
 	 *
 	 * @see BP_Component::setup_globals() for description of parameters.
 	 * @param array $args See {@link BP_Component::setup_globals()}.
+	 * @return void
 	 */
 	public function setup_globals( $args = array() ) {
 		
@@ -108,6 +113,10 @@ buddypress()->bppaperauthors = new BP_Working_Papers_Author_Component();
 
 
 
+//==============================================================================
+
+
+
 /**
  * Check whether the current page is part of the BuddyPress Working Papers component.
  *
@@ -132,6 +141,8 @@ function bp_is_bppaperauthors_component() {
 
 /**
  * A custom load template filter for this component
+ * 
+ * @return string $found_template Path to the found template
  */
 function bppaperauthors_load_template_filter( $found_template, $templates ) {
 	
@@ -173,6 +184,8 @@ add_filter( 'bp_located_template', 'bppaperauthors_load_template_filter', 10, 2 
 
 /** 
  * Load our loop when requested
+ * 
+ * @return void
  */
 function bppaperauthors_object_template_loader() {
 	
@@ -225,6 +238,7 @@ add_action( 'wp_ajax_nopriv_bppaperauthors_filter', 'bppaperauthors_object_templ
 
 /**
  * Output the working paper authors component root slug.
+ * 
  * @uses bppaperauthors_get_root_slug()
  */
 function bppaperauthors_root_slug() {
@@ -233,6 +247,7 @@ function bppaperauthors_root_slug() {
 
 	/**
 	 * Return the working paper authors component root slug.
+	 * 
 	 * @return string The 'authors' root slug.
 	 */
 	function bppaperauthors_get_root_slug() {

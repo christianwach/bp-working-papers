@@ -25,6 +25,8 @@ class BP_Working_Papers_Theme_Compat {
 	
 	/**
 	 * Set up theme compatibility for the BuddyPress Working Papers component.
+	 * 
+	 * @return void
 	 */
 	public function __construct() {
 		
@@ -37,6 +39,8 @@ class BP_Working_Papers_Theme_Compat {
 	
 	/**
 	 * Are we looking at something that needs BuddyPress Working Papers theme compatability?
+	 * 
+	 * @return void
 	 */
 	public function is_bpwpapers() {
 		
@@ -92,7 +96,7 @@ class BP_Working_Papers_Theme_Compat {
 	/**
 	 * Update the global $post with directory data.
 	 *
-	 * @since BuddyPress (1.7.0)
+	 * @return void
 	 */
 	public function directory_dummy_post() {
 
@@ -118,6 +122,8 @@ class BP_Working_Papers_Theme_Compat {
 	
 	/**
 	 * Filter the_content with the BuddyPress Working Papers index template part.
+	 * 
+	 * @return string $content Buffered content
 	 */
 	public function directory_content() {
 		
@@ -137,8 +143,14 @@ new BP_Working_Papers_Theme_Compat();
 
 
 
+//==============================================================================
+
+
+
 /**
  * Load the top-level BuddyPress Working Papers directory.
+ * 
+ * @return void
  */
 function bpwpapers_screen_index() {
 	
@@ -167,6 +179,8 @@ add_action( 'bp_screens', 'bpwpapers_screen_index', 20 );
 
 /**
  * Load the BuddyPress Working Papers create screen.
+ * 
+ * @return void
  */
 function bpwpapers_screen_create_a_blog() {
 
@@ -190,6 +204,8 @@ add_action( 'bp_screens', 'bpwpapers_screen_create_a_blog', 3 );
 
 /**
  * Load the BuddyPress Working Papers Members screen.
+ * 
+ * @return void
  */
 function bpwpapers_screen_member() {
 
@@ -388,6 +404,7 @@ function bpwpapers_signup_blog( $blogname = '', $blog_title = '', $errors = '' )
 /**
  * Validate the BuddyPress Working Papers create form content
  * copied from bp_blogs_validate_blog_signup and amended
+ * 
  * @return bool True if successful, false otherwise
  */
 function bpwpapers_validate_signup() {
@@ -452,7 +469,8 @@ function bpwpapers_validate_signup() {
 /**
  * Confirm BuddyPress Working Papers creation
  * copied from bp_blogs_confirm_blog_signup and amended
- * @return nothing
+ * 
+ * @return void
  */
 function bpwpapers_confirm_signup( $domain, $path, $blog_title, $user_name, $user_email = '', $meta = '' ) {
 
@@ -514,8 +532,7 @@ add_action( 'bp_directory_blogs_actions',  'bpwpapers_visit_group_button', 20 );
 	/**
 	 * Return button for visiting a group in the working papers loop.
 	 *
-	 * @see BP_Button for a complete description of arguments and return
-	 *      value.
+	 * @see BP_Button for a complete description of arguments and return value.
 	 *
 	 * @param array $args {
 	 *     Arguments are listed below, with their default values. For a

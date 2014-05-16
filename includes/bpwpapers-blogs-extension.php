@@ -39,8 +39,9 @@ class BP_Working_Papers_Blogs_Template extends BP_Blogs_Template {
 	
 	
 	/** 
-	 * @description: initialises this object
-	 * @return nothing
+	 * Initialises this object
+	 * 
+	 * @return void
 	 */
 	function __construct( $type, $page, $per_page, $max, $user_id, $search_terms, $page_arg ) {
 		
@@ -108,7 +109,8 @@ class BP_Working_Papers_Blogs_Template extends BP_Blogs_Template {
 	
 	
 	/** 
-	 * @description: filter blogs by their group associations
+	 * Filter blogs by their group associations
+	 * 
 	 * @param array $blogs an array of blogs
 	 * @return array filtered blogs
 	 */
@@ -165,7 +167,9 @@ class BP_Working_Papers_Blogs_Template extends BP_Blogs_Template {
 
 
 	/** 
-	 * @description: recalculate properties
+	 * Recalculate properties
+	 * 
+	 * @return void
 	 */
 	protected function _recalculate() {
 
@@ -195,7 +199,9 @@ class BP_Working_Papers_Blogs_Template extends BP_Blogs_Template {
 
 
 	/**
-	 * @description calculate true total of filtered blogs
+	 * Calculate true total of filtered blogs
+	 * 
+	 * @return void
 	 */
 	protected function _calculate_true_total( $user_id ) {
 	
@@ -237,9 +243,14 @@ class BP_Working_Papers_Blogs_Template extends BP_Blogs_Template {
 
 
 
+//==============================================================================
+
+
+
 /** 
- * @description: group-aware modification of bp_has_blogs
- * @return boolean true when there are blogs, false when not
+ * Group-aware modification of bp_has_blogs
+ * 
+ * @return bool True when there are blogs, false when not
  */
 function bpwpapers_has_blogs( $args = '' ) {
 	global $blogs_template;
@@ -301,7 +312,7 @@ Functions which may only be used in the loop
 
 
 /** 
- * @description: copied from bp_blogs_pagination_count() and amended
+ * Copied from bp_blogs_pagination_count() and amended
  */
 function bpwpapers_blogs_pagination_count() {
 	global $blogs_template;
@@ -332,7 +343,7 @@ function bpwpapers_blogs_pagination_count() {
 
 
 /**
- * @description: get the total number of working papers being tracked.
+ * Get the total number of working papers being tracked.
  * copied from bp_total_blogs() and amended
  *
  * @return int $count Total blog count.
@@ -371,7 +382,8 @@ function bpwpapers_total_paper_count() {
 }
 
 	/**
-	 * Return the total number of working papers on the site.
+	 * Return the total number of working papers on the site
+	 * 
 	 * @return int Total number of working papers.
 	 */
 	function bpwpapers_get_total_paper_count() {
@@ -428,12 +440,169 @@ function bpwpapers_total_paper_count_for_user( $user_id = 0 ) {
 
 	/**
 	 * Return the total number of working papers for this user
+	 * 
 	 * @return int Total number of working papers for this user
 	 */
 	function bpwpapers_get_total_paper_count_for_user( $user_id = 0 ) {
 		return apply_filters( 'bpwpapers_get_total_paper_count_for_user', bpwpapers_total_papers_for_user( $user_id ) );
 	}
 	add_filter( 'bpwpapers_get_total_paper_count_for_user', 'bp_core_number_format' );
+
+
+
+//==============================================================================
+	
+	
+	
+/** 
+ * Check if blog is a groupblog
+ *
+ * @param int $blog_id the numeric ID of the blog
+ * @return bool $return True if blog is a groupblog, false otherwise
+ */
+function bpwpapers_is_groupblog( $blog_id ) {
+
+	// init return
+	$return = false;
+
+	// do we have groupblogs enabled?
+	if ( function_exists( 'get_groupblog_group_id' ) ) {
+	
+		// yes, get group id
+		$group_id = get_groupblog_group_id( $blog_id );
+		
+		// is this blog a groupblog? 
+		if ( is_numeric( $group_id ) ) { $return = true; }
+		
+	}
+	
+	// --<
+	return $return;
+	
+}
+
+
+
+/** 
+ * Check if blog is a working paper
+ *
+ * @param int $blog_id the numeric ID of the blog
+ * @return bool $return True if blog is a working paper, false otherwise
+ */
+function bpwpapers_is_working_paper( $blog_id ) {
+
+	// init return
+	$return = false;
+
+	// get group for this site
+	$group_id = bpwpapers_get_group_by_blog_id( $blog_id );
+	
+	// if we have a group ID, then it is
+	if ( $group_id !== false ) { 
+		$return = true; 
+	}
+	
+	// --<
+	return $return;
+	
+}
+
+
+
+/**
+ * Sever link and delete group when a site gets deleted
+ *
+ * @param int $blog_id the numeric ID of the blog
+ * @return void
+ */
+function bpwpapers_blog_deleted( $blog_id, $drop = false ) {
+
+	// get existing group ID
+	$group_id = bpwpapers_get_group_by_blog_id( $blog_id );
+
+	// sanity check
+	if ( is_numeric( $group_id ) ) {
+	
+		// delete group meta
+		bpwpapers_remove_blog_from_group( $group_id, $blog_id );
+		
+	}
+	
+	// delete the site option
+	delete_site_option( BP_WORKING_PAPERS_PREFIX . $blog_id );
+	
+	// TODO: delete the group
+
+}
+
+// sever links when site deleted
+add_action( 'delete_blog', 'bpwpapers_blog_deleted', 10, 1 );
+	
+
+
+/**
+ * Set comment registration
+ *
+ * @param int $blog_id the numeric ID of the blog
+ * @return void
+ */
+function bpwpapers_configure_blog_options( $blog_id ) {
+
+	// kick out if already a working paper
+	if ( bpwpapers_is_working_paper( $blog_id ) ) return;
+
+	// go there
+	switch_to_blog( $blog_id );
+	
+	// get existing comment_registration option
+	$existing_option = get_option( 'comment_registration', 0 );
+	
+	// store it for later
+	add_option( 'bpwpapers_saved_comment_registration', $existing_option );
+
+	// anonymous commenting - off by default
+	$anon_comments = apply_filters( 
+		'bpwpapers_require_comment_registration', 
+		0 // disallow
+	);
+	
+	// update option
+	update_option( 'comment_registration', $anon_comments );
+	
+	// switch back
+	restore_current_blog();
+	
+}
+
+
+
+/**
+ * Unset comment registration
+ *
+ * @param int $blog_id the numeric ID of the blog
+ * @return void
+ */
+function bpwpapers_reset_blog_options( $blog_id ) {
+
+	// kick out if still a working paper
+	if ( bpwpapers_is_working_paper( $blog_id ) ) return;
+
+	// go there
+	switch_to_blog( $blog_id );
+
+	// get saved comment_registration option
+	$previous_option = get_option( 'bpwpapers_saved_comment_registration', 0 );
+	
+	// remove our saved one
+	delete_option( 'bpwpapers_saved_comment_registration' );
+
+	// update option
+	update_option( 'comment_registration', $previous_option );
+	
+	// switch back
+	restore_current_blog();
+	
+}
 
 
 

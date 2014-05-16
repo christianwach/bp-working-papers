@@ -50,7 +50,7 @@ class BP_Working_Papers_Activity {
 	/**
 	 * Register hooks for this class
 	 * 
-	 * @return nothing
+	 * @return void
 	 */
 	public function register_hooks() {
 	
@@ -59,6 +59,9 @@ class BP_Working_Papers_Activity {
 		
 		// if the current blog is a working paper...
 		if ( bpwpapers_is_working_paper( get_current_blog_id() ) ) {
+			
+			// add custom site activity
+			//add_action( 'bp_activity_before_save', array( $this, 'custom_site_activity' ), 10, 1 );
 			
 			// add custom post activity
 			add_action( 'bp_activity_before_save', array( $this, 'custom_post_activity' ), 10, 1 );
@@ -101,12 +104,14 @@ class BP_Working_Papers_Activity {
 	
 	
 		
-	//##########################################################################
+	//==========================================================================
 	
 	
 	
 	/**
 	 * Add actions for filter options on group activity stream
+	 * 
+	 * @return void
 	 */
 	function add_filter_options() {
 		
@@ -170,14 +175,15 @@ class BP_Working_Papers_Activity {
 	
 	
 	
-	//##########################################################################
+	//==========================================================================
 	
 	
 	
 	/**
 	 * Record the blog post activity for the group
 	 * 
-	 * @see: bp_groupblog_set_group_to_post_activity ( $activity )
+	 * @see: bp_groupblog_set_group_to_post_activity( $activity )
+	 * @return object $activity The new activity item
 	 */
 	function custom_post_activity( $activity ) {
 	
@@ -365,6 +371,7 @@ class BP_Working_Papers_Activity {
 	 * CommentPress, because CommentPress needs to know the subpage of a comment
 	 * 
 	 * @see: bp_groupblog_set_group_to_post_activity()
+	 * @return object $activity The new activity item
 	 */
 	function custom_comment_activity( $activity ) {
 	
@@ -585,6 +592,7 @@ class BP_Working_Papers_Activity {
 	 * @param array $args the setup array
 	 * @param object $comment the comment
 	 * @param object $post the post
+	 * @return string $link The link markup
 	 */
 	function override_reply_to_link( $link, $args, $comment, $post ) {
 	
@@ -627,7 +635,7 @@ class BP_Working_Papers_Activity {
 	 * Decides whether or not to show comment form
 	 * 
 	 * @param bool $show whether or not to show comment form
-	 * @return bool $show Show the comment form
+	 * @return bool $show True if we should show the comment form, false otherwise
 	 */
 	function show_comment_form( $show ) {
 	
@@ -762,14 +770,14 @@ class BP_Working_Papers_Activity {
 	
 	
 	
-	//##########################################################################
+	//==========================================================================
 	// Methods below are yet to do...
-	//##########################################################################
+	//==========================================================================
 	
 	
 	
 	/** 
-	 * @description: adds links to the Special Pages menu in CommentPress themes
+	 * Adds links to the Special Pages menu in CommentPress themes
 	 */
 	function get_group_navigation_links() {
 	
@@ -1027,7 +1035,7 @@ class BP_Working_Papers_Activity {
 	
 	
 	/** 
-	 * @description: show working papers activity in sidebar
+	 * Show working papers activity in sidebar
 	 */
 	function get_activity_sidebar_section() {
 	
@@ -1135,7 +1143,9 @@ class BP_Working_Papers_Activity {
 	
 	
 	/** 
-	 * @description: override the title of the Recent Posts section in the activity sidebar
+	 * Override the title of the Recent Posts section in the activity sidebar
+	 * 
+	 * @return string $title The title of the activity sidebar section
 	 */
 	function get_activity_sidebar_recent_title() {
 	
@@ -1153,7 +1163,7 @@ class BP_Working_Papers_Activity {
 	
 	
 	/** 
-	 * @description: show working papers activity in sidebar
+	 * Show working papers activity in sidebar
 	 */
 	function get_activity_item() {
 		

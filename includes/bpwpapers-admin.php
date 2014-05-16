@@ -51,7 +51,7 @@ class BP_Group_Sites_Admin {
 	
 	/**
 	 * @description: register hooks on plugin init
-	 * @return nothing
+	 * @return void
 	 */
 	public function register_hooks() {
 	
@@ -69,7 +69,7 @@ class BP_Group_Sites_Admin {
 		
 	/**
 	 * @description: actions to perform on plugin activation
-	 * @return nothing
+	 * @return void
 	 */
 	public function activate() {
 	
@@ -115,7 +115,7 @@ class BP_Group_Sites_Admin {
 	
 	/**
 	 * @description: actions to perform on plugin deactivation (NOT deletion)
-	 * @return nothing
+	 * @return void
 	 */
 	public function deactivate() {
 		
@@ -313,8 +313,6 @@ class BP_Group_Sites_Admin {
 		
 		// ---------------------------------------------------------------------
 		
-		
-		
 		// save
 		$this->options_save();
 		
@@ -418,7 +416,7 @@ class BP_Group_Sites_Admin {
 	
 	/** 
 	 * General debugging utility
-	 * @return nothing
+	 * @return void
 	 */
 	public function do_debug() {
 		
@@ -889,7 +887,7 @@ add_filter( 'bp_get_blogs_visit_blog_button', 'bpwpapers_get_visit_site_button',
 
 
 
-// -----------------------------------------------------------------------------
+//==============================================================================
 
 
 

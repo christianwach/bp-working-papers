@@ -25,6 +25,8 @@ class BP_Working_Paper_Authors_Theme_Compat {
 	
 	/**
 	 * Set up theme compatibility for the BuddyPress Working Papers component.
+	 * 
+	 * @return void
 	 */
 	public function __construct() {
 		
@@ -37,6 +39,8 @@ class BP_Working_Paper_Authors_Theme_Compat {
 	
 	/**
 	 * Are we looking at something that needs BuddyPress Working Paper Authors theme compatability?
+	 * 
+	 * @return void
 	 */
 	public function is_bppaperauthors() {
 		
@@ -92,7 +96,7 @@ class BP_Working_Paper_Authors_Theme_Compat {
 	/**
 	 * Update the global $post with directory data.
 	 *
-	 * @since BuddyPress (1.7.0)
+	 * @return void
 	 */
 	public function directory_dummy_post() {
 
@@ -118,6 +122,8 @@ class BP_Working_Paper_Authors_Theme_Compat {
 	
 	/**
 	 * Filter the_content with the BuddyPress Working Papers index template part.
+	 * 
+	 * @return string $content Buffered content
 	 */
 	public function directory_content() {
 		
@@ -137,8 +143,14 @@ new BP_Working_Papers_Theme_Compat();
 
 
 
+//==============================================================================
+
+
+
 /**
  * Load the top-level BuddyPress Working Papers directory.
+ * 
+ * @return void
  */
 function bppaperauthors_screen_index() {
 	

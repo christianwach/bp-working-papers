@@ -17,7 +17,9 @@ working paper authorship, whilst retaining useful stuff like pagination.
 
 /**
  * Parse the query
+ * 
  * @param object $query_obj Query object passed by reference
+ * @return array $retval Array of WordPress users
  */
 function bpwpapers_authors_core_get_users( $retval, $params ) {
 	
@@ -76,6 +78,8 @@ function bpwpapers_members_pagination_count() {
 	/**
 	 * Get pagination count
 	 * copied from bp_get_members_pagination_count() and adapted
+	 * 
+	 * @return string $pag The pagination text including number of members
 	 */
 	function bpwpapers_get_members_pagination_count() {
 		global $members_template;
@@ -174,6 +178,10 @@ function bppaperauthors_directory_members_search_form() {
 
 
 
+//==============================================================================
+
+
+
 /** 
  * Get all working paper author IDs
  *
@@ -230,6 +238,7 @@ function bpwpapers_is_author( $author_id ) {
  * @param int $author_id the numeric ID of the user
  * @param int $blog_id the numeric ID of the working paper site
  * @param bool $save Optionally pass 'false' to override saving the option
+ * @return void
  */
 function bpwpapers_grant_authorship( $author_id, $blog_id, $save = true ) {
 
@@ -273,6 +282,7 @@ function bpwpapers_grant_authorship( $author_id, $blog_id, $save = true ) {
  * @param int $author_id the numeric ID of the user
  * @param int $blog_id the numeric ID of the working paper site
  * @param bool $save Optionally pass 'false' to override saving the option
+ * @return void
  */
 function bpwpapers_revoke_authorship( $author_id, $blog_id, $save = true ) {
 

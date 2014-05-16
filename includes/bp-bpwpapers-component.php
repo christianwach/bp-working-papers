@@ -20,6 +20,8 @@ class BP_Working_Papers_Component extends BP_Component {
 	
 	/**
 	 * Start the component creation process.
+	 * 
+	 * @return void
 	 */
 	function __construct() {
 		
@@ -57,6 +59,8 @@ class BP_Working_Papers_Component extends BP_Component {
 	
 	/**
 	 * Include our component's files
+	 * 
+	 * @return void
 	 */
 	public function includes() {
 		
@@ -72,6 +76,7 @@ class BP_Working_Papers_Component extends BP_Component {
 	 *
 	 * @see BP_Component::setup_globals() for description of parameters.
 	 * @param array $args See {@link BP_Component::setup_globals()}.
+	 * @return void
 	 */
 	public function setup_globals( $args = array() ) {
 	
@@ -101,6 +106,8 @@ class BP_Working_Papers_Component extends BP_Component {
 	
 	/**
 	 * Create component navigation (Member > Working Papers)
+	 * 
+	 * @return void
 	 */
 	function setup_nav( $main_nav = array(), $sub_nav = array() ) {
 		
@@ -139,6 +146,10 @@ buddypress()->bpwpapers = new BP_Working_Papers_Component();
 
 
 
+//==============================================================================
+
+
+
 /**
  * Check whether the current page is part of the BuddyPress Working Papers component.
  *
@@ -163,6 +174,8 @@ function bp_is_bpwpapers_component() {
 
 /**
  * A custom load template filter for this component
+ * 
+ * @return string $found_template Path to the found template
  */
 function bpwpapers_load_template_filter( $found_template, $templates ) {
 	
@@ -204,6 +217,8 @@ add_filter( 'bp_located_template', 'bpwpapers_load_template_filter', 10, 2 );
 
 /** 
  * Load our loop when requested
+ * 
+ * @return void
  */
 function bpwpapers_object_template_loader() {
 	
@@ -264,6 +279,7 @@ function bpwpapers_slug() {
 
 	/**
 	 * Return the working papers slug
+	 * 
 	 * @return string The 'blogs' slug.
 	 */
 	function bpwpapers_get_slug() {
@@ -281,7 +297,8 @@ function bpwpapers_root_slug() {
 }
 
 	/**
-	 * Return the working papers component root slug.
+	 * Return the working papers component root slug
+	 * 
 	 * @return string The 'blogs' root slug.
 	 */
 	function bpwpapers_get_root_slug() {
