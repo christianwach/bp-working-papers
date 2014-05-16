@@ -34,7 +34,7 @@ function bpwpapers_has_groups( $has_groups, $groups_template, $params ) {
 	if ( empty( $params['exclude'] ) ) {
 	
 		// always exclude working paper groups
-		$params['exclude'] = bpwpapers_get_all_groups();
+		$params['exclude'] = bpwpapers_get_paper_groups();
 		
 		// remove this filter to avoid recursion
 		remove_filter( 'bp_has_groups', 'bpwpapers_has_groups', 20 );
@@ -78,7 +78,7 @@ if ( ! is_admin() ) {
  * @param int $user_id The numeric ID of a user
  * @return array $groups The full array of working paper groups
  */
-function bpwpapers_get_all_groups( $user_id = false ) {
+function bpwpapers_get_paper_groups( $user_id = false ) {
 	
 	// init return
 	$groups = array();
@@ -155,7 +155,7 @@ function bpwpapers_get_total_group_count() {
 	$actual_count = bp_get_total_group_count();
 	
 	// get working paper groups
-	$bpwpapers_groups = bpwpapers_get_all_groups();
+	$bpwpapers_groups = bpwpapers_get_paper_groups();
 	
 	// calculate
 	$filtered_count = $actual_count - count( $bpwpapers_groups );
@@ -189,7 +189,7 @@ function bpwpapers_get_total_group_count_for_user( $count, $user_id ) {
 	remove_filter( 'bp_get_total_group_count_for_user', 'bpwpapers_get_total_group_count_for_user', 8 );
 	
 	// get working paper groups for this user
-	$bpwpapers_groups = bpwpapers_get_all_groups( $user_id );
+	$bpwpapers_groups = bpwpapers_get_paper_groups( $user_id );
 	
 	// calculate
 	$filtered_count = $count - count( $bpwpapers_groups );
