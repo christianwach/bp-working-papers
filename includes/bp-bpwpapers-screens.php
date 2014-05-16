@@ -264,19 +264,29 @@ function bpwpapers_show_working_paper_create_form( $blogname = '', $blog_title =
 		$blog_title = $filtered_results['blog_title'];
 		$errors = $filtered_results['errors'];
 		
-		$singular = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
-		$plural = apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) );
+		$singular = strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) );
+		$plural = strtolower( apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ) );
+		
+		?>
+		
+		<div class="entry clearfix">
+		
+		<?php	
 
 		if ( $errors->get_error_code() ) {
-			echo '<p>' . __( 'There was a problem, please correct the form below and try again.', 'bpwpapers' ) . '</p>';
+			
+			// show error message
+			echo '<div id="message" class="error"><p>' . 
+					__( 'There was a problem, please correct the form below and try again.', 'bpwpapers' ) . 
+				 '</p></div>';
 		}
 		?>
+		
 		<p><?php 
 		
 		echo sprintf( 
 			__( 'By filling out the form below, you can <strong>add a %s to your account</strong>.', 'bpwpapers' ), 
-			$singular,
-			$plural
+			$singular
 		);
 
 		?></p>
@@ -285,7 +295,6 @@ function bpwpapers_show_working_paper_create_form( $blogname = '', $blog_title =
 		
 		echo sprintf( 
 			__( 'There is no limit to the number of %s that you can have, so create to your heart&#8217;s content.', 'bpwpapers' ), 
-			$singular,
 			$plural
 		);
 
@@ -299,7 +308,7 @@ function bpwpapers_show_working_paper_create_form( $blogname = '', $blog_title =
 
 			<?php bpwpapers_signup_blog( $blogname, $blog_title, $errors ); ?>
 			
-			<p>
+			<p class="submitbutton">
 				<input id="submit" type="submit" name="submit" class="submit" value="<?php 
 				
 				echo sprintf( 
@@ -313,6 +322,9 @@ function bpwpapers_show_working_paper_create_form( $blogname = '', $blog_title =
 			<?php wp_nonce_field( 'bp_blog_signup_form' ) ?>
 			
 		</form>
+		
+		</div>
+		
 		<?php
 		
 	}
@@ -329,14 +341,19 @@ function bpwpapers_signup_blog( $blogname = '', $blog_title = '', $errors = '' )
 	
 	global $current_site;
 	
+	// get name
+	$name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+	
 	?>
+	
+	<div class="bpwpapers_title">
 	
 	<label for="blog_title"><?php
 	
 	// Working Paper title
 	echo sprintf( 
-		__( '%s Title:', 'bpwpapers' ), 
-		apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+		__( 'What is the title of your %s?', 'bpwpapers' ), 
+		$name
 	);
 
 	 ?></label>
@@ -352,23 +369,27 @@ function bpwpapers_signup_blog( $blogname = '', $blog_title = '', $errors = '' )
 	}
 	
 	// show title input
-	echo '<input name="blog_title" type="text" id="blog_title" value="' . esc_html( $blog_title, 1 ) . '" />';
+	echo '<input name="blog_title" type="text" id="blog_title" value="' . esc_html( $blog_title ) . '" />';
 	
 	?>
+	
+	</div>
 
+	<div class="bpwpapers_url">
+	
 	<label for="blogname"><?php
 	
 	// Working Paper subfolder URL
 	// do we actually want people to define their own URL?
 	if( !is_subdomain_install() ) {
 		echo sprintf( 
-			__( '%s Name', 'bpwpapers' ), 
-			apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+			__( 'Choose a nice URL for your %s:', 'bpwpapers' ), 
+			$name
 		);
 	} else {
 		echo '<label for="blogname">' . sprintf( 
 			__( '%s Domain:', 'bpwpapers' ), 
-			apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+			$name
 		) . '</label>';
 	}
 
@@ -382,12 +403,21 @@ function bpwpapers_signup_blog( $blogname = '', $blog_title = '', $errors = '' )
 	
 	// if subfolders...
 	if ( !is_subdomain_install() ) {
-		echo '<span class="prefix_address">' . $current_site->domain . $current_site->path . '</span> <input name="blogname" type="text" id="blogname" value="'.$blogname.'" maxlength="50" /><br />';
+	
+		// get protocol
+		$http = ( is_ssl() ) ? 'https://' : 'http://';
+	
+		echo '<span class="prefix_address">' . 
+				$http . $current_site->domain . $current_site->path . 
+			 '</span> <input name="blogname" type="text" id="blogname" value="'.$blogname.'" maxlength="50" /><br />';
+		
 	} else {
 		echo '<input name="blogname" type="text" id="blogname" value="'.$blogname.'" maxlength="50" /> <span class="suffix_address">.' . bp_blogs_get_subdomain_base() . '</span><br />';
 	}
 	
 	?>
+	
+	</div>
 
 	<input type="hidden" id="blog_public_on" name="blog_public" value="1" />
 	<input type="hidden" value="1" id="cpmu-new-blog" name="cpmu-new-blog" />
@@ -476,29 +506,33 @@ function bpwpapers_validate_signup() {
 function bpwpapers_confirm_signup( $domain, $path, $blog_title, $user_name, $user_email = '', $meta = '' ) {
 
 	$protocol = is_ssl() ? 'https://' : 'http://';
-	$blog_url = $protocol . $domain . $path; ?>
-
-	<p><?php 
+	$blog_url = $protocol . $domain . $path; 
+	
+	?>
+	
+	<div class="entry clearfix">
+	
+	<p class="bpwpapers-congrats"><?php 
 	
 	echo sprintf( 
-		__( 'Congratulations! You have successfully created a new %s', 'bpwpapers' ), 
-		apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+		__( 'Congratulations! You have successfully created a new %s.', 'bpwpapers' ), 
+		strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) )
 	);
 
 	?></p>
 	
-	<p><?php 
+	<p class="bpwpapers-new-url"><?php 
 	
 	printf(
-		__( 'The URL for your new %1$s is <a href="%2$s">%3$s</a>.', 'bpwpapers' ), 
-		apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ),
+		__( 'The URL for your new %1$s is <a href="%2$s">%3$s</a>', 'bpwpapers' ), 
+		strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) ),
 		$blog_url, 
 		$blog_url
 	);
 	
 	?></p>
 
-	<p><?php 
+	<p class="bpwpapers-login-link"><?php 
 	
 	printf(
 		__( '<a href="%1$s">Login</a> as "%2$s" using your existing password.', 'bpwpapers' ), 
@@ -511,6 +545,12 @@ function bpwpapers_confirm_signup( $domain, $path, $blog_title, $user_name, $use
 	<?php
 	
 	do_action('signup_finished');
+	
+	?>
+	
+	</div><!-- /.entry -->
+	
+	<?php
 	
 }
 
