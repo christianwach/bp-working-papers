@@ -51,6 +51,10 @@ function bpwpapers_has_groups( $has_groups, $groups_template, $params ) {
 		) ); die();
 		*/
 		
+	} else {
+		
+		// TODO: merge arrays...
+	
 	}
 	
 	// fallback
@@ -58,17 +62,23 @@ function bpwpapers_has_groups( $has_groups, $groups_template, $params ) {
 	
 }
 
-// add filter for the above
-add_filter( 'bp_has_groups', 'bpwpapers_has_groups', 20, 3 );
+// only on front end
+if ( ! is_admin() ) {
+
+	// add filter for the above
+	add_filter( 'bp_has_groups', 'bpwpapers_has_groups', 20, 3 );
+
+}
 
 
 
 /**
- * Get all BuddyPress Groups that are working paper groups
+ * Get all BuddyPress Groups that are working paper groups (optionally by user)
  *
+ * @param int $user_id The numeric ID of a user
  * @return array $groups The full array of working paper groups
  */
-function bpwpapers_get_all_groups() {
+function bpwpapers_get_all_groups( $user_id = false ) {
 	
 	// init return
 	$groups = array();
@@ -80,6 +90,11 @@ function bpwpapers_get_all_groups() {
 	$params = array(
 		'per_page' => 100000,
 	);
+	
+	// did we get a passed in user?
+	if ( $user_id !== false ) {
+		$params['user_id'] = $user_id;
+	}
 	
 	// construct meta query
 	$params['meta_query'] = array(
@@ -127,6 +142,77 @@ function bpwpapers_get_all_groups() {
 
 	
 /**
+ * Override the total number of BuddyPress Groups, excluding working paper groups
+ *
+ * @return int $filtered_count The filtered total number of BuddyPress Groups
+ */
+function bpwpapers_get_total_group_count() {
+	
+	// remove filter to prevent recursion
+	remove_filter( 'bp_get_total_group_count', 'bpwpapers_get_total_group_count', 20 );
+	
+	// get actual count
+	$actual_count = bp_get_total_group_count();
+	
+	// get working paper groups
+	$bpwpapers_groups = bpwpapers_get_all_groups();
+	
+	// calculate
+	$filtered_count = $actual_count - count( $bpwpapers_groups );
+
+	// add filter again
+	add_filter( 'bp_get_total_group_count', 'bpwpapers_get_total_group_count', 20 );
+	
+	// --<
+	return $filtered_count;
+
+}
+
+// only on front end
+if ( ! is_admin() ) {
+
+	// add filter for the above
+	add_filter( 'bp_get_total_group_count', 'bpwpapers_get_total_group_count', 20 );
+
+}
+
+
+
+/**
+ * Override the total number of BuddyPress Groups for a user, excluding working paper groups
+ *
+ * @return int $filtered_count The filtered total number of BuddyPress Groups for a user
+ */
+function bpwpapers_get_total_group_count_for_user( $count, $user_id ) {
+	
+	// remove filter to prevent recursion
+	remove_filter( 'bp_get_total_group_count_for_user', 'bpwpapers_get_total_group_count_for_user', 8 );
+	
+	// get working paper groups for this user
+	$bpwpapers_groups = bpwpapers_get_all_groups( $user_id );
+	
+	// calculate
+	$filtered_count = $count - count( $bpwpapers_groups );
+
+	// add filter again
+	add_filter( 'bp_get_total_group_count_for_user', 'bpwpapers_get_total_group_count_for_user', 8, 2 );
+	
+	// --<
+	return $filtered_count;
+
+}
+
+// only on front end
+if ( ! is_admin() ) {
+
+	// add filter for the above, before BP applies its number formatting
+	add_filter( 'bp_get_total_group_count_for_user', 'bpwpapers_get_total_group_count_for_user', 8, 2 );
+
+}
+
+
+
+/**
  * Creates a BuddyPress Group given a title and description
  *
  * @param string $title the title of the BP group
@@ -137,6 +223,9 @@ function bpwpapers_create_group( $title, $description, $user_id = null ) {
 	
 	// if no user passed in, use current user
 	if ( is_null( $user_id ) ) $user_id = bp_loggedin_user_id();
+	
+	// get current time
+	$time = current_time( 'mysql' );
 	
 	/**
 	 * Possible parameters (see function groups_create_group):
@@ -158,7 +247,7 @@ function bpwpapers_create_group( $title, $description, $user_id = null ) {
 		'slug' => groups_check_slug( sanitize_title( esc_attr( $title ) ) ),
 		'status' => 'public',
 		'enable_forum' => 0,
-		'date_created' => current_time( 'mysql' ),
+		'date_created' => $time,
 
 	);
 	
@@ -167,7 +256,7 @@ function bpwpapers_create_group( $title, $description, $user_id = null ) {
 	
 	// add some meta
 	groups_update_groupmeta( $new_group_id, 'total_member_count', 1 );
-	groups_update_groupmeta( $new_group_id, 'last_activity', time() );
+	groups_update_groupmeta( $new_group_id, 'last_activity', $time );
 	groups_update_groupmeta( $new_group_id, 'invite_status', 'members' );
 	
 	// --<
