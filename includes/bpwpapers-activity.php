@@ -69,8 +69,11 @@ class BP_Working_Papers_Activity {
 			// add custom comment activity
 			add_action( 'bp_activity_before_save', array( $this, 'custom_comment_activity' ), 10, 1 );
 			
+			// override the action of this custom comment activity
+			add_action( 'commentpress_comment_activity_action', array( $this, 'custom_comment_activity_action' ), 10, 7 );
+			
 			// add filter for post name in activity item
-			//add_filter( 'bpwpapers_activity_post_name', array( $this, 'custom_comment_activity_post_name' ), 10, 2 );
+			add_filter( 'bpwpapers_activity_post_name', array( $this, 'custom_comment_activity_post_name' ), 10, 2 );
 		
 			// add filter for commenting capability
 			add_filter( 'commentpress_allowed_to_comment', array( $this, 'allow_anon_commenting' ), 10, 1 );
@@ -87,13 +90,16 @@ class BP_Working_Papers_Activity {
 			// override CommentPress TinyMCE
 			add_filter( 'cp_override_tinymce', array( $this, 'disable_tinymce' ), 10, 1 );
 			
+			// override cp_activity_tab_recent_title_blog
+			add_filter( 'cp_activity_tab_recent_title_blog', array( $this, 'get_activity_sidebar_recent_title' ) );
+			
+			// add section to activity sidebar in CommentPress
+			add_filter( 'commentpress_bp_activity_sidebar_before_members', array( $this, 'get_activity_sidebar_section' ) );
+			
 			/*
 			// add navigation items for groups
 			//add_filter( 'cp_nav_after_network_home_title', array( $this, 'get_group_navigation_links' ) );
 		
-			// add section to activity sidebar in CommentPress
-			//add_filter( 'commentpress_bp_activity_sidebar_before_members', array( $this, 'get_activity_sidebar_section' ) );
-			
 			// override cp_activity_tab_recent_title_blog
 			//add_filter( 'cp_activity_tab_recent_title_blog', array( $this, 'get_activity_sidebar_recent_title' ) );
 			*/
@@ -658,8 +664,75 @@ class BP_Working_Papers_Activity {
 	 */
 	function custom_comment_activity_post_name( $name, $post_obj ) {
 		
-		// nothing for now
+		// sanity check
+		if ( ! is_object( $post_obj ) ) return $name;
+		
+		// if it's a page...
+		if ( $post_obj->post_type == 'page' ) return __( 'page', 'bpwpapers' );
+		
+		// fallback
 		return $name;
+		
+	}
+	
+	
+	
+	/**
+	 * Set the action (at the top) of the activity item
+	 * 
+	 * @param string $action The action of the activity item
+	 * @param object $activity The activity object
+	 * @return string $action The action of the activity item
+	 */
+	function custom_comment_activity_action( 
+	
+		$action, 
+		$activity, 
+		$user_link, 
+		$comment_link, 
+		$activity_name, 
+		$target_post_link, 
+		$group_link
+		
+	) {
+		
+		// which blog?
+		$blog_id = $activity->item_id;
+
+		// only on working papers
+		if ( ! bpwpapers_is_working_paper( $blog_id ) ) return $action;
+
+		// safely get home URL
+		$home_url = ( $blog_id !== false ) ? get_home_url( $blog_id ) : false;
+	
+		// bail if we don't get a home URL for the site
+		if ( empty( $home_url ) ) return $action;
+		
+		// get site name
+		$blog_name = get_blog_option( $blog_id, 'blogname' );
+		
+		// construct blog link
+		$blog_link = '<a href="'.$home_url.'" title="'.esc_attr( $blog_name ).'">'.$blog_name.'</a>';
+	
+		// get name
+		$name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+
+		// replace any necessary values to display in the activity stream
+		$action = sprintf( 
+			
+			__( '%1$s left a %2$s on the %3$s %4$s in the %5$s %6$s:', 'commentpress-core' ), 
+			
+			$user_link, 
+			$comment_link, 
+			$activity_name, 
+			$target_post_link,
+			strtolower( $name ),
+			$blog_link
+			
+		);
+		
+		// --<
+		return $action;
 		
 	}
 	
@@ -1172,6 +1245,26 @@ class BP_Working_Papers_Activity {
 	
 	
 	
+	/** 
+	 * Override the title of the Recent Posts section in the activity sidebar
+	 * 
+	 * @return string $title The title of the activity sidebar section
+	 */
+	function get_activity_sidebar_recent_title() {
+	
+		// set title, but allow plugins to override
+		$title = sprintf(
+			__( 'Recent Comments in this %s', 'bpwpapers' ),
+			apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+		);
+		
+		// --<
+		return $title;
+		
+	}
+	
+	
+	
 	// =============================================================================
 	// We may or may not use what follows...
 	// =============================================================================
@@ -1191,7 +1284,7 @@ class BP_Working_Papers_Activity {
 		if ( bp_has_activities( array(
 
 			'scope' => 'groups',
-			'action' => 'new_working_paper_comment,new_working_paper_post',
+			'action' => 'new_working_paper,new_working_paper_post,new_working_paper_comment',
 	
 		) ) ) {
 
@@ -1202,7 +1295,7 @@ class BP_Working_Papers_Activity {
 				$section_header_text = apply_filters(
 					'bpwpapers_activity_tab_recent_title_all_yours', 
 					sprintf(
-						__( 'All Recent Activity in your %s', 'bpwpapers' ),
+						__( 'Recent Activity in your %s', 'bpwpapers' ),
 						apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
 					)
 				);
@@ -1223,7 +1316,7 @@ class BP_Working_Papers_Activity {
 			// open section
 			echo '<h3 class="activity_heading">'.$section_header_text.'</h3>
 			
-			<div class="paragraph_wrapper working_papers_comments_output">
+			<div class="paragraph_wrapper workshop_comments_output">
 	
 			<ol class="comment_activity">';
 			
@@ -1250,7 +1343,7 @@ class BP_Working_Papers_Activity {
 			if ( bp_has_activities( array(
 
 				'scope' => 'friends',
-				'action' => 'new_working_paper_comment,new_working_paper_post',
+				'action' => 'new_working_paper,new_working_paper_post,new_working_paper_comment',
 	
 			) ) ) {
 
@@ -1266,7 +1359,7 @@ class BP_Working_Papers_Activity {
 				// open section
 				echo '<h3 class="activity_heading">'.$section_header_text.'</h3>
 			
-				<div class="paragraph_wrapper working_papers_comments_output">
+				<div class="paragraph_wrapper workshop_comments_output">
 	
 				<ol class="comment_activity">';
 			
@@ -1284,26 +1377,6 @@ class BP_Working_Papers_Activity {
 		
 		}
 
-	}
-	
-	
-	
-	/** 
-	 * Override the title of the Recent Posts section in the activity sidebar
-	 * 
-	 * @return string $title The title of the activity sidebar section
-	 */
-	function get_activity_sidebar_recent_title() {
-	
-		// set title, but allow plugins to override
-		$title = sprintf(
-			__( 'Recent Comments in this %s', 'bpwpapers' ),
-			apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
-		);
-		
-		// --<
-		return $title;
-		
 	}
 	
 	
