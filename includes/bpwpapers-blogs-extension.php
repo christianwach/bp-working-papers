@@ -526,13 +526,14 @@ function bpwpapers_blog_deleted( $blog_id, $drop = false ) {
 		// delete group meta
 		bpwpapers_remove_blog_from_group( $group_id, $blog_id );
 		
+		// delete the group
+		groups_delete_group( $group_id );
+	
 	}
 	
 	// delete the site option
 	delete_site_option( BP_WORKING_PAPERS_PREFIX . $blog_id );
 	
-	// TODO: delete the group
-
 }
 
 // sever links when site deleted
