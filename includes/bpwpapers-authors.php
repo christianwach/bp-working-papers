@@ -40,7 +40,7 @@ function bpwpapers_authors_core_get_users( $retval, $params ) {
 		$params['meta_value'] = true;
 		
 		// remove this filter
-		remove_filter( 'bp_core_get_users', 20 );
+		remove_filter( 'bp_core_get_users', 'bpwpapers_authors_core_get_users', 20 );
 		
 		// re-query with our params
 		$retval = bp_core_get_users( $params );
