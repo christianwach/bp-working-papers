@@ -33,9 +33,6 @@ if ( !defined( 'BP_WORKING_PAPERS_PATH' ) ) {
 // set site option prefix
 define( 'BP_WORKING_PAPERS_PREFIX', 'bpwpapers_blog_group_' );
 
-// set linked groups option name
-define( 'BP_WORKING_PAPERS_LINKED', 'bpwpapers_linked_groups' );
-
 // set working papers option name
 define( 'BP_WORKING_PAPERS_OPTION', 'bpwpapers_group_blogs' );
 
