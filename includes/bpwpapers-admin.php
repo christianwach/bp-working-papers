@@ -172,9 +172,9 @@ class BP_Group_Sites_Admin {
 		wp_enqueue_style(
 			
 			'bpwpapers-admin-style', 
-			BPGSITES_URL . 'assets/css/bpwpapers-admin.css',
+			BP_WORKING_PAPERS_URL . 'assets/css/bpwpapers-admin.css',
 			null,
-			BPGSITES_VERSION,
+			BP_WORKING_PAPERS_VERSION,
 			'all' // media
 			
 		);
