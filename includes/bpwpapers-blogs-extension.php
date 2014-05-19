@@ -577,6 +577,21 @@ function bpwpapers_configure_blog_options( $blog_id ) {
 		bp_get_loggedin_user_fullname()
 	) );
 	
+	// access object
+	global $bp_working_papers;
+	
+	// register CPT first
+	$bp_working_papers->template->register_cpt();
+
+	// create group page
+	$page_id = $bp_working_papers->template->create_page();
+
+	// store page ID for later
+	add_option( 'bpwpapers_group_page', $page_id );
+
+	// go ahead and flush
+	flush_rewrite_rules();
+	
 	// switch back
 	restore_current_blog();
 	

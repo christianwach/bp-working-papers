@@ -61,6 +61,9 @@ class BP_Working_Papers {
 	// activity object
 	public $activity;
 	
+	// template object
+	public $template;
+	
 	
 	
 	/** 
@@ -86,7 +89,7 @@ class BP_Working_Papers {
 		
 		// --<
 		return $this;
-
+		
 	}
 	
 	
@@ -171,6 +174,12 @@ class BP_Working_Papers {
 		// load our group functions file
 		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-groups.php' );
 	
+		// load our template functions file
+		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-template.php' );
+		
+		// init object
+		$this->template = new BP_Working_Papers_Template;
+		
 		// load our activity functions file
 		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-activity.php' );
 		
@@ -202,6 +211,7 @@ class BP_Working_Papers {
 	
 		// hooks that always need to be present...
 		$this->admin->register_hooks();
+		$this->template->register_hooks();
 		$this->activity->register_hooks();
 		
 	}
