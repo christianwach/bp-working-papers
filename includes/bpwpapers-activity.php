@@ -96,6 +96,9 @@ class BP_Working_Papers_Activity {
 			// add section to activity sidebar in CommentPress
 			add_filter( 'commentpress_bp_activity_sidebar_before_members', array( $this, 'get_activity_sidebar_section' ) );
 			
+			// on a working paper, filter activity stream to include only items from that group
+			add_filter( 'bp_ajax_querystring', array( $this, 'filter_ajax_querystring' ), 20, 2 );
+			
 			/*
 			// add navigation items for groups
 			//add_filter( 'cp_nav_after_network_home_title', array( $this, 'get_group_navigation_links' ) );
@@ -1261,6 +1264,37 @@ class BP_Working_Papers_Activity {
 		// --<
 		return $title;
 		
+	}
+	
+	
+	
+	/** 
+	 * Filter the group activity feed on a working paper site to show only items from the group
+	 * 
+	 * @return string $new_querystring The filtered querystring
+	 */
+	public function filter_ajax_querystring( $querystring = '', $object = '' ) {
+
+		//print_r( array( $querystring, $object ) ); die();
+		
+		// pass through if not activity stream
+		if( $object != 'activity' ) return $querystring;
+		
+		// get group ID
+		$group_id = bpwpapers_get_group_by_blog_id( get_current_blog_id() );
+		
+		// set some defaults
+		$defaults = array(
+			'action' => 'new_working_paper_post,new_working_paper_comment',
+			'primary_id' => $group_id,
+		);
+		
+		// parse defaults
+		$new_querystring = wp_parse_args( $querystring, $defaults );
+		
+		// allow plugins to override
+		return apply_filters( 'bpwpapers_filter_ajax_querystring', $new_querystring, $querystring );
+			
 	}
 	
 	
