@@ -83,6 +83,18 @@ class BP_Working_Papers_Template {
 				// override new site link
 				add_filter( 'cp_user_links_new_site_link', array( $this, 'filter_new_site_link' ), 30 );
 				
+				// show working paper author avatar in Contents column
+				//add_action( 'cp_content_tab_before', array( $this, 'show_author' ) );
+				
+				// show working paper author avatar in Header
+				add_filter( 'commentpress_header_image_post_customizer', array( $this, 'author_avatar' ), 10, 1 );
+				
+				// show join button in header
+				add_action( 'commentpress_header_before', array( $this, 'join_button' ) );
+				
+				// filter join button content
+				add_filter( 'bp_get_group_join_button', array( $this, 'join_button_content' ), 20, 1 );
+				
 			}
 			
 		}
@@ -430,6 +442,92 @@ class BP_Working_Papers_Template {
 		
 		// --<
 		return '';
+		
+	}
+	
+	
+	
+	/** 
+	 * Show author avatar in Contents column
+	 * 
+	 * @return void
+	 */
+	public function show_author() {
+		
+		// get original author
+		$author_id = get_option( 'bpwpapers_original_author', false );
+		
+		// santiy check
+		if ( $author_id === false ) return;
+		
+		// show avatar
+		echo '
+			<div class="paper_author_avatar">
+			' . get_avatar( $author_id, $size='150' ) . '
+			</div>
+		';
+		
+	}
+	
+	
+	
+	/** 
+	 * Show author avatar in Header
+	 * 
+	 * @return void
+	 */
+	public function author_avatar() {
+		
+		// get original author
+		$author_id = get_option( 'bpwpapers_original_author', false );
+		
+		// santiy check
+		if ( $author_id === false ) return false;
+		
+		// show avatar
+		return get_avatar( $author_id, $size='48' );
+		
+	}
+	
+	
+	
+	/** 
+	 * Show the "join group" button
+	 * 
+	 * @return void
+	 */
+	public function join_button() {
+		
+		// get group ID
+		$group_id = bpwpapers_get_group_by_blog_id( get_current_blog_id() );
+		
+		// get group
+		$group = groups_get_group( array( 'group_id' => $group_id ) );
+		
+		// --<
+		$button = bp_get_group_join_button( $group );
+		
+		echo '<div class="bpwpapers_join">';
+		echo $button;
+		echo '</div>';
+		
+	}
+	
+	
+	
+	/** 
+	 * Filter the "join group" button content
+	 * 
+	 * @return array $button The overridden button array
+	 */
+	public function join_button_content( $button ) {
+		
+		// Override content
+		$button['link_text'] = __( 'Join the Discussion', 'bpwpapers' );
+		$button['link_title'] = __( 'Join the Discussion', 'bpwpapers' );
+		
+		// --<
+		return $button;
 		
 	}
 	

@@ -63,6 +63,9 @@ class BP_Working_Papers_Activity {
 		// if the current blog is a working paper...
 		if ( bpwpapers_is_working_paper( get_current_blog_id() ) ) {
 			
+			// on working papers, we don't need some filter options
+			add_action( 'init', array( $this, 'remove_external_filter_options' ), 50 );
+		
 			// add custom post activity
 			add_action( 'bp_activity_before_save', array( $this, 'custom_post_activity' ), 10, 1 );
 			
@@ -99,13 +102,8 @@ class BP_Working_Papers_Activity {
 			// on a working paper, filter activity stream to include only items from that group
 			add_filter( 'bp_ajax_querystring', array( $this, 'filter_ajax_querystring' ), 20, 2 );
 			
-			/*
-			// add navigation items for groups
-			//add_filter( 'cp_nav_after_network_home_title', array( $this, 'get_group_navigation_links' ) );
-		
-			// override cp_activity_tab_recent_title_blog
-			//add_filter( 'cp_activity_tab_recent_title_blog', array( $this, 'get_activity_sidebar_recent_title' ) );
-			*/
+			// override activity comment reply link
+			add_filter( 'cp_activity_entry_comment_link', array( $this, 'filter_comment_link' ), 10, 1 );
 			
 		}
 		
@@ -118,11 +116,30 @@ class BP_Working_Papers_Activity {
 	
 	
 	/**
+	 * Remove actions for filter options on group activity stream
+	 * 
+	 * @return void
+	 */
+	function remove_external_filter_options() {
+		
+		// remove unnecessary filter options
+		remove_action( 'bp_group_activity_filter_options', 'bp_groupblog_posts' );
+		remove_action( 'bp_group_activity_filter_options', 'bp_groupblogs_add_filter' );
+		
+	}
+	
+	
+	
+	/**
 	 * Add actions for filter options on group activity stream
 	 * 
 	 * @return void
 	 */
 	function add_filter_options() {
+		
+		// remove unnecessary filter options
+		remove_action( 'bp_group_activity_filter_options', 'bp_groupblog_posts' );
+		remove_action( 'bp_group_activity_filter_options', 'bp_groupblogs_add_filter' );
 		
 		// add our sites filter
 		add_action( 'bp_activity_filter_options', array( $this, 'filter_option_sites' ) );
@@ -395,7 +412,8 @@ class BP_Working_Papers_Activity {
 		// allow plugins to override the name of the activity item
 		$activity_name = apply_filters(
 			'bpwpapers_activity_post_name',
-			__( 'post', 'bpwpapers' )
+			__( 'post', 'bpwpapers' ),
+			$post
 		);
 	
 		// default to standard BP author
@@ -741,6 +759,84 @@ class BP_Working_Papers_Activity {
 	
 	
 	
+	//==========================================================================
+	
+	
+	
+	/** 
+	 * Filter the group activity feed on a working paper site to show only items from the group
+	 * 
+	 * @return string $new_querystring The filtered querystring
+	 */
+	public function filter_ajax_querystring( $querystring = '', $object = '' ) {
+
+		//print_r( array( $querystring, $object ) ); die();
+		//trigger_error( print_r( array( $querystring, $object ), true ), E_USER_ERROR ); die();
+
+		// pass through if not activity stream
+		if( $object != 'activity' ) return $querystring;
+		
+		// get group ID
+		$group_id = bpwpapers_get_group_by_blog_id( get_current_blog_id() );
+		
+		// set some defaults
+		$defaults = array(
+			'action' => 'new_working_paper_post,new_working_paper_comment',
+			'primary_id' => $group_id,
+		);
+		
+		// parse defaults
+		$new_querystring = wp_parse_args( $querystring, $defaults );
+		
+		// allow plugins to override
+		return apply_filters( 'bpwpapers_filter_ajax_querystring', $new_querystring, $querystring );
+			
+	}
+	
+	
+	
+	/** 
+	 * Filter the comment reply link on activity items. This is called during the
+	 * loop, so we can assume that the activity item API will work.
+	 * 
+	 * @return string $link The overridden comment reply link
+	 */
+	public function filter_comment_link( $link ) {
+		
+		// get type of activity
+		$type = bp_get_activity_action_name();
+		
+		// our custom activity types
+		$types = array( 'new_working_paper', 'new_working_paper_post', 'new_working_paper_comment' );
+		
+		// not one of ours?
+		if ( ! in_array( $type, $types ) ) return $link;
+		
+		// change the link
+		if ( $type == 'new_working_paper_post' ) {
+			$link_text = __( 'Comment', 'bpwpapers' );
+		}
+		
+		if ( $type == 'new_working_paper_comment' ) {
+			$link_text = __( 'Reply', 'bpwpapers' );
+		}
+		
+		// construct new link to actual comment
+		$link = '<a href="' . bp_get_activity_feed_item_link() . '" class="button acomment-reply bp-primary-action">' . 
+					$link_text . 
+				'</a>';
+		
+		// --<
+		return $link;
+		
+	}
+	
+	
+	
+	//==========================================================================
+	
+	
+	
 	/** 
 	 * Check if anonymous commenting is allowed
 	 * 
@@ -989,262 +1085,8 @@ class BP_Working_Papers_Activity {
 	
 	
 	//==========================================================================
-	// Methods below are yet to do...
+	// Sidebar additions
 	//==========================================================================
-	
-	
-	
-	/** 
-	 * Adds links to the Special Pages menu in CommentPress themes
-	 * 
-	 * @return void
-	 */
-	function get_group_navigation_links() {
-	
-		// is a CommentPress theme active?
-		if ( function_exists( 'commentpress_setup' ) ) {
-
-			// init HTML output
-			$html = '';
-	
-			// get the groups this user can see
-			$user_group_ids = $this->get_groups_for_user();
-	
-			// kick out if all are empty
-			if (
-				count( $user_group_ids['my_groups'] ) == 0 AND 
-				count( $user_group_ids['linked_groups'] ) == 0 AND 
-				count( $user_group_ids['public_groups'] ) == 0 
-			) {
-				// --<
-				return;
-			}
-			
-			// init array
-			$groups = array();
-				
-			// if any has entries
-			if (
-				count( $user_group_ids['my_groups'] ) > 0 OR 
-				count( $user_group_ids['public_groups'] ) > 0 
-			) {
-
-				// merge the arrays
-				$groups = array_unique( array_merge( 
-					$user_group_ids['my_groups'], 
-					$user_group_ids['linked_groups'], 
-					$user_group_ids['public_groups'] 
-				) );
-
-			}
-			
-			// define config array
-			$config_array = array(
-				//'user_id' => $user_id,
-				'type' => 'alphabetical',
-				'populate_extras' => 0,
-				'include' => $groups
-			);
-	
-			// get groups
-			if ( bp_has_groups( $config_array ) ) {
-		
-				// access object
-				global $groups_template, $post;
-		
-				// only show if user has more than one...
-				if ( $groups_template->group_count > 1 ) {
-				
-					// set title, but allow plugins to override
-					$title = apply_filters( 
-						'bpwpapers_working_papers_menu_item_title', 
-						sprintf(
-							__( 'Groups reading this %s', 'bpwpapers' ),
-							apply_filters( 'bpwpapers_extension_name', __( 'site', 'bpwpapers' ) )
-						)
-					);
-					
-					// construct item
-					$html .= '<li><a href="#working_papers-list" id="btn_working_papers" class="css_btn" title="'.$title.'">'.$title.'</a>';
-				
-					// open sublist
-					$html .= '<ul class="children" id="working_papers-list">'."\n";
-					
-					// init lists
-					$mine = array();
-					$linked = array();
-					$public = array();
-
-					// do the loop
-					while ( bp_groups() ) {  bp_the_group();
-					
-						// construct item
-						$item = '<li>'.
-									'<a href="'.bp_get_group_permalink().'" class="css_btn btn_working_papers" title="'.bp_get_group_name().'">'.
-										bp_get_group_name().
-									'</a>'.
-								'</li>';
-						
-						// get group ID
-						$group_id = bp_get_group_id();
-						
-						// mine?
-						if ( in_array( $group_id, $user_group_ids['my_groups'] ) ) {
-							$mine[] = $item;
-							continue;
-						}
-			
-						// linked?
-						if ( in_array( $group_id, $user_group_ids['linked_groups'] ) ) {
-							$linked[] = $item;
-							continue;
-						}
-			
-						// public?
-						if ( in_array( $group_id, $user_group_ids['public_groups'] ) ) {
-							$public[] = $item;
-						}
-						
-					} // end while
-					
-					// did we get any that are mine?
-					if ( count( $mine ) > 0 ) {
-					
-						// join items
-						$items = implode( "\n", $mine );
-					
-						// only show if we one of the other lists is populated
-						if ( count( $linked ) > 0 OR count( $public ) > 0 ) {
-						
-							// construct title
-							$title = __( 'My Groups', 'bpwpapers' );
-						
-							// construct item
-							$sublist = '<li><a href="#working_papers-list-mine" id="btn_working_papers_mine" class="css_btn" title="'.$title.'">'.$title.'</a>';
-						
-							// open sublist
-							$sublist .= '<ul class="children" id="working_papers-list-mine">'."\n";
-							
-							// insert items
-							$sublist .= $items;
-						
-							// close sublist
-							$sublist .= '</ul>'."\n";
-							$sublist .= '</li>'."\n";
-							
-							// replace items
-							$items = $sublist;
-						
-						}
-						
-						// add to html
-						$html .= $items;
-				
-					}
-			
-					// did we get any that are linked?
-					if ( count( $linked ) > 0 ) {
-					
-						// join items
-						$items = implode( "\n", $linked );
-					
-						// only show if we one of the other lists is populated
-						if ( count( $mine ) > 0 OR count( $public ) > 0 ) {
-						
-							// construct title
-							$title = __( 'Linked Groups', 'bpwpapers' );
-						
-							// construct item
-							$sublist = '<li><a href="#working_papers-list-linked" id="btn_working_papers_linked" class="css_btn" title="'.$title.'">'.$title.'</a>';
-						
-							// open sublist
-							$sublist .= '<ul class="children" id="working_papers-list-linked">'."\n";
-							
-							// insert items
-							$sublist .= $items;
-						
-							// close sublist
-							$sublist .= '</ul>'."\n";
-							$sublist .= '</li>'."\n";
-							
-							// replace items
-							$items = $sublist;
-						
-						}
-						
-						// add to html
-						$html .= $items;
-				
-					}
-			
-					// did we get any that are public?
-					if ( count( $public ) > 0 ) {
-					
-						// join items
-						$items = implode( "\n", $public );
-					
-						// only show if we one of the other lists is populated
-						if ( count( $mine ) > 0 OR count( $linked ) > 0 ) {
-						
-							// construct title
-							$title = __( 'Public Groups', 'bpwpapers' );
-						
-							// construct item
-							$sublist = '<li><a href="#working_papers-list-public" id="btn_working_papers_public" class="css_btn" title="'.$title.'">'.$title.'</a>';
-						
-							// open sublist
-							$sublist .= '<ul class="children" id="working_papers-list-public">'."\n";
-							
-							// insert items
-							$sublist .= $items;
-						
-							// close sublist
-							$sublist .= '</ul>'."\n";
-							$sublist .= '</li>'."\n";
-							
-							// replace items
-							$items = $sublist;
-						
-						}
-						
-						// add to html
-						$html .= $items;
-				
-					}
-			
-					// close tags
-					$html .= '</ul>'."\n";
-					$html .= '</li>'."\n";
-			
-				} else {
-			
-					// set title
-					$title = __( 'Group Home Page', 'bpwpapers' );
-				
-					// do we want to use bp_get_group_name()
-			
-					// do the loop (though there will only be one item
-					while ( bp_groups() ) {  bp_the_group();
-			
-						// construct item
-						$html .= '<li>'.
-									'<a href="'.bp_get_group_permalink().'" id="btn_working_papers" class="css_btn" title="'.$title.'">'.
-										$title.
-									'</a>'.
-								 '</li>';
-				
-					}
-			
-				}
-	
-			}
-	
-			// output
-			echo $html;
-	
-		}
-
-	}
 	
 	
 	
@@ -1265,43 +1107,6 @@ class BP_Working_Papers_Activity {
 		return $title;
 		
 	}
-	
-	
-	
-	/** 
-	 * Filter the group activity feed on a working paper site to show only items from the group
-	 * 
-	 * @return string $new_querystring The filtered querystring
-	 */
-	public function filter_ajax_querystring( $querystring = '', $object = '' ) {
-
-		//print_r( array( $querystring, $object ) ); die();
-		
-		// pass through if not activity stream
-		if( $object != 'activity' ) return $querystring;
-		
-		// get group ID
-		$group_id = bpwpapers_get_group_by_blog_id( get_current_blog_id() );
-		
-		// set some defaults
-		$defaults = array(
-			'action' => 'new_working_paper_post,new_working_paper_comment',
-			'primary_id' => $group_id,
-		);
-		
-		// parse defaults
-		$new_querystring = wp_parse_args( $querystring, $defaults );
-		
-		// allow plugins to override
-		return apply_filters( 'bpwpapers_filter_ajax_querystring', $new_querystring, $querystring );
-			
-	}
-	
-	
-	
-	// =============================================================================
-	// We may or may not use what follows...
-	// =============================================================================
 	
 	
 	

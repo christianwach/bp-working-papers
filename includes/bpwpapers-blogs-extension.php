@@ -555,6 +555,10 @@ function bpwpapers_configure_blog_options( $blog_id ) {
 	// go there
 	switch_to_blog( $blog_id );
 	
+	// -------------------------------------------------------------------------
+	// Set commenting options
+	// -------------------------------------------------------------------------
+	
 	// get existing comment_registration option
 	$existing_option = get_option( 'comment_registration', 0 );
 	
@@ -570,12 +574,27 @@ function bpwpapers_configure_blog_options( $blog_id ) {
 	// update option
 	update_option( 'comment_registration', $anon_comments );
 	
+	// -------------------------------------------------------------------------
+	// A better tagline
+	// -------------------------------------------------------------------------
+	
 	// set new, more descriptive tagline
 	update_option( 'blogdescription', sprintf(
 		__( 'A %1$s by %2$s', 'bpwpapers' ),
 		apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ),
 		bp_get_loggedin_user_fullname()
 	) );
+	
+	// -------------------------------------------------------------------------
+	// Save original author
+	// -------------------------------------------------------------------------
+	
+	// add an option for easy access
+	add_option( 'bpwpapers_original_author', bp_loggedin_user_id() );
+	
+	// -------------------------------------------------------------------------
+	// Site setup
+	// -------------------------------------------------------------------------
 	
 	// access object
 	global $bp_working_papers;
