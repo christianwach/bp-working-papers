@@ -30,6 +30,7 @@
 		<?php //do_action( 'bp_group_header_meta' ); ?>
 
 	</div>
+	
 </div><!-- #group-header-content -->
 
 <?php

@@ -74,6 +74,15 @@ class BP_Working_Papers_Template {
 				// add CSS files
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 			
+				// add navigation items for groups
+				add_filter( 'cp_nav_before_special_pages', array( $this, 'group_navigation_link' ) );
+				
+				// override CommentPress "Title Page" (after CPMU)
+				add_filter( 'cp_nav_title_page_title', array( $this, 'filter_nav_title' ), 30 );
+				
+				// override new site link
+				add_filter( 'cp_user_links_new_site_link', array( $this, 'filter_new_site_link' ), 30 );
+				
 			}
 			
 		}
@@ -165,7 +174,7 @@ class BP_Working_Papers_Template {
 		// allow overrides of title
 		$page['post_title'] = apply_filters( 
 			'bpwpapers_group_page_title',
-			__( 'Group', 'bpwpapers' )
+			__( 'Activity', 'bpwpapers' )
 		);
 		
 		// allow overrides of template
@@ -234,6 +243,9 @@ class BP_Working_Papers_Template {
 		// add filter options
 		add_action( 'bp_group_activity_filter_options', array( $bp_working_papers->activity, 'filter_option_posts' ) );
 		add_action( 'bp_group_activity_filter_options', array( $bp_working_papers->activity, 'filter_option_comments' ) );
+		
+		// set flag
+		$this->is_group = true;
 
 		// --<
 		return $found_template;
@@ -323,6 +335,101 @@ class BP_Working_Papers_Template {
 		
 		// --<
 		return false;
+		
+	}
+	
+	
+	
+	/** 
+	 * Adds a link to the Special Pages menu in CommentPress themes
+	 * 
+	 * @return void
+	 */
+	public function group_navigation_link() {
+	
+		// is a CommentPress theme active?
+		if ( function_exists( 'commentpress_setup' ) ) {
+
+			// init HTML output
+			$html = '';
+			
+			// get group page ID
+			$page_id = get_option( 'bpwpapers_group_page', false );
+			
+			// sanity check
+			if ( $page_id === false ) return;
+			
+			// get post
+			$post = get_post( $page_id );
+			
+			// sanity check
+			if ( ! is_object( $post ) ) return;
+			
+			// get title
+			$title = sprintf( 
+				__( 'Activity in this %s', 'bpwpapers' ), 
+				apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+			);
+			
+			// construct link
+			$link = get_permalink( $post->ID );
+			
+			// init class
+			$class = '';
+			
+			// is this page active?
+			if ( isset( $this->is_group ) AND $this->is_group === true ) {
+				
+				// override
+				$class = ' class="active_page"';
+			
+			}
+			
+			// construct item
+			$html .= '<li'.$class.'>'.
+						'<a href="'.$link.'" id="btn_bpwpaper" class="css_btn" title="'.esc_attr( $title ).'">'.
+							$title.
+						'</a>'.
+					 '</li>';
+			
+			// output
+			echo $html;
+			
+		}
+		
+	}
+	
+	
+	
+	/** 
+	 * Filter the title of the link to the document homepage
+	 * 
+	 * @return boolean False, because this is never commentable
+	 */
+	public function filter_nav_title( $title ) {
+		
+		// construct title
+		$title = sprintf( 
+			__( '%s Home Page', 'bpwpapers' ), 
+			apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+		);
+		
+		// --<
+		return $title;
+		
+	}
+	
+	
+	
+	/** 
+	 * Filter the link to the "new site" page
+	 * 
+	 * @return string Empty string because we don't want that link
+	 */
+	public function filter_new_site_link( $link ) {
+		
+		// --<
+		return '';
 		
 	}
 	
