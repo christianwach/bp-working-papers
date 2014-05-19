@@ -20,7 +20,33 @@ NOTES
  * @param array $params Array of arguments with which the query was configured
  * @return bool $has_groups Whether or not our modified query has found groups
  */
-function bpwpapers_has_groups( $has_groups, $groups_template, $params ) {
+function bpwpapers_has_groups( $params ) {
+	
+	// remove this filter to avoid recursion
+	remove_filter( 'bp_has_groups', 'bpwpapers_filter_groups', 20 );
+	
+	// re-query with our params
+	$has_groups = bp_has_groups( $params );
+	
+	// add filter back in
+	add_filter( 'bp_has_groups', 'bpwpapers_filter_groups', 20, 3 );
+
+	// fallback
+	return $has_groups;
+	
+}
+
+
+
+/**
+ * Parse the query
+ * 
+ * @param bool $has_groups Whether or not this query has found groups
+ * @param object $groups_template BuddyPress groups template object
+ * @param array $params Array of arguments with which the query was configured
+ * @return bool $has_groups Whether or not our modified query has found groups
+ */
+function bpwpapers_filter_groups( $has_groups, $groups_template, $params ) {
 	
 	/*
 	print_r( array(
@@ -37,7 +63,7 @@ function bpwpapers_has_groups( $has_groups, $groups_template, $params ) {
 		$params['exclude'] = bpwpapers_get_paper_groups();
 		
 		// remove this filter to avoid recursion
-		remove_filter( 'bp_has_groups', 'bpwpapers_has_groups', 20 );
+		remove_filter( 'bp_has_groups', 'bpwpapers_filter_groups', 20 );
 		
 		// re-query with our params
 		$has_groups = bp_has_groups( $params );
@@ -51,6 +77,9 @@ function bpwpapers_has_groups( $has_groups, $groups_template, $params ) {
 		) ); die();
 		*/
 		
+		// add filter back in
+		add_filter( 'bp_has_groups', 'bpwpapers_filter_groups', 20, 3 );
+	
 	} else {
 		
 		// TODO: merge arrays...
@@ -66,7 +95,7 @@ function bpwpapers_has_groups( $has_groups, $groups_template, $params ) {
 if ( ! is_admin() ) {
 
 	// add filter for the above
-	add_filter( 'bp_has_groups', 'bpwpapers_has_groups', 20, 3 );
+	add_filter( 'bp_has_groups', 'bpwpapers_filter_groups', 20, 3 );
 
 }
 
@@ -84,7 +113,7 @@ function bpwpapers_get_paper_groups( $user_id = false ) {
 	$groups = array();
 	
 	// remove this filter to avoid recursion
-	remove_filter( 'bp_has_groups', 'bpwpapers_has_groups', 20 );
+	remove_filter( 'bp_has_groups', 'bpwpapers_filter_groups', 20 );
 	
 	// init with unlikely value so we get all
 	$params = array(
@@ -123,7 +152,7 @@ function bpwpapers_get_paper_groups( $user_id = false ) {
 	}
 	
 	// add filter back in
-	add_filter( 'bp_has_groups', 'bpwpapers_has_groups', 20, 3 );
+	add_filter( 'bp_has_groups', 'bpwpapers_filter_groups', 20, 3 );
 	
 	/*
 	print_r( array(
