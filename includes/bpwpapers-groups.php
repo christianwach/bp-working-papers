@@ -504,6 +504,46 @@ function bpwpapers_group_has_working_paper( $group_id = null ) {
 
 
 /** 
+ * Override the group permalink
+ * 
+ * @param string $permalink The permalink of the group on the main site
+ * @return string $permalink The permalink of the group on the working paper site
+ */
+function bpwpapers_get_group_permalink( $permalink ) {
+	
+	// bail if not joining
+	if ( ! isset( $_GET['bpwpaper_group'] ) ) return $permalink;
+	if ( $_GET['bpwpaper_group'] != 'true' ) return $permalink;
+	
+	// get calling page
+	$url = parse_url( $_SERVER['HTTP_REFERER'] );
+	$scheme = isset( $url['scheme'] ) ? $url['scheme'] . '://' : '';
+	$host = isset( $url['host'] ) ? $url['host'] : '';
+	$path = isset( $url['path'] ) ? $url['path'] : '';
+
+	// construct link to calling page
+	$permalink = $scheme . $host . $path;
+
+	// did we get a caller?
+	if ( isset( $_GET['bpwpaper_caller'] ) ) {
+		
+		// add text sig
+		$permalink .= '#' . trim( $_GET['bpwpaper_caller'] );
+		
+	}
+	//print_r( $permalink ); die();
+
+	// allow plugin overrides
+	return apply_filters( 'bpwpapers_get_group_permalink', $permalink, $group_id );
+	
+}
+
+// add filter for the above
+add_filter( 'bp_get_group_permalink', 'bpwpapers_get_group_permalink', 20, 1 );
+
+
+
+/** 
  * Filter media buttons by authoritative groups context
  * 
  * @param bool $enabled if media buttons are enabled

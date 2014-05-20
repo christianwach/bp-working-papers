@@ -501,12 +501,17 @@ class BP_Working_Papers_Template {
 		// get group ID
 		$group_id = bpwpapers_get_group_by_blog_id( get_current_blog_id() );
 		
+		// bail if not appropriate
+		if ( groups_is_user_member( bp_loggedin_user_id(), $group_id ) ) return;
+		if ( groups_is_user_banned( bp_loggedin_user_id(), $group_id ) ) return;
+		
 		// get group
 		$group = groups_get_group( array( 'group_id' => $group_id ) );
 		
-		// --<
+		// gety button
 		$button = bp_get_group_join_button( $group );
 		
+		// show it
 		echo '<div class="bpwpapers_join">';
 		echo $button;
 		echo '</div>';
@@ -522,9 +527,12 @@ class BP_Working_Papers_Template {
 	 */
 	public function join_button_content( $button ) {
 		
-		// Override content
+		// override content
 		$button['link_text'] = __( 'Join the Discussion', 'bpwpapers' );
 		$button['link_title'] = __( 'Join the Discussion', 'bpwpapers' );
+		
+		// override content
+		$button['link_href'] .= '&bpwpaper_group=true';
 		
 		// --<
 		return $button;

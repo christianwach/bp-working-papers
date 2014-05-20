@@ -28,8 +28,8 @@ class BP_Working_Papers_Activity {
 	============================================================================
 	*/
 
-	// groups
-	public $groups = array();
+	// group ID
+	public $group_id = false;
 	
 	
 	
@@ -62,6 +62,9 @@ class BP_Working_Papers_Activity {
 		
 		// if the current blog is a working paper...
 		if ( bpwpapers_is_working_paper( get_current_blog_id() ) ) {
+			
+			// store group ID for this blog
+			$this->group_id = bpwpapers_get_group_by_blog_id( get_current_blog_id() );
 			
 			// on working papers, we don't need some filter options
 			add_action( 'init', array( $this, 'remove_external_filter_options' ), 50 );
@@ -1013,7 +1016,7 @@ class BP_Working_Papers_Activity {
 				
 				// add filters on reply to link
 				add_filter( 'commentpress_reply_to_para_link_text', array( $this, 'override_reply_to_text' ), 10, 2 );
-				add_filter( 'commentpress_reply_to_para_link_href', array( $this, 'override_reply_to_href' ), 10, 1 );
+				add_filter( 'commentpress_reply_to_para_link_href', array( $this, 'override_reply_to_href' ), 10, 2 );
 				add_filter( 'commentpress_reply_to_para_link_onclick', array( $this, 'override_reply_to_onclick' ), 10, 2 );
 				
 				// disable
@@ -1043,10 +1046,15 @@ class BP_Working_Papers_Activity {
 	function override_reply_to_text( $link_text, $paragraph_text ) {
 	
 		// construct link content
+		$link_text = __( 'Join the discussion to leave a comment', 'bpwpapers' );
+		
+		/*
+		// construct link content (alt)
 		$link_text = sprintf(
-			__( 'Join the group to leave a comment on %s', 'bpwpapers' ),
+			__( 'Join the discussion to leave a comment on %s', 'bpwpapers' ),
 			$paragraph_text
 		);
+		*/
 		
 		// --<
 		return $link_text;
@@ -1058,13 +1066,24 @@ class BP_Working_Papers_Activity {
 	/** 
 	 * Override content of the reply to link target
 	 * 
-	 * @param string $href existing target URL
-	 * @return string $href permalink of the groups directory
+	 * @param string $href The existing target URL
+	 * @param string $text_sig The text signature of the paragraph
+	 * @return string $href Overridden target URL
 	 */
-	function override_reply_to_href( $href ) {
-	
+	function override_reply_to_href( $href, $text_sig ) {
+		
+		// get group for this blog
+		$group = groups_get_group( array( 'group_id' => $this->group_id ) );
+		
+		// init URL
+		$href = wp_nonce_url( bp_get_group_permalink( $group ) . 'join', 'groups_join_group' );
+		
+		// add identifier and anchor - should be fine for length, see:
+		// http://stackoverflow.com/questions/812925/what-is-the-maximum-possible-length-of-a-query-string
+		$href .= '&bpwpaper_group=true&bpwpaper_caller=' . $text_sig;
+
 		// --<
-		return bp_get_groups_directory_permalink();
+		return $href;
 	
 	}
 	

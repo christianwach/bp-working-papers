@@ -36,6 +36,9 @@ define( 'BP_WORKING_PAPERS_PREFIX', 'bpwpapers_blog_group_' );
 // set working papers option name
 define( 'BP_WORKING_PAPERS_OPTION', 'bpwpapers_group_blogs' );
 
+// set working papers option name
+define( 'BP_WORKING_PAPERS_GROUP_PERMALINK', 'bpwpapers_group_permalink' );
+
 // set working paper author meta key name
 define( 'BP_WORKING_PAPERS_AUTHOR_META_KEY', 'bpwpapers_author' );
 

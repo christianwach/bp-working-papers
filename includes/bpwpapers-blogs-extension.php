@@ -545,9 +545,10 @@ add_action( 'delete_blog', 'bpwpapers_blog_deleted', 10, 1 );
  * Configure blog options
  *
  * @param int $blog_id the numeric ID of the blog
+ * @param int $group_id the numeric ID of the group
  * @return void
  */
-function bpwpapers_configure_blog_options( $blog_id ) {
+function bpwpapers_configure_blog_options( $blog_id, $group_id ) {
 
 	// kick out if already a working paper
 	if ( bpwpapers_is_working_paper( $blog_id ) ) return;
@@ -610,6 +611,16 @@ function bpwpapers_configure_blog_options( $blog_id ) {
 
 	// go ahead and flush
 	flush_rewrite_rules();
+	
+	// -------------------------------------------------------------------------
+	// Save group permalink in group meta
+	// -------------------------------------------------------------------------
+	
+	// get permalink to this page
+	$permalink = get_permalink( $page_id );
+	
+	// save option with group page permalink
+	groups_update_groupmeta( $group_id, BP_WORKING_PAPERS_GROUP_PERMALINK, $permalink );
 	
 	// switch back
 	restore_current_blog();

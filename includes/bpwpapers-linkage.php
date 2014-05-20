@@ -60,7 +60,7 @@ function bpwpapers_get_blog_by_group_id( $group_id ) {
 function bpwpapers_link_blog_and_group( $blog_id, $group_id ) {
 
 	// set blog options
-	bpwpapers_configure_blog_options( $blog_id );
+	bpwpapers_configure_blog_options( $blog_id, $group_id );
 
 	// add to blog's option
 	bpwpapers_add_group_to_blog( $blog_id, $group_id );
@@ -116,7 +116,7 @@ function bpwpapers_add_group_to_blog( $blog_id, $group_id ) {
  */
 function bpwpapers_add_blog_to_group( $group_id, $blog_id ) {
 
-	// save updated option
+	// save option with blog ID
 	groups_update_groupmeta( $group_id, BP_WORKING_PAPERS_OPTION, $blog_id );
 	
 }
