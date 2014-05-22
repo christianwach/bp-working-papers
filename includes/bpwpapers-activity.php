@@ -57,6 +57,9 @@ class BP_Working_Papers_Activity {
 		// hooks that always need to be present...
 		add_action( 'bp_setup_globals', array( $this, 'add_filter_options' ) );
 		
+		// add custom group activity (outside the working paper check, since joining takes place on the main site)
+		add_action( 'bp_activity_before_save', array( $this, 'custom_group_activity' ), 10, 1 );
+		
 		// add custom site activity (outside the working paper check, since there's no group yet)
 		add_action( 'bp_activity_before_save', array( $this, 'custom_site_activity' ), 10, 1 );
 		
@@ -148,6 +151,10 @@ class BP_Working_Papers_Activity {
 		add_action( 'bp_activity_filter_options', array( $this, 'filter_option_sites' ) );
 		add_action( 'bp_member_activity_filter_options', array( $this, 'filter_option_sites' ) );
 		
+		// add our groups filter
+		add_action( 'bp_activity_filter_options', array( $this, 'filter_option_groups' ) );
+		add_action( 'bp_member_activity_filter_options', array( $this, 'filter_option_groups' ) );
+		
 		// add our posts filter
 		add_action( 'bp_activity_filter_options', array( $this, 'filter_option_posts' ) );
 		add_action( 'bp_member_activity_filter_options', array( $this, 'filter_option_posts' ) );
@@ -181,6 +188,29 @@ class BP_Working_Papers_Activity {
 		
 		// construct option
 		$option = '<option value="new_working_paper">'.$post_name.'</option>'."\n";
+		
+		// print
+		echo $option;
+
+	}
+	
+	
+	
+	/** 
+	 * Add a filter option to the filter select box on activity pages
+	 *
+	 * @return void
+	 */
+	function filter_option_groups( $slug ) {
+		
+		// default name, but allow plugins to override
+		$group_name = apply_filters( 
+			'bpwpapers_group_name', 
+			__( 'Working Paper Memberships', 'bpwpapers' )
+		);
+		
+		// construct option
+		$option = '<option value="joined_working_paper">'.$group_name.'</option>'."\n";
 		
 		// print
 		echo $option;
@@ -241,6 +271,116 @@ class BP_Working_Papers_Activity {
 	
 	/**
 	 * Record the blog post activity for the group
+	 * 
+	 * @see bp_blogs_record_blog()
+	 * @see bp_blogs_record_activity()
+	 * 
+	 * @return object $activity The new activity item
+	 */
+	function custom_group_activity( $activity ) {
+		
+		// only on new sign-ups
+		if ( ( $activity->type != 'joined_group' ) ) return $activity;
+		
+		/*
+		trigger_error( print_r( array( 
+			'group activity BEFORE' => $activity,
+			'POST' => $_POST, 
+		), true ), E_USER_ERROR ); die();
+		//print_r( array( 'group activity BEFORE' => $activity ) ); //die();
+		*/
+		
+		// get group ID
+		$group_id = $activity->item_id;
+
+		// get blog ID
+		$blog_id = bpwpapers_get_blog_by_group_id( $group_id );
+		
+		// bail if not a working paper group
+		if ( $blog_id === false ) return $activity;
+		
+		// set activity type
+		$type = 'joined_working_paper';
+		
+		// see if we already have the modified activity for this blog (unlikely)
+		$id = bp_activity_get_activity_id( array(
+	
+			'user_id' => $activity->user_id,
+			'type' => $type,
+			'item_id' => $group_id
+		
+		) );
+
+		// if we don't find a modified item...
+		if ( !$id ) {
+	
+			// see if we have an unmodified activity item (also unlikely)
+			$id = bp_activity_get_activity_id( array(
+		
+				'user_id' => $activity->user_id,
+				'type' => $activity->type,
+				'item_id' => $activity->item_id
+			
+			) );
+		
+		}
+
+		// If we found an activity for this group then overwrite that to avoid 
+		// having multiple activities
+		if ( $id ) { $activity->id = $id; }
+		
+		// get site name
+		$name = get_blog_option( $blog_id, 'blogname' );
+	
+		// if we're replacing an item, show different message...
+		if ( $id ) {
+		
+			// replace the necessary values to display in group activity stream
+			$activity->action = sprintf( 
+				
+				__( '%s joined the discussion on the %s %s', 'bpwpapers' ), 
+				bp_core_get_userlink( $activity->user_id ), 
+				strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) ),
+				'<a href="' . get_home_url( $blog_id ) . '">' . esc_attr( $name ) . '</a>'
+				
+			);
+		
+		} else {
+		
+			// replace the necessary values to display in group activity stream
+			$activity->action = sprintf( 
+				
+				__( '%s joined the discussion on the %s %s', 'bpwpapers' ), 
+				bp_core_get_userlink( $activity->user_id ), 
+				strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) ),
+				'<a href="' . get_home_url( $blog_id ) . '">' . esc_attr( $name ) . '</a>'
+				
+			);
+			
+		}
+		
+		// set to relevant custom type
+		$activity->type = $type;
+		
+		/*
+		trigger_error( print_r( array( 
+			'site activity AFTER' => $activity,
+			'POST' => $_POST, 
+		), true ), E_USER_ERROR ); //die();
+		//print_r( array( 'site activity AFTER' => $activity ) ); //die();
+		*/
+		
+		// prevent from firing again
+		remove_action( 'bp_activity_before_save', array( $this, 'custom_group_activity' ) );
+		
+		// --<
+		return $activity;
+	}
+	
+	
+	
+	/**
+	 * Record the blog creation activity
 	 * 
 	 * @see bp_blogs_record_blog()
 	 * @see bp_blogs_record_activity()
@@ -378,6 +518,21 @@ class BP_Working_Papers_Activity {
 		// get group
 		$group = groups_get_group( array( 'group_id' => $group_id ) );
 		
+		// safely get home URL
+		$home_url = ( $blog_id !== false ) ? get_home_url( $blog_id ) : false;
+	
+		// bail if we don't get a home URL for the site
+		if ( empty( $home_url ) ) return $activity;
+		
+		// get site name
+		$blog_name = get_blog_option( $blog_id, 'blogname' );
+		
+		// construct blog link
+		$blog_link = '<a href="'.$home_url.'" title="'.esc_attr( $blog_name ).'">'.$blog_name.'</a>';
+	
+		// get name
+		$name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+
 		// set activity type
 		$type = 'new_working_paper_post';
 		
@@ -481,29 +636,31 @@ class BP_Working_Papers_Activity {
 		// if we're replacing an item, show different message...
 		if ( $id ) {
 		
-			// replace the necessary values to display in group activity stream
+			// replace the necessary values to display in activity stream
 			$activity->action = sprintf( 
 		
-				__( '%s updated a %s %s in the group %s:', 'bpwpapers' ),
+				__( '%1$s updated a %2$s %3$s in the %4$s %5$s:', 'bpwpapers' ),
 			
 				$activity_author, 
 				$activity_name, 
 				'<a href="' . get_permalink( $post->ID ) .'">' . esc_attr( $post->post_title ) . '</a>', 
-				'<a href="' . bp_get_group_permalink( $group ) . '">' . esc_attr( $group->name ) . '</a>' 
+				strtolower( $name ),
+				$blog_link
 			
 			);
 		
 		} else {
 	
-			// replace the necessary values to display in group activity stream
+			// replace the necessary values to display in activity stream
 			$activity->action = sprintf( 
 		
-				__( '%s wrote a new %s %s in the group %s:', 'bpwpapers' ),
+				__( '%1$s wrote a new %2$s %3$s in the %4$s %5$s:', 'bpwpapers' ),
 			
 				$activity_author, 
 				$activity_name, 
 				'<a href="' . get_permalink( $post->ID ) .'">' . esc_attr( $post->post_title ) . '</a>', 
-				'<a href="' . bp_get_group_permalink( $group ) . '">' . esc_attr( $group->name ) . '</a>' 
+				strtolower( $name ),
+				$blog_link
 			
 			);
 		
