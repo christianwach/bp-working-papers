@@ -33,8 +33,8 @@ class BP_Working_Papers_Template {
 	============================================================================
 	*/
 
-	// groups
-	//public $groups = array();
+	// group ID
+	public $group_id = false;
 	
 	
 	
@@ -62,9 +62,16 @@ class BP_Working_Papers_Template {
 		// if the current blog is a working paper...
 		if ( bpwpapers_is_working_paper( get_current_blog_id() ) ) {
 			
+			// store group ID for this blog
+			$this->group_id = bpwpapers_get_group_by_blog_id( get_current_blog_id() );
+			
 			// register post type
 			add_action( 'init', array( $this, 'register_cpt' ) );
 			
+			// intercept BuddyPress Group Email Subscription stuff
+			add_action( 'ass_group_all_mail_login_redirect_url', array( $this, 'intercept_email_login_url' ), 10, 1 );
+			add_filter( 'bp_ass_activity_notification_message', array( $this, 'intercept_email_text' ), 10, 2 );
+		
 			// front end
 			if ( ! is_admin() ) {
 		
@@ -73,6 +80,9 @@ class BP_Working_Papers_Template {
 			
 				// add CSS files
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+			
+				// add Javascript files
+				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			
 				// add navigation items for groups
 				add_filter( 'cp_nav_before_special_pages', array( $this, 'group_navigation_link' ) );
@@ -317,7 +327,7 @@ class BP_Working_Papers_Template {
 	
 	
 	/** 
-	 * Register plugin stylesheet
+	 * Register stylesheets
 	 * 
 	 * @return void
 	 */
@@ -333,6 +343,120 @@ class BP_Working_Papers_Template {
 			'all' // media
 			
 		);
+		
+		// enqueue BuddyPress Group Email Subscription styles
+		$style_url  = plugins_url() . '/buddypress-group-email-subscription/css/bp-activity-subscription-css.css';
+		$style_file = WP_PLUGIN_DIR . '/buddypress-group-email-subscription/css/bp-activity-subscription-css.css';
+		if (file_exists($style_file)) {
+			wp_register_style('activity-subscription-style', $style_url);
+			wp_enqueue_style('activity-subscription-style');
+		}
+		
+	}
+	
+	
+	
+	/** 
+	 * Register Javascripts
+	 * 
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		
+		// enqueue BuddyPress Group Email Subscription script
+		wp_register_script(
+			'bp-activity-subscription-js', 
+			plugins_url() . '/buddypress-group-email-subscription/bp-activity-subscription-js.js', 
+			array( 'jquery' ) 
+		);
+		wp_enqueue_script( 'bp-activity-subscription-js' );
+		wp_localize_script( 'bp-activity-subscription-js', 'bp_ass', array(
+			'mute'   => __( 'Mute', 'bp-ass' ),
+			'follow' => __( 'Follow', 'bp-ass' ),
+			'error'  => __( 'Error', 'bp-ass' )
+		) );
+		
+	}
+	
+	
+	
+	/** 
+	 * Override the login URL that BuddyPress Group Email Subscription prints in emails
+	 * 
+	 * @param string $url The existing BuddyPress Group Email Subscription login URL
+	 * @return string $url The overridden login URL
+	 */
+	public function intercept_email_login_url( $url ) {
+	
+		/*
+		trigger_error( print_r( array( 
+			'method' => 'intercept_email_login_url',
+			'url' => $url,
+			'group_id' => $this->group_id,
+			//'permalink' => $permalink,
+		), true ), E_USER_ERROR ); die();
+		*/
+		
+		// sanity check
+		if ( ! isset( $this->group_id ) ) return $url;
+		
+		// get the permalink for the group page
+		$permalink = groups_get_groupmeta( $this->group_id, BP_WORKING_PAPERS_GROUP_PERMALINK );
+		
+		// sanity check
+		if ( empty( $permalink ) ) return $url;
+		
+		// --<
+		return $permalink;
+		
+	}
+	
+	
+	
+	/** 
+	 * Override the text that BuddyPress Group Email Subscription sends in emails
+	 * 
+	 * @param string $text The existing BuddyPress Group Email Subscription email text
+	 * @param array $params The params that BuddyPress Group Email Subscription uses to construct the text
+	 * @return string $text The overridden email text
+	 */
+	public function intercept_email_text( $text, $params ) {
+	
+		/*
+		// default params
+		$params = array( 
+			'message'           => $message,
+			'notice'            => $notice,
+			'user_id'           => $user_id,
+			'subscription_type' => $group_status,
+			'content'           => $the_content,
+			'settings_link'     => ! empty( $settings_link ) ? $settings_link : '',
+		)
+		*/
+		
+		/*
+		trigger_error( print_r( array( 
+			'method' => 'intercept_email_text',
+			'text' => $text,
+			'params' => $params,
+		), true ), E_USER_ERROR ); die();
+		*/
+		
+		// sanity check
+		if ( ! isset( $this->group_id ) ) return $text;
+		
+		// get name 
+		$name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+		
+		// replace instances of "group"
+		$text = str_replace( 
+			' for this group', // instance
+			' for this ' . strtolower( $name ), // replacement
+			$text 
+		);
+		
+		// --<
+		return $text;
 		
 	}
 	
