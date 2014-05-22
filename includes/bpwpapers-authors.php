@@ -45,6 +45,9 @@ function bpwpapers_authors_core_get_users( $retval, $params ) {
 		// re-query with our params
 		$retval = bp_core_get_users( $params );
 		
+		// re-add filter
+		add_filter( 'bp_core_get_users', 'bpwpapers_authors_core_get_users', 20, 2 );
+		
 	}
 	
 	// fallback
@@ -97,8 +100,8 @@ function bpwpapers_members_pagination_count() {
 		
 			$pag = sprintf( 
 				_n( 
-					'Viewing member %1$s to %2$s (of %3$s active member)', 
-					'Viewing member %1$s to %2$s (of %3$s active members)', 
+					'Viewing author %1$s to %2$s (of %3$s active author)', 
+					'Viewing author %1$s to %2$s (of %3$s active authors)', 
 					$total, 
 					'bpwpapers' 
 				), 
@@ -111,8 +114,8 @@ function bpwpapers_members_pagination_count() {
 		
 			$pag = sprintf( 
 				_n( 
-					'Viewing member %1$s to %2$s (of %3$s member with friends)', 
-					'Viewing member %1$s to %2$s (of %3$s members with friends)', 
+					'Viewing author %1$s to %2$s (of %3$s author with friends)', 
+					'Viewing author %1$s to %2$s (of %3$s authors with friends)', 
 					$total, 
 					'bpwpapers' 
 				), 
@@ -125,8 +128,8 @@ function bpwpapers_members_pagination_count() {
 			
 			$pag = sprintf( 
 				_n( 
-					'Viewing member %1$s to %2$s (of %3$s member online)', 
-					'Viewing member %1$s to %2$s (of %3$s members online)', 
+					'Viewing author %1$s to %2$s (of %3$s author online)', 
+					'Viewing author %1$s to %2$s (of %3$s authors online)', 
 					$total, 
 					'bpwpapers' 
 				), 
@@ -139,8 +142,8 @@ function bpwpapers_members_pagination_count() {
 		
 			$pag = sprintf( 
 				_n( 
-					'Viewing member %1$s to %2$s (of %3$s member)', 
-					'Viewing member %1$s to %2$s (of %3$s members)', 
+					'Viewing author %1$s to %2$s (of %3$s author)', 
+					'Viewing author %1$s to %2$s (of %3$s authors)', 
 					$total, 
 					'bpwpapers' 
 				), 

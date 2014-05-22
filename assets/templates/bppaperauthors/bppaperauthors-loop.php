@@ -20,7 +20,7 @@ if ( bp_has_members( bp_ajax_querystring( 'bppaperauthors' ) ) ) {
 
 		<div class="pag-count" id="member-dir-count-top">
 
-			<?php bp_members_pagination_count(); ?>
+			<?php bpwpapers_members_pagination_count(); ?>
 
 		</div>
 
@@ -95,7 +95,7 @@ if ( bp_has_members( bp_ajax_querystring( 'bppaperauthors' ) ) ) {
 
 		<div class="pag-count" id="member-dir-count-bottom">
 
-			<?php bp_members_pagination_count(); ?>
+			<?php bpwpapers_members_pagination_count(); ?>
 
 		</div>
 
