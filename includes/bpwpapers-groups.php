@@ -13,10 +13,8 @@ NOTES
 
 
 /**
- * Parse the query
+ * Query all groups
  * 
- * @param bool $has_groups Whether or not this query has found groups
- * @param object $groups_template BuddyPress groups template object
  * @param array $params Array of arguments with which the query was configured
  * @return bool $has_groups Whether or not our modified query has found groups
  */
@@ -39,7 +37,7 @@ function bpwpapers_has_groups( $params ) {
 
 
 /**
- * Parse the query
+ * Parse the query passed to bp_has_groups() and exclude paper groups
  * 
  * @param bool $has_groups Whether or not this query has found groups
  * @param object $groups_template BuddyPress groups template object
@@ -47,6 +45,9 @@ function bpwpapers_has_groups( $params ) {
  * @return bool $has_groups Whether or not our modified query has found groups
  */
 function bpwpapers_filter_groups( $has_groups, $groups_template, $params ) {
+	
+	// kick out if type is invites
+	//if ( $params['type'] == 'invites' ) return $has_groups;
 	
 	/*
 	trigger_error( print_r( array( 
@@ -115,21 +116,19 @@ if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
  * @param int $user_id The numeric ID of a user
  * @return array $groups The full array of working paper groups
  */
-function bpwpapers_get_paper_groups( $user_id = false ) {
+function bpwpapers_get_paper_groups( $user_id = 0 ) {
 	
 	// init return
 	$groups = array();
 	
-	// remove this filter to avoid recursion
-	remove_filter( 'bp_has_groups', 'bpwpapers_filter_groups', 20 );
-	
 	// init with unlikely value so we get all
 	$params = array(
+		'type' => 'alphabetical',
 		'per_page' => 100000,
 	);
 	
 	// did we get a passed in user?
-	if ( $user_id !== false ) {
+	if ( $user_id !== 0 AND $user_id !== false ) {
 		$params['user_id'] = $user_id;
 	}
 	
@@ -144,8 +143,10 @@ function bpwpapers_get_paper_groups( $user_id = false ) {
 		)
 	);
 	
+	//$groups_template = new BP_Groups_Template( $params );
+
 	// get our groups
-	$has_groups = bp_has_groups( $params );
+	$has_groups = bpwpapers_has_groups( $params );
 	
 	global $groups_template;
 	
@@ -158,9 +159,6 @@ function bpwpapers_get_paper_groups( $user_id = false ) {
 			
 		}
 	}
-	
-	// add filter back in
-	add_filter( 'bp_has_groups', 'bpwpapers_filter_groups', 20, 3 );
 	
 	/*
 	print_r( array(
@@ -205,8 +203,8 @@ function bpwpapers_get_total_group_count() {
 
 }
 
-// only on front end
-if ( ! is_admin() ) {
+// only on front end OR ajax
+if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
 
 	// add filter for the above
 	add_filter( 'bp_get_total_group_count', 'bpwpapers_get_total_group_count', 20 );
@@ -230,7 +228,17 @@ function bpwpapers_get_total_group_count_for_user( $count, $user_id ) {
 	
 	// calculate
 	$filtered_count = $count - count( $bpwpapers_groups );
-
+	
+	/*
+	print_r( array( 
+		'method' => 'bpwpapers_get_total_group_count_for_user', 
+		'count' => $count, 
+		'user_id' => $user_id, 
+		'bpwpapers_groups' => $bpwpapers_groups, 
+		'filtered_count' => $filtered_count, 
+	) ); die();
+	*/
+		
 	// add filter again
 	add_filter( 'bp_get_total_group_count_for_user', 'bpwpapers_get_total_group_count_for_user', 8, 2 );
 	
@@ -239,8 +247,8 @@ function bpwpapers_get_total_group_count_for_user( $count, $user_id ) {
 
 }
 
-// only on front end
-if ( ! is_admin() ) {
+// only on front end OR ajax
+if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
 
 	// add filter for the above, before BP applies its number formatting
 	add_filter( 'bp_get_total_group_count_for_user', 'bpwpapers_get_total_group_count_for_user', 8, 2 );
