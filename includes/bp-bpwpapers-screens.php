@@ -568,7 +568,7 @@ function bpwpapers_visit_group_button( $args = '' ) {
 }
 
 // add after "visit working paper" button
-add_action( 'bp_directory_blogs_actions',  'bpwpapers_visit_group_button', 20 );
+//add_action( 'bp_directory_blogs_actions',  'bpwpapers_visit_group_button', 20 );
 
 	/**
 	 * Return button for visiting a group in the working papers loop.
