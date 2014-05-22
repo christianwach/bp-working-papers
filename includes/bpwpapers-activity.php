@@ -63,6 +63,9 @@ class BP_Working_Papers_Activity {
 		// add custom site activity (outside the working paper check, since there's no group yet)
 		add_action( 'bp_activity_before_save', array( $this, 'custom_site_activity' ), 10, 1 );
 		
+		// override activity comment reply link
+		add_filter( 'cp_activity_entry_comment_link', array( $this, 'filter_comment_link' ), 10, 1 );
+		
 		// if the current blog is a working paper...
 		if ( bpwpapers_is_working_paper( get_current_blog_id() ) ) {
 			
@@ -107,9 +110,6 @@ class BP_Working_Papers_Activity {
 			
 			// on a working paper, filter activity stream to include only items from that group
 			add_filter( 'bp_ajax_querystring', array( $this, 'filter_ajax_querystring' ), 20, 2 );
-			
-			// override activity comment reply link
-			add_filter( 'cp_activity_entry_comment_link', array( $this, 'filter_comment_link' ), 10, 1 );
 			
 		}
 		
@@ -967,7 +967,7 @@ class BP_Working_Papers_Activity {
 		$type = bp_get_activity_action_name();
 		
 		// our custom activity types
-		$types = array( 'new_working_paper', 'new_working_paper_post', 'new_working_paper_comment' );
+		$types = array( 'new_working_paper_post', 'new_working_paper_comment' );
 		
 		// not one of ours?
 		if ( ! in_array( $type, $types ) ) return $link;
