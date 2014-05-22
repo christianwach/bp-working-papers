@@ -49,6 +49,14 @@ function bpwpapers_has_groups( $params ) {
 function bpwpapers_filter_groups( $has_groups, $groups_template, $params ) {
 	
 	/*
+	trigger_error( print_r( array( 
+		'has_groups' => $has_groups, 
+		'groups_template' => $groups_template, 
+		'params' => $params, 
+	), true ), E_USER_ERROR ); die();
+	*/
+	
+	/*
 	print_r( array(
 		'has_groups' => $has_groups, 
 		'groups_template' => $groups_template, 
@@ -91,8 +99,8 @@ function bpwpapers_filter_groups( $has_groups, $groups_template, $params ) {
 	
 }
 
-// only on front end
-if ( ! is_admin() ) {
+// only on front end OR ajax
+if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
 
 	// add filter for the above
 	add_filter( 'bp_has_groups', 'bpwpapers_filter_groups', 20, 3 );
