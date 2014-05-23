@@ -27,21 +27,28 @@ get_header( 'buddypress' );
 				__( '%s Directory', 'bpwpapers' ), 
 				apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
 			);
+			
+			// show "create" if logged in
+			if ( is_user_logged_in() ) {
+			
+				?> &nbsp;<a class="button" href="<?php 
+			
+				// print link to create page
+				echo bp_get_root_domain() . '/' . bpwpapers_get_root_slug() . '/create/' 
+			
+				?>"><?php 
+			
+				// show create link
+				echo sprintf( 
+					__( 'Create a %s', 'bpwpapers' ), 
+					apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+				);
 
-			?> &nbsp;<a class="button" href="<?php 
+				?></a><?php
 			
-			// print link to create page
-			echo bp_get_root_domain() . '/' . bpwpapers_get_root_slug() . '/create/' 
+			}
 			
-			?>"><?php 
-			
-			// show create link
-			echo sprintf( 
-				__( 'Create a %s', 'bpwpapers' ), 
-				apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
-			);
-
-			?></a></h3>
+			?></h3>
 
 			<?php do_action( 'bp_before_directory_blogs_content' ); ?>
 
