@@ -1,0 +1,28 @@
+/*
+================================================================================
+BuddyPress Working Papers Widgets Stylesheet
+================================================================================
+AUTHOR: Christian Wach <needle@haystack.co.uk>
+--------------------------------------------------------------------------------
+NOTES
+=====
+
+Provide basic styles for widgets supplied with this plugin
+
+--------------------------------------------------------------------------------
+*/
+
+
+
+/* Featured Author widget styles */
+.widget.widget_bpwpapers_author_widget .item-avatar
+{
+	width: 160px;
+	height: 160px;
+}
+
+.widget.widget_bpwpapers_author_widget img.avatar
+{
+	width: 150px;
+	height: 150px;
+}

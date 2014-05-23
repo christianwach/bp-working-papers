@@ -58,7 +58,21 @@ class BP_Working_Papers_Template {
 	 * @return void
 	 */
 	public function register_hooks() {
+		
+		// for main site
+		if ( is_main_blog() ) {
 	
+			// add widget areas for working papers homepage
+			add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
+			
+			// add widgets for working papers homepage
+			add_action( 'widgets_init', array( $this, 'register_widgets' ) );
+		
+			// add widget CSS file
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_widget_styles' ) );
+		
+		}
+		
 		// if the current blog is a working paper...
 		if ( bpwpapers_is_working_paper( get_current_blog_id() ) ) {
 			
@@ -327,7 +341,7 @@ class BP_Working_Papers_Template {
 	
 	
 	/** 
-	 * Register stylesheets
+	 * Register stylesheets on working paper sub-sites
 	 * 
 	 * @return void
 	 */
@@ -336,8 +350,8 @@ class BP_Working_Papers_Template {
 		// add admin css
 		wp_enqueue_style(
 			
-			'bpwpapers-public-style', 
-			BP_WORKING_PAPERS_URL . 'assets/css/bpwpapers-public.css',
+			'bpwpapers-commentpress',
+			BP_WORKING_PAPERS_URL . 'assets/css/bpwpapers-commentpress.css',
 			null,
 			BP_WORKING_PAPERS_VERSION,
 			'all' // media
@@ -357,7 +371,7 @@ class BP_Working_Papers_Template {
 	
 	
 	/** 
-	 * Register Javascripts
+	 * Register Javascripts on working paper sub-sites
 	 * 
 	 * @return void
 	 */
@@ -375,6 +389,98 @@ class BP_Working_Papers_Template {
 			'follow' => __( 'Follow', 'bp-ass' ),
 			'error'  => __( 'Error', 'bp-ass' )
 		) );
+		
+	}
+	
+	
+	
+	/**
+	 * Register widget areas for BP Working Papers plugin
+	 * 
+	 * @return void
+	 */
+	public function register_sidebars() {
+
+		// define an area where a widget may be placed
+		register_sidebar( array(
+			'name' => __( 'Working Papers Top', 'ihc-cbox' ),
+			'id' => 'working-papers-top',
+			'description' => __( 'A widget area at the top of the Working Papers Homepage', 'ihc-cbox' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => "</div>",
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
+		) );
+	
+		// define an area where a widget may be placed
+		register_sidebar( array(
+			'name' => __( 'Working Papers Bottom Left', 'ihc-cbox' ),
+			'id' => 'working-papers-bottom-left',
+			'description' => __( 'A widget area at the bottom left of the Working Papers Homepage', 'ihc-cbox' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => "</div>",
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
+		) );
+	
+		// define an area where a widget may be placed
+		register_sidebar( array(
+			'name' => __( 'Working Papers Bottom Right', 'ihc-cbox' ),
+			'id' => 'working-papers-bottom-right',
+			'description' => __( 'A widget area at the bottom right of the Working Papers Homepage', 'ihc-cbox' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => "</div>",
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
+		) );
+	
+		// define an area where a widget may be placed
+		register_sidebar( array(
+			'name' => __( 'Working Papers Sidebar', 'ihc-cbox' ),
+			'id' => 'working-papers-sidebar',
+			'description' => __( 'A widget area in the sidebar of the Working Papers pages', 'ihc-cbox' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => "</div>",
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
+		) );
+	
+	}
+	
+	
+	
+	/**
+	 * Register widgets for BP Working Papers plugin
+	 * 
+	 * @return void
+	 */
+	public function register_widgets() {
+
+		// include widgets
+		require_once( BP_WORKING_PAPERS_PATH . '/includes/widgets/bpwpapers-author-widget.php' );
+		require_once( BP_WORKING_PAPERS_PATH . '/includes/widgets/bpwpapers-paper-widget.php' );
+
+	}
+	
+	
+	
+	/** 
+	 * Register stylesheets on working paper sub-sites
+	 * 
+	 * @return void
+	 */
+	public function enqueue_widget_styles() {
+	
+		// add admin css
+		wp_enqueue_style(
+			
+			'bpwpapers-widgets',
+			BP_WORKING_PAPERS_URL . 'assets/css/bpwpapers-widgets.css',
+			null,
+			BP_WORKING_PAPERS_VERSION,
+			'all' // media
+			
+		);
 		
 	}
 	
