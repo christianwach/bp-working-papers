@@ -22,7 +22,7 @@ Logic functions which don't need to be in the loop.
 function bpwpapers_get_group_by_blog_id( $blog_id ) {
 
 	// construct option name
-	$option_name = BP_WORKING_PAPERS_PREFIX . $blog_id;
+	$option_name = BP_WORKING_PAPERS_BLOG_GROUP_PREFIX . $blog_id;
 	
 	// return option if it exists
 	return get_site_option( $option_name, false );
@@ -102,7 +102,7 @@ function bpwpapers_unlink_blog_and_group( $blog_id, $group_id ) {
 function bpwpapers_add_group_to_blog( $blog_id, $group_id ) {
 
 	// save option
-	update_site_option( BP_WORKING_PAPERS_PREFIX . $blog_id, $group_id );
+	update_site_option( BP_WORKING_PAPERS_BLOG_GROUP_PREFIX . $blog_id, $group_id );
 	
 }
 
@@ -132,7 +132,7 @@ function bpwpapers_add_blog_to_group( $group_id, $blog_id ) {
 function bpwpapers_remove_group_from_blog( $blog_id, $group_id ) {
 
 	// delete the site option
-	delete_site_option( BP_WORKING_PAPERS_PREFIX . $blog_id );
+	delete_site_option( BP_WORKING_PAPERS_BLOG_GROUP_PREFIX . $blog_id );
 
 }
 

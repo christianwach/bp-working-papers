@@ -30,8 +30,8 @@ if ( !defined( 'BP_WORKING_PAPERS_PATH' ) ) {
 	define( 'BP_WORKING_PAPERS_PATH', plugin_dir_path( BP_WORKING_PAPERS_FILE ) );
 }
 
-// set site option prefix
-define( 'BP_WORKING_PAPERS_PREFIX', 'bpwpapers_blog_group_' );
+// set site option prefix for storing the group ID for a blog ID
+define( 'BP_WORKING_PAPERS_BLOG_GROUP_PREFIX', 'bpwpapers_blog_group_' );
 
 // set working papers option name
 define( 'BP_WORKING_PAPERS_OPTION', 'bpwpapers_group_blogs' );
