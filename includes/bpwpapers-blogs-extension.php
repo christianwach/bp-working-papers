@@ -15,290 +15,168 @@ association, whilst retaining useful stuff like pagination.
 
 
 
-/*
-================================================================================
-Class Name
-================================================================================
-*/
-
-// TODO: this class may not be necessary if we can filter bp_has_blogs instead
-
-class BP_Working_Papers_Blogs_Template extends BP_Blogs_Template {
-
-
-
-	/*
-	============================================================================
-	Properties
-	============================================================================
-	*/
-	
-	// need to store this for recalculation
-	public $page_arg = 'bpage';
-	
-	
-	
-	/** 
-	 * Initialises this object
-	 * 
-	 * @return void
-	 */
-	function __construct( $type, $page, $per_page, $max, $user_id, $search_terms, $page_arg ) {
-		
-		// init parent
-		parent::__construct( $type, $page, $per_page, $max, $user_id, $search_terms, $page_arg );
-		
-		// calculate true total (for this user if passed)
-		$this->_calculate_true_total( $user_id );
-		
-		// store property for recalculation
-		$this->page_arg = $page_arg;
-		
-		// exclude groupblogs and the BP root blog
-		$this->filter_blogs();
-
-		/*
-		
-		At some point, BP_Blogs_Template is bound to go the way of BP_Groups_Template
-		and arguments will be passed as an associative array. The following code will
-		go some way to dealing with that situation when it arises.
-		
-		// get passed arguments
-		$args = func_get_args();
-		
-		// did we get any?
-		if( is_array( $args ) AND count( $args ) > 1 ) {
-			
-			// yes, init parent
-			parent::__construct( $args );
-			
-			// modify with our additions
-			$this->filter_by_group( $args );
-
-		} else {
-			
-			// no, init with empty array
-			$this->params = array();
-
-		}
-		
-		*/
-
-	}
-	
-	
-	
-	/**
-	 * @description exclude groupblogs and the BP root blog
-	 */
-	public function filter_blogs() {
-		
-		// if we got some...
-		if ( is_array( $this->blogs ) AND count( $this->blogs ) > 0 ) {
-		
-			// exclude groupblogs and the BP root blog
-			$this->blogs = $this->_exclude_groupblogs_and_root( $this->blogs );
-		
-			// recalculate parameters
-			$this->_recalculate();
-	
-		}
-		
-	}
-	
-	
-	
-	/** 
-	 * Filter blogs by their group associations
-	 * 
-	 * @param array $blogs an array of blogs
-	 * @return array filtered blogs
-	 */
-	protected function _exclude_groupblogs_and_root( $blogs ) {
-		
-		// init return
-		$filtered_blogs = array();
-		$filtered_blogs['blogs'] = array();
-
-		// if we have some blogs...
-		if ( is_array( $blogs ) AND count( $blogs ) > 0 ) {
-		
-			// let's look at them
-			foreach( $blogs AS $blog ) {
-			
-				// is it the BP root blog?
-				if ( $blog->blog_id == bp_get_root_blog_id() ) { continue; }
-				
-				// is it a groupblog?
-				if ( bpwpapers_is_groupblog( $blog->blog_id ) ) { continue; }
-				
-				// if we're showing the component directory, include only working papers
-				if ( bp_is_bpwpapers_component() ) {
-				
-					// is it a working paper?
-					if ( !bpwpapers_is_working_paper( $blog->blog_id ) ) { continue; }
-					
-				}
-				
-				// okay, none of those - add it
-				$filtered_blogs['blogs'][] = $blog;
-		
-			}
-	
-		}
-	
-		// total blog count is calculated by _calculate_true_total()
-		$filtered_blogs['total'] = $this->total_blog_count;
-	
-		/*
-		// DIE!!!!!!
-		print_r( array(
-			'blogs' => $blogs, 
-			'filtered_blogs' => $filtered_blogs,
-			'total_blog_count' => $this->total_blog_count
-		) ); die();
-		*/
-	
-		// --<
-		return $filtered_blogs;
-	
-	}
-
-
-
-	/** 
-	 * Recalculate properties
-	 * 
-	 * @return void
-	 */
-	protected function _recalculate() {
-
-		// recalculate and reassign
-		$this->blogs = $this->blogs['blogs'];
-		$this->blog_count = count( $this->blogs );
-
-		// rebuild pagination with new blog counts
-		if ( (int) $this->total_blog_count && (int) $this->pag_num ) {
-	
-			$this->pag_links = paginate_links( array(
-		
-				'base'      => add_query_arg( $this->page_arg, '%#%' ),
-				'format'    => '',
-				'total'     => ceil( (int) $this->total_blog_count / (int) $this->pag_num ),
-				'current'   => (int) $this->pag_page,
-				'prev_text' => _x( '&larr;', 'Blog pagination previous text', 'bpwpapers' ),
-				'next_text' => _x( '&rarr;', 'Blog pagination next text', 'bpwpapers' ),
-				'mid_size'  => 1
-			
-			) );
-		
-		}
-	
-	}
-
-
-
-	/**
-	 * Calculate true total of filtered blogs
-	 * 
-	 * @return void
-	 */
-	protected function _calculate_true_total( $user_id ) {
-	
-		// are we filtering by user ID?
-		if ( $user_id == 0 ) {
-
-			// get all blogs first
-			$all = bp_blogs_get_all_blogs();
-			
-		} else {
-			
-			// get all for this user
-			$all = bp_blogs_get_blogs_for_user( $user_id );
-
-		}
-		
-		// filter out root blog and group blogs
-		$filtered = $this->_exclude_groupblogs_and_root( $all['blogs'] );
-		
-		// store total
-		$this->total_blog_count = count( $filtered['blogs'] );
-		
-		/*
-		print_r( array(
-			'user_id' => $user_id, 
-			'user' => new WP_User( $user_id ), 
-			'all' => $all, 
-			'filtered' => $filtered,
-			'total_blog_count' => $this->total_blog_count,
-			'debug_backtrace' => debug_backtrace( 0 )
-		) ); //die();
-		*/
-	
-	}
-
-
-
-} // class ends
-
-
-
-//==============================================================================
-
-
-
-/** 
- * Group-aware modification of bp_has_blogs
+/**
+ * Query only working paper blogs
  * 
- * @return bool True when there are blogs, false when not
+ * @param array $args Array of arguments with which the query was configured
+ * @return bool $has_blogs Whether or not our modified query has found blogs
  */
 function bpwpapers_has_blogs( $args = '' ) {
-	global $blogs_template;
-
-	/***
-	 * Set the defaults based on the current page. Any of these will be overridden
-	 * if arguments are directly passed into the loop. Custom plugins should always
-	 * pass their parameters directly to the loop.
-	 */
-	$type         = 'active';
-	$user_id      = 0;
-	$search_terms = null;
-
-	// User filtering
-	if ( bp_displayed_user_id() )
-		$user_id = bp_displayed_user_id();
-
+	
+	// remove default exclusion filter
+	remove_filter( 'bp_has_blogs', 'bpwpapers_filter_papers', 20 );
+	
+	// get paper IDs
+	$papers = bpwpapers_get_papers();
+	
+	// declare defaults
 	$defaults = array(
-		'type'         => $type,
+		'type'         => 'active',
 		'page'         => 1,
-		'per_page'     => 20,
+		'per_page'     => 20, // set large default so we avoid pagination
 		'max'          => false,
-
-		'page_arg'     => 'bpage',        // See https://buddypress.trac.wordpress.org/ticket/3679
-
-		'user_id'      => $user_id,       // Pass a user_id to limit to only blogs this user has higher than subscriber access to
-		'search_terms' => $search_terms,  // Pass search terms to filter on the blog title or description.
+		'page_arg'     => 'bpage',
+		'user_id'      => 0,
+		'include_blog_ids'  => $papers,
+		'search_terms' => null,
+		'update_meta_cache' => true,
 	);
+	
+	// parse args
+	$parsed_args = wp_parse_args( $args, $defaults );
 
-	$r = wp_parse_args( $args, $defaults );
-	extract( $r );
+	// re-query with our params
+	$has_blogs = bp_has_blogs( $parsed_args );
+	
+	// add exclusion filter back as default
+	add_filter( 'bp_has_blogs', 'bpwpapers_filter_papers', 20, 3 );
+	
+	// fallback
+	return $has_blogs;
+	
+}
 
-	if ( is_null( $search_terms ) ) {
-		if ( isset( $_REQUEST['s'] ) && !empty( $_REQUEST['s'] ) )
-			$search_terms = $_REQUEST['s'];
-		else
-			$search_terms = false;
-	}
 
-	if ( $max ) {
-		if ( $per_page > $max ) {
-			$per_page = $max;
+
+/**
+ * Intercept the bp_has_blogs() query and exclude working paper sites
+ * 
+ * @param bool $has_blogs Whether or not this query has found blogs
+ * @param object $blogs_template BuddyPress blogs template object
+ * @param array $params Array of arguments with which the query was configured
+ * @return bool $has_blogs Whether or not this query has found blogs
+ */
+function bpwpapers_filter_papers( $has_blogs, $blogs_template, $params ) {
+	
+	// get paper IDs
+	$papers = bpwpapers_get_papers();
+	
+	// get all blogs via BP_Blogs_Blog
+	$all = BP_Blogs_Blog::get_all();
+	
+	// init ID array
+	$blog_ids = array();
+	
+	if ( is_array( $all['blogs'] ) AND count( $all['blogs'] ) > 0 ) {
+		foreach ( $all['blogs'] AS $blog ) {
+			$blog_ids[] = $blog->blog_id;
 		}
 	}
-
-	$blogs_template = new BP_Working_Papers_Blogs_Template( $type, $page, $per_page, $max, $user_id, $search_terms, $page_arg );
-	return apply_filters( 'bpwpapers_has_blogs', $blogs_template->has_blogs(), $blogs_template );
 	
+	// lets exclude
+	$papers_excluded = array_merge( array_diff( $blog_ids, $papers ) );
+	
+	// always exclude papers
+	$params['include_blog_ids'] = $papers_excluded;
+	
+	// remove this filter to avoid recursion
+	remove_filter( 'bp_has_blogs', 'bpwpapers_filter_papers', 20 );
+	
+	// re-query with our params
+	$has_blogs = bp_has_blogs( $params );
+	
+	// re-add filter
+	add_filter( 'bp_has_blogs', 'bpwpapers_filter_papers', 20, 3 );
+
+	// fallback
+	return $has_blogs;
+	
+}
+
+// only on front end OR ajax
+if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
+
+	// add filter for the above
+	add_filter( 'bp_has_blogs', 'bpwpapers_filter_papers', 20, 3 );
+
+}
+
+
+
+/**
+ * Override the total number of sites, excluding working papers
+ *
+ * @return int $filtered_count The filtered total number of BuddyPress Groups
+ */
+function bpwpapers_filter_total_blog_count() {
+	
+	// remove filter to prevent recursion
+	remove_filter( 'bp_get_total_blog_count', 'bpwpapers_filter_total_blog_count', 8 );
+	
+	// get actual count
+	$actual_count = bp_blogs_total_blogs();
+	
+	// get working papers
+	$papers = bpwpapers_total_papers();
+	
+	// calculate
+	$filtered_count = $actual_count - $papers;
+
+	// add filter again
+	add_filter( 'bp_get_total_blog_count', 'bpwpapers_filter_total_blog_count', 8 );
+	
+	// --<
+	return $filtered_count;
+
+}
+
+// only on front end OR ajax
+if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
+
+	// add filter for the above
+	add_filter( 'bp_get_total_blog_count', 'bpwpapers_filter_total_blog_count', 8 );
+
+}
+
+
+
+/**
+ * Override the total number of sites for a user, excluding working papers
+ *
+ * @return int $filtered_count The filtered total number of BuddyPress Groups for a user
+ */
+function bpwpapers_filter_total_blog_count_for_user( $user_id ) {
+	
+	// get total for user
+	$blog_count = bp_blogs_total_blogs_for_user( $user_id );
+	
+	// get working papers for this user
+	$paper_count = bpwpapers_get_total_paper_count_for_user( $user_id );
+	
+	// calculate
+	$filtered_count = $blog_count - $paper_count;
+	
+	// --<
+	return $filtered_count;
+
+}
+
+// only on front end OR ajax
+if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
+
+	// add filter for the above, before BP applies its number formatting
+	add_filter( 'bp_get_total_blog_count_for_user', 'bpwpapers_filter_total_blog_count_for_user', 8, 1 );
+
 }
 
 
@@ -343,6 +221,34 @@ function bpwpapers_blogs_pagination_count() {
 
 
 /**
+ * Get all working paper IDs
+ * 
+ * @return array $papers Array of all working paper site IDs
+ */
+function bpwpapers_get_papers() {
+	
+	// init
+	$papers = array();
+	
+	// access plugin
+	global $bp_working_papers;
+
+	// get current list
+	$blog_authors = $bp_working_papers->admin->option_get( 'bpwpapers_blog_authors' );
+	
+	// if we get some, we return the keys, which are the blog IDs
+	if ( is_array( $blog_authors ) AND count( $blog_authors ) > 0 ) {
+		return array_keys( $blog_authors );
+	}
+
+	// --<
+	return $papers;
+	
+}
+
+
+
+/**
  * Get the total number of working papers being tracked.
  * copied from bp_total_blogs() and amended
  *
@@ -353,14 +259,14 @@ function bpwpapers_total_papers() {
 	// get from cache if possible
 	if ( !$count = wp_cache_get( 'bpwpapers_total_papers', 'bpwpapers' ) ) {
 		
-		// access blogs template
-		global $blogs_template;
-		
-		// if we haven't got one yet, create one
-		if ( !isset( $blogs_template ) ) { bpwpapers_has_blogs(); }
-		
+		// access plugin
+		global $bp_working_papers;
+	
+		// get current list
+		$blog_authors = $bp_working_papers->admin->option_get( 'bpwpapers_blog_authors' );
+	
 		// get total
-		$total = bp_core_number_format( $blogs_template->total_blog_count );
+		$total = bp_core_number_format( count( $blog_authors ) );
 		
 		// stash it
 		wp_cache_set( 'bpwpapers_total_papers', $count, 'bpwpapers' );
@@ -408,21 +314,18 @@ function bpwpapers_total_papers_for_user( $user_id = 0 ) {
 		$user_id = ( bp_displayed_user_id() ) ? bp_displayed_user_id() : bp_loggedin_user_id();
 	}
 	
-	if ( !$count = wp_cache_get( 'bpwpapers_total_papers_for_user_' . $user_id, 'bpwpapers' ) ) {
+	//if ( !$count = wp_cache_get( 'bpwpapers_total_papers_for_user_' . $user_id, 'bpwpapers' ) ) {
 
-		// access blogs template
-		global $blogs_template;
-		
-		// create one
-		bpwpapers_has_blogs( array( 'user_id' => $user_id ) );
+		// get papers for author
+		$blogs = bpwpapers_get_author_papers( $user_id );
 		
 		// get count
-		$count = bp_core_number_format( $blogs_template->total_blog_count );
+		$count = bp_core_number_format( count( $blogs ) );
 		
 		// stash it
 		wp_cache_set( 'bpwpapers_total_papers_for_user_' . $user_id, $count, 'bpwpapers' );
 		
-	}
+	//}
 	
 	// --<
 	return $count;
@@ -516,6 +419,9 @@ function bpwpapers_is_working_paper( $blog_id ) {
  * @return void
  */
 function bpwpapers_blog_deleted( $blog_id, $drop = false ) {
+	
+	// bail if not working paper
+	if ( ! bpwpapers_is_working_paper( $blog_id ) ) return;
 
 	// get existing group ID
 	$group_id = bpwpapers_get_group_by_blog_id( $blog_id );
@@ -532,7 +438,18 @@ function bpwpapers_blog_deleted( $blog_id, $drop = false ) {
 	}
 	
 	// delete the site option
-	delete_site_option( BP_WORKING_PAPERS_PREFIX . $blog_id );
+	delete_site_option( BP_WORKING_PAPERS_BLOG_GROUP_PREFIX . $blog_id );
+	
+	// get author for this blog
+	$author_id = bpwpapers_get_author_for_blog( $blog_id );
+	
+	// sanity check
+	if ( $author_id !== false AND is_numeric( $author_id ) ) {
+	
+		// revoke authorship
+		bpwpapers_revoke_authorship( $author_id, $blog_id );
+	
+	}
 	
 }
 
