@@ -41,6 +41,7 @@ class BP_Group_Sites_Admin {
 	
 		// get options array, if it exists
 		$this->bpwpapers_options = bpwpapers_site_option_get( 'bpwpapers_options', array() );
+		//print_r( $this->bpwpapers_options ); die();
 		
 		// --<
 		return $this;
@@ -102,6 +103,9 @@ class BP_Group_Sites_Admin {
 	
 		// default authors to empty array
 		$this->option_set( 'bpwpapers_authors', $defaults['authors'] );
+	
+		// default blog authors to empty array
+		$this->option_set( 'bpwpapers_blog_authors', $defaults['blog_authors'] );
 	
 		// save options array
 		$this->options_save();
@@ -422,25 +426,23 @@ class BP_Group_Sites_Admin {
 		
 		return;
 		
-		// get authors
-		$authors = $this->option_get( 'bpwpapers_authors' );
+		/*
+		// get current list
+		$authors = bpwpapers_get_authors();
 		
-		// loop
-		if ( count( $authors ) > 0 ) {
-			foreach( $authors AS $user_id => $blogs ) {
-				
-				// get user
-				$user = new WP_User( $user_id );
-				print_r( ( $user->get( BP_WORKING_PAPERS_AUTHOR_META_KEY ) ? 'yes' : 'no' ) );
-				
-				// add author meta
-				//update_user_meta( $user_id, BP_WORKING_PAPERS_AUTHOR_META_KEY, true );
-				
-			}
+		foreach( $authors AS $author_id ) {
+		
+			// delete user meta
+			delete_user_meta( $author_id, BP_WORKING_PAPERS_AUTHOR_META_KEY );
+		
 		}
-		
-		die();
-		
+		*/
+
+		// default blog authors to empty array
+		$this->option_set( 'bpwpapers_blog_authors', array() );
+	
+		$this->options_save();
+	
 	}
 	
 	
@@ -712,6 +714,9 @@ class BP_Group_Sites_Admin {
 		// default plural to "Working Paper Authors"
 		$defaults['author_plural'] = __( 'Working Paper Authors', 'bpwpapers' );
 	
+		// default blog authors list
+		$defaults['blog_authors'] = array();
+		
 		// --<
 		return $defaults;
 	
