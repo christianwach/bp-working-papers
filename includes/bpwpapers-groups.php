@@ -184,7 +184,7 @@ function bpwpapers_get_paper_groups( $user_id = 0 ) {
 function bpwpapers_get_total_group_count() {
 	
 	// remove filter to prevent recursion
-	remove_filter( 'bp_get_total_group_count', 'bpwpapers_get_total_group_count', 20 );
+	remove_filter( 'bp_get_total_group_count', 'bpwpapers_get_total_group_count', 8 );
 	
 	// get actual count
 	$actual_count = bp_get_total_group_count();
@@ -194,9 +194,9 @@ function bpwpapers_get_total_group_count() {
 	
 	// calculate
 	$filtered_count = $actual_count - count( $bpwpapers_groups );
-
+	
 	// add filter again
-	add_filter( 'bp_get_total_group_count', 'bpwpapers_get_total_group_count', 20 );
+	add_filter( 'bp_get_total_group_count', 'bpwpapers_get_total_group_count', 8 );
 	
 	// --<
 	return $filtered_count;
@@ -207,7 +207,7 @@ function bpwpapers_get_total_group_count() {
 if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
 
 	// add filter for the above
-	add_filter( 'bp_get_total_group_count', 'bpwpapers_get_total_group_count', 20 );
+	add_filter( 'bp_get_total_group_count', 'bpwpapers_get_total_group_count', 8 );
 
 }
 
@@ -220,27 +220,11 @@ if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
  */
 function bpwpapers_get_total_group_count_for_user( $count, $user_id ) {
 	
-	// remove filter to prevent recursion
-	remove_filter( 'bp_get_total_group_count_for_user', 'bpwpapers_get_total_group_count_for_user', 8 );
-	
 	// get working paper groups for this user
 	$bpwpapers_groups = bpwpapers_get_paper_groups( $user_id );
 	
 	// calculate
 	$filtered_count = $count - count( $bpwpapers_groups );
-	
-	/*
-	print_r( array( 
-		'method' => 'bpwpapers_get_total_group_count_for_user', 
-		'count' => $count, 
-		'user_id' => $user_id, 
-		'bpwpapers_groups' => $bpwpapers_groups, 
-		'filtered_count' => $filtered_count, 
-	) ); die();
-	*/
-		
-	// add filter again
-	add_filter( 'bp_get_total_group_count_for_user', 'bpwpapers_get_total_group_count_for_user', 8, 2 );
 	
 	// --<
 	return $filtered_count;
