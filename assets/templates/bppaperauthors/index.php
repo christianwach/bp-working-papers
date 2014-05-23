@@ -47,7 +47,7 @@ get_header( 'buddypress' );
 						printf( 
 							__( 'All %1$s <span>%2$s</span>', 'bpwpapers' ), 
 							apply_filters( 'bppaperauthors_extension_plural', __( 'Working Paper Authors', 'bpwpapers' ) ),
-							bp_get_total_member_count()
+							bpwpapers_get_total_member_count()
 						); 
 						
 					?></a></li>
