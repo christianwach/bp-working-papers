@@ -66,33 +66,35 @@ class BP_Working_Papers_Paper_Widget extends WP_Widget {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
 		
-		/*
 		// get paper
-		if ( bp_has_members( array( 'include' => $instance['paper_id'] ) ) ) {
+		if ( bpwpapers_has_blogs( array( 'include_blog_ids' => $instance['paper_id'] ) ) ) {
 		
-			while ( bp_members() ) : bp_the_member();
+			while ( bp_blogs() ) : bp_the_blog();
 				
 				///*
 				?>
 				<div class="bpwpapers-featured-paper clearfix">
 
 					<div class="item-avatar">
-						<a href="<?php bp_member_permalink(); ?>"><?php bp_member_avatar( 'type=full&width=150&height=150' ); ?></a>
+						<a href="<?php bp_blog_permalink(); ?>"><?php bp_blog_avatar( 'type=full&width=150&height=150' ); ?></a>
 					</div>
 
 					<div class="item">
-						<div class="item-title">
-							<a href="<?php bp_member_permalink(); ?>"><?php bp_member_name(); ?></a>
+						<div class="item-title"><a href="<?php bp_blog_permalink(); ?>"><?php bp_blog_name(); ?></a></div>
+						<div class="item-meta"><span class="activity"><?php bp_blog_last_active(); ?></span></div>
 
-							<?php if ( bp_get_member_latest_update() ) : ?>
-								<span class="update"><?php bp_member_latest_update(); ?></span>
-							<?php endif; ?>
+						<?php do_action( 'bp_directory_blogs_item' ); ?>
+					</div>
+
+					<div class="action">
+
+						<?php do_action( 'bp_directory_blogs_actions' ); ?>
+
+						<div class="meta">
+
+							<?php bp_blog_latest_post(); ?>
 
 						</div>
-
-						<div class="item-meta"><span class="activity"><?php bp_member_last_active(); ?></span></div>
-
-						<?php do_action( 'bp_directory_members_item' ); ?>
 
 					</div>
 
@@ -102,7 +104,6 @@ class BP_Working_Papers_Paper_Widget extends WP_Widget {
 			endwhile;
 			
 		}
-		*/
 		
 		// show after
 		echo $args['after_widget'];
@@ -138,7 +139,6 @@ class BP_Working_Papers_Paper_Widget extends WP_Widget {
 		</p>
 		<?php
 		
-		/*
 		// get paper ID
 		if ( isset( $instance['paper_id'] ) ) {
 			$paper_id = $instance['paper_id'];
@@ -162,39 +162,31 @@ class BP_Working_Papers_Paper_Widget extends WP_Widget {
 			// init params
 			$params = array();
 			
-			// no, insert it
-			$params['meta_key'] = BP_WORKING_PAPERS_AUTHOR_META_KEY;
-			$params['meta_value'] = true;
+			// set params we want to get all papers
+			$params['type'] = 'alphabetical';
+			$params['per_page'] = 100000;
 		
-			// remove this filter
-			remove_filter( 'bp_core_get_users', 'bpwpapers_papers_core_get_users', 20 );
-		
-			// re-query with our params
-			$paper_array = bp_core_get_users( $params );
-		
-			// re-add filter
-			add_filter( 'bp_core_get_users', 'bpwpapers_papers_core_get_users', 20, 2 );
-			
-			// do we have any?
-			if ( count( $paper_array['users'] ) > 0 ) {
-			
-				foreach( $paper_array['users'] AS $paper ) {
+			// get papers
+			if ( bpwpapers_has_blogs( $params ) ) {
 				
-					// get paper name
-					$paper_name = $paper->fullname;
-					
-					// sanity checks and fallbacks
-					if ( empty( $paper_name ) ) $paper_name = $paper->display_name;
-					if ( empty( $paper_name ) ) $paper_name = $paper->user_nicename;
+				/*
+				global $blogs_template;
+				print_r( $blogs_template ); die();
+				*/
+				
+				while ( bp_blogs() ) : bp_the_blog();
+				
+					// get blog ID
+					$blog_id = bp_get_blog_id();
 				
 					// get selected
 					$selected = '';
-					if ( $paper->ID == $paper_id ) $selected = ' selected="selected"';
+					if ( $blog_id == $paper_id ) $selected = ' selected="selected"';
 				
 					// show select option
-					echo '<option value="' . $paper->ID . '"' . $selected . '>' . $paper_name . '</option>'."\n";
+					echo '<option value="' . $blog_id . '"' . $selected . '>' . bp_get_blog_name() . '</option>'."\n";
 				
-				}
+				endwhile;
 			
 			}
 			
@@ -202,7 +194,6 @@ class BP_Working_Papers_Paper_Widget extends WP_Widget {
 		</select>
 		</p>
 		<?php
-		*/
 		
 	}
 	
