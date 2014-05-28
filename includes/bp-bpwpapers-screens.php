@@ -28,7 +28,7 @@ class BP_Working_Papers_Theme_Compat {
 	 * 
 	 * @return void
 	 */
-	public function __construct() {
+	function __construct() {
 		
 		// add theme comaptibility action
 		add_action( 'bp_setup_theme_compat', array( $this, 'is_bpwpapers' ) );

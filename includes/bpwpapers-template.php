@@ -130,7 +130,7 @@ class BP_Working_Papers_Template {
 	/**
 	 * Register custom post type
 	 */
-	function register_cpt() {
+	public function register_cpt() {
 		
 		// only call this once
 		static $registered;
@@ -296,7 +296,7 @@ class BP_Working_Papers_Template {
 	 * @param string $template Relative path to a template file
 	 * @return string $full_path The full path to the template file if one is located, false otherwise
 	 */
-	function find_template( $template ) {
+	public function find_template( $template ) {
 		
 		// init as false
 		$full_path = false;
@@ -414,6 +414,39 @@ class BP_Working_Papers_Template {
 	
 		// define an area where a widget may be placed
 		register_sidebar( array(
+			'name' => __( 'Working Papers Middle Left', 'ihc-cbox' ),
+			'id' => 'working-papers-middle-left',
+			'description' => __( 'A widget area at the middle left of the Working Papers Homepage', 'ihc-cbox' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => "</div>",
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
+		) );
+	
+		// define an area where a widget may be placed
+		register_sidebar( array(
+			'name' => __( 'Working Papers Middle Right', 'ihc-cbox' ),
+			'id' => 'working-papers-middle-right',
+			'description' => __( 'A widget area at the middle right of the Working Papers Homepage', 'ihc-cbox' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => "</div>",
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
+		) );
+	
+		// define an area where a widget may be placed
+		register_sidebar( array(
+			'name' => __( 'Working Papers Lower', 'ihc-cbox' ),
+			'id' => 'working-papers-lower',
+			'description' => __( 'A spanning widget area below the middle of the Working Papers Homepage', 'ihc-cbox' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => "</div>",
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
+		) );
+	
+		// define an area where a widget may be placed
+		register_sidebar( array(
 			'name' => __( 'Working Papers Bottom Left', 'ihc-cbox' ),
 			'id' => 'working-papers-bottom-left',
 			'description' => __( 'A widget area at the bottom left of the Working Papers Homepage', 'ihc-cbox' ),
@@ -459,6 +492,8 @@ class BP_Working_Papers_Template {
 		// include widgets
 		require_once( BP_WORKING_PAPERS_PATH . '/includes/widgets/bpwpapers-author-widget.php' );
 		require_once( BP_WORKING_PAPERS_PATH . '/includes/widgets/bpwpapers-paper-widget.php' );
+		require_once( BP_WORKING_PAPERS_PATH . '/includes/widgets/bpwpapers-activity-widget.php' );
+		require_once( BP_WORKING_PAPERS_PATH . '/includes/widgets/bpwpapers-recent-widget.php' );
 
 	}
 	

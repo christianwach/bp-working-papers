@@ -109,7 +109,7 @@ class BP_Working_Papers_Component extends BP_Component {
 	 * 
 	 * @return void
 	 */
-	function setup_nav( $main_nav = array(), $sub_nav = array() ) {
+	public function setup_nav( $main_nav = array(), $sub_nav = array() ) {
 		
 		// only setup nav on profile pages
 		if ( is_multisite() AND bp_is_user() ) {
@@ -187,10 +187,10 @@ function bpwpapers_load_template_filter( $found_template, $templates ) {
 	
 		// we've got to find the template manually
 		foreach ( (array) $templates as $template ) {
-			if ( file_exists( STYLESHEETPATH . '/' . $template ) ) {
-				$filtered_templates[] = STYLESHEETPATH . '/' . $template;
-			} elseif ( is_child_theme() && file_exists( TEMPLATEPATH . '/' . $template ) ) {
-				$filtered_templates[] = TEMPLATEPATH . '/' . $template;
+			if ( file_exists( get_stylesheet_directory() . '/' . $template ) ) {
+				$filtered_templates[] = get_stylesheet_directory() . '/' . $template;
+			} elseif ( is_child_theme() && file_exists( get_template_directory() . '/' . $template ) ) {
+				$filtered_templates[] = get_template_directory() . '/' . $template;
 			} else {
 				$filtered_templates[] = BP_WORKING_PAPERS_PATH . 'assets/templates/' . $template;
 			}

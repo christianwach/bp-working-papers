@@ -14,7 +14,11 @@ Provide basic styles for widgets supplied with this plugin
 
 
 
-/* common styles */
+/* 
+--------------------------------------------------------------------------------
+Common styles
+--------------------------------------------------------------------------------
+*/
 .widget.widget_bpwpapers_author_widget,
 .widget.widget_bpwpapers_paper_widget
 {
@@ -22,7 +26,11 @@ Provide basic styles for widgets supplied with this plugin
 
 
 
-/* Featured Author widget styles */
+/*
+--------------------------------------------------------------------------------
+Featured Author widget styles
+--------------------------------------------------------------------------------
+*/
 .widget.widget_bpwpapers_author_widget .item-avatar
 {
 	width: 160px;
@@ -37,7 +45,11 @@ Provide basic styles for widgets supplied with this plugin
 
 
 
-/* Featured Paper widget styles */
+/*
+--------------------------------------------------------------------------------
+Featured Paper widget styles
+--------------------------------------------------------------------------------
+*/
 .widget.widget_bpwpapers_paper_widget .item-avatar
 {
 	width: 160px;
@@ -49,3 +61,172 @@ Provide basic styles for widgets supplied with this plugin
 	width: 150px;
 	height: 150px;
 }
+
+
+
+/*
+--------------------------------------------------------------------------------
+Activity in Working Papers widget styles
+--------------------------------------------------------------------------------
+*/
+.widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list,
+#sidebar .widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list
+{
+	margin: 0;
+}
+
+.widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li,
+#sidebar .widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li,
+.widget_bpwpapers_activity_widget p.bpwpapers-no-activity,
+#sidebar .widget_bpwpapers_activity_widget p.bpwpapers-no-activity
+{
+	padding: 0 0 20px 0;
+	margin: 20px 0;
+}
+
+.widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-avatar,
+#sidebar .widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-avatar
+{
+	float: left;
+	width: 60px;
+	height: 68px;
+}
+
+.widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-avatar a,
+#sidebar .widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-avatar a
+{
+	display: block;
+	width: 50px;
+	height: 52px;
+	padding-top: 2px;
+}
+
+.widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-avatar a img.avatar,
+#sidebar .widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-avatar a img.avatar
+{
+	width: 50px;
+	height: 50px;
+}
+
+.widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-header,
+#sidebar .widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-header
+{
+	margin-left: 60px;
+}
+
+.widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-header p,
+#sidebar .widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-header p
+{
+	padding: 0;
+	margin: 0;
+	font-size: 90%;
+	line-height: 1.5;
+}
+
+.widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-inner,
+#sidebar .widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-inner
+{
+	background: none;
+	background-color: #E9D6AE;
+	margin: 1em 0;
+	padding: 1px 0.5em;
+}
+
+.widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-inner p,
+#sidebar .widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-inner p
+{
+	margin: 0.4em 0;
+}
+
+.widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-meta a.button,
+#sidebar .widget_bpwpapers_activity_widget ul.bpwpapers-activity-widget-list li .activity-meta a.button
+{
+	margin: 0;
+	padding: 1px 8px;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
+Recent Working Papers widget styles
+--------------------------------------------------------------------------------
+*/
+.widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list,
+#sidebar .widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list
+{
+	margin: 0;
+}
+
+.widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li,
+#sidebar .widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li,
+.widget_bpwpapers_recent_widget p.bpwpapers-no-activity,
+#sidebar .widget_bpwpapers_recent_widget p.bpwpapers-no-activity
+{
+	padding: 0 0 20px 0;
+	margin: 20px 0;
+}
+
+.widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-avatar,
+#sidebar .widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-avatar
+{
+	float: left;
+	width: 60px;
+	height: 68px;
+}
+
+.widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-avatar a,
+#sidebar .widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-avatar a
+{
+	display: block;
+	width: 50px;
+	height: 52px;
+	padding-top: 2px;
+}
+
+.widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-avatar a img.avatar,
+#sidebar .widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-avatar a img.avatar
+{
+	width: 50px;
+	height: 50px;
+}
+
+.widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-header,
+#sidebar .widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-header
+{
+	margin-left: 60px;
+}
+
+.widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-header p,
+#sidebar .widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-header p
+{
+	padding: 0;
+	margin: 0;
+	font-size: 90%;
+	line-height: 1.5;
+}
+
+.widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-inner,
+#sidebar .widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-inner
+{
+	background: none;
+	background-color: #E9D6AE;
+	margin: 1em 0;
+	padding: 1px 0.5em;
+}
+
+.widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-inner p,
+#sidebar .widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-inner p
+{
+	margin: 0.4em 0;
+}
+
+.widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-meta a.button,
+#sidebar .widget_bpwpapers_recent_widget ul.bpwpapers-activity-widget-list li .activity-meta a.button
+{
+	margin: 0;
+	padding: 1px 8px;
+}
+
+
+

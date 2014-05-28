@@ -74,30 +74,24 @@ class BP_Working_Papers_Paper_Widget extends WP_Widget {
 				///*
 				?>
 				<div class="bpwpapers-featured-paper clearfix">
-
+				
 					<div class="item-avatar">
 						<a href="<?php bp_blog_permalink(); ?>"><?php bp_blog_avatar( 'type=full&width=150&height=150' ); ?></a>
 					</div>
-
+					
 					<div class="item">
 						<div class="item-title"><a href="<?php bp_blog_permalink(); ?>"><?php bp_blog_name(); ?></a></div>
 						<div class="item-meta"><span class="activity"><?php bp_blog_last_active(); ?></span></div>
-
 						<?php do_action( 'bp_directory_blogs_item' ); ?>
 					</div>
-
+					
 					<div class="action">
-
 						<?php do_action( 'bp_directory_blogs_actions' ); ?>
-
 						<div class="meta">
-
 							<?php bp_blog_latest_post(); ?>
-
 						</div>
-
 					</div>
-
+					
 				</div>
 				<?php
 				

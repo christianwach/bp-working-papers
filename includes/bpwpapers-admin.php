@@ -328,7 +328,7 @@ class BP_Group_Sites_Admin {
 	 * @description: save array as site option
 	 * @return bool Success or failure
 	 */
-	function options_save() {
+	public function options_save() {
 		
 		// save array as site option
 		return bpwpapers_site_option_set( 'bpwpapers_options', $this->bpwpapers_options );
@@ -673,7 +673,7 @@ class BP_Group_Sites_Admin {
 	 * @description: get default values for this plugin
 	 * @return array The default values for this plugin
 	 */
-	function _get_defaults() {
+	public function _get_defaults() {
 	
 		// init return
 		$defaults = array();

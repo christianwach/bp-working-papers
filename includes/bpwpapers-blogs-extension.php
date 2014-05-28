@@ -158,25 +158,12 @@ if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
  */
 function bpwpapers_filter_total_blog_count_for_user( $count ) {
 	
-	// get total for user
-	//$blog_count = bp_blogs_total_blogs_for_user( $user_id );
-	
 	// get working papers for this user
 	$paper_count = bpwpapers_get_total_paper_count_for_user( $user_id );
 	
 	// calculate
 	$filtered_count = $count - $paper_count;
 	
-	/*
-	print_r( array( 
-		'method' => 'bpwpapers_filter_total_blog_count_for_user', 
-		'user_id' => $user_id, 
-		'count' => $count, 
-		'paper_count' => $paper_count, 
-		'filtered_count' => $filtered_count, 
-	) ); //die();
-	*/
-		
 	// --<
 	return $filtered_count;
 

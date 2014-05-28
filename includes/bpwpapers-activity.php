@@ -126,7 +126,7 @@ class BP_Working_Papers_Activity {
 	 * 
 	 * @return void
 	 */
-	function remove_external_filter_options() {
+	public function remove_external_filter_options() {
 		
 		// remove unnecessary filter options
 		remove_action( 'bp_group_activity_filter_options', 'bp_groupblog_posts' );
@@ -141,7 +141,7 @@ class BP_Working_Papers_Activity {
 	 * 
 	 * @return void
 	 */
-	function add_filter_options() {
+	public function add_filter_options() {
 		
 		// remove unnecessary filter options
 		remove_action( 'bp_group_activity_filter_options', 'bp_groupblog_posts' );
@@ -178,7 +178,7 @@ class BP_Working_Papers_Activity {
 	 *
 	 * @return void
 	 */
-	function filter_option_sites( $slug ) {
+	public function filter_option_sites( $slug ) {
 		
 		// default name, but allow plugins to override
 		$post_name = apply_filters( 
@@ -201,7 +201,7 @@ class BP_Working_Papers_Activity {
 	 *
 	 * @return void
 	 */
-	function filter_option_groups( $slug ) {
+	public function filter_option_groups( $slug ) {
 		
 		// default name, but allow plugins to override
 		$group_name = apply_filters( 
@@ -224,7 +224,7 @@ class BP_Working_Papers_Activity {
 	 *
 	 * @return void
 	 */
-	function filter_option_posts( $slug ) {
+	public function filter_option_posts( $slug ) {
 		
 		// default name, but allow plugins to override
 		$post_name = apply_filters( 
@@ -247,7 +247,7 @@ class BP_Working_Papers_Activity {
 	 *
 	 * @return void
 	 */
-	function filter_option_comments() { 
+	public function filter_option_comments() { 
 		
 		// default name, but allow plugins to override
 		$comment_name = apply_filters( 
@@ -277,7 +277,7 @@ class BP_Working_Papers_Activity {
 	 * 
 	 * @return object $activity The new activity item
 	 */
-	function custom_group_activity( $activity ) {
+	public function custom_group_activity( $activity ) {
 		
 		// only on new sign-ups
 		if ( ( $activity->type != 'joined_group' ) ) return $activity;
@@ -387,7 +387,7 @@ class BP_Working_Papers_Activity {
 	 * 
 	 * @return object $activity The new activity item
 	 */
-	function custom_site_activity( $activity ) {
+	public function custom_site_activity( $activity ) {
 		
 		/*
 		trigger_error( print_r( array( 
@@ -494,7 +494,7 @@ class BP_Working_Papers_Activity {
 	 * 
 	 * @return object $activity The new activity item
 	 */
-	function custom_post_activity( $activity ) {
+	public function custom_post_activity( $activity ) {
 	
 		//print_r( array( 'post activity BEFORE' => $activity ) ); //die();
 		
@@ -701,7 +701,7 @@ class BP_Working_Papers_Activity {
 	 * 
 	 * @return object $activity The new activity item
 	 */
-	function custom_comment_activity( $activity ) {
+	public function custom_comment_activity( $activity ) {
 	
 		//trigger_error( print_r( array( 'comment activity BEFORE' => $activity ), true ), E_USER_ERROR ); die();
 		//print_r( array( 'comment activity BEFORE' => $activity ) ); //die();
@@ -843,7 +843,7 @@ class BP_Working_Papers_Activity {
 	 * @param object $post_obj The post object that the comment has been left on
 	 * @return string $name The name of the post in an activity item
 	 */
-	function custom_comment_activity_post_name( $name, $post_obj ) {
+	public function custom_comment_activity_post_name( $name, $post_obj ) {
 		
 		// sanity check
 		if ( ! is_object( $post_obj ) ) return $name;
@@ -865,7 +865,7 @@ class BP_Working_Papers_Activity {
 	 * @param object $activity The activity object
 	 * @return string $action The action of the activity item
 	 */
-	function custom_comment_activity_action( 
+	public function custom_comment_activity_action( 
 	
 		$action, 
 		$activity, 
@@ -1003,7 +1003,7 @@ class BP_Working_Papers_Activity {
 	 * @param bool $allowed whether commenting is is allowed or not
 	 * @return bool $allowed whether commenting is is allowed or not
 	 */
-	function allow_anon_commenting( $allowed ) {
+	public function allow_anon_commenting( $allowed ) {
 
 		// get current blog ID
 		$blog_id = get_current_blog_id();
@@ -1025,7 +1025,7 @@ class BP_Working_Papers_Activity {
 	 * @param array $commentdata the comment data
 	 * @return bool $approved True if un-moderated commenting is allowed, false otherwise
 	 */
-	function check_comment_approval( $approved, $commentdata ) {
+	public function check_comment_approval( $approved, $commentdata ) {
 	
 		// get current blog ID
 		$blog_id = get_current_blog_id();
@@ -1068,7 +1068,7 @@ class BP_Working_Papers_Activity {
 	 * @param object $post the post
 	 * @return string $link The link markup
 	 */
-	function override_reply_to_link( $link, $args, $comment, $post ) {
+	public function override_reply_to_link( $link, $args, $comment, $post ) {
 	
 		// pass through if not logged in
 		if ( ! is_user_logged_in() ) return $link;
@@ -1111,7 +1111,7 @@ class BP_Working_Papers_Activity {
 	 * @param bool $show whether or not to show comment form
 	 * @return bool $show True if we should show the comment form, false otherwise
 	 */
-	function show_comment_form( $show ) {
+	public function show_comment_form( $show ) {
 	
 		// get current blog ID
 		$blog_id = get_current_blog_id();
@@ -1151,7 +1151,7 @@ class BP_Working_Papers_Activity {
 	 * @param bool $tinymce whether TinyMCE is enabled or not
 	 * @return bool $tinymce whether TinyMCE is enabled or not
 	 */
-	function disable_tinymce( $tinymce ) {
+	public function disable_tinymce( $tinymce ) {
 		
 		// get current blog ID
 		$blog_id = get_current_blog_id();
@@ -1200,7 +1200,7 @@ class BP_Working_Papers_Activity {
 	 * @param string $paragraph_text paragraph text
 	 * @return string $link_text updated content of the reply to link
 	 */
-	function override_reply_to_text( $link_text, $paragraph_text ) {
+	public function override_reply_to_text( $link_text, $paragraph_text ) {
 	
 		// construct link content
 		$link_text = __( 'Join the discussion to leave a comment', 'bpwpapers' );
@@ -1227,7 +1227,7 @@ class BP_Working_Papers_Activity {
 	 * @param string $text_sig The text signature of the paragraph
 	 * @return string $href Overridden target URL
 	 */
-	function override_reply_to_href( $href, $text_sig ) {
+	public function override_reply_to_href( $href, $text_sig ) {
 		
 		// get group for this blog
 		$group = groups_get_group( array( 'group_id' => $this->group_id ) );
@@ -1251,7 +1251,7 @@ class BP_Working_Papers_Activity {
 	 * 
 	 * @return string $onclick the reply to onclick attribute
 	 */
-	function override_reply_to_onclick( $onclick ) {
+	public function override_reply_to_onclick( $onclick ) {
 	
 		// --<
 		return '';
@@ -1271,7 +1271,7 @@ class BP_Working_Papers_Activity {
 	 * 
 	 * @return string $title The title of the activity sidebar section
 	 */
-	function get_activity_sidebar_recent_title() {
+	public function get_activity_sidebar_recent_title() {
 	
 		// set title, but allow plugins to override
 		$title = sprintf(
@@ -1291,7 +1291,7 @@ class BP_Working_Papers_Activity {
 	 * 
 	 * @return void
 	 */
-	function get_activity_sidebar_section() {
+	public function get_activity_sidebar_section() {
 	
 		// All Activity
 		
@@ -1401,7 +1401,7 @@ class BP_Working_Papers_Activity {
 	 * 
 	 * @return void
 	 */
-	function get_activity_item() {
+	public function get_activity_item() {
 		
 		$same_post = '';
 
