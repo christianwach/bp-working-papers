@@ -522,24 +522,46 @@ function bpwpapers_get_group_permalink( $permalink ) {
 	$path = isset( $url['path'] ) ? $url['path'] : '';
 
 	// construct link to calling page
-	$permalink = $scheme . $host . $path;
+	$new_permalink = $scheme . $host . $path;
 
 	// did we get a caller?
-	if ( isset( $_GET['bpwpaper_caller'] ) ) {
+	if ( isset( $_GET['bpwpaper_caller'] ) AND $_GET['bpwpaper_caller'] != '' ) {
 		
 		// add text sig
-		$permalink .= '#' . trim( $_GET['bpwpaper_caller'] );
+		$new_permalink .= '#' . trim( $_GET['bpwpaper_caller'] );
 		
 	}
-	//print_r( $permalink ); die();
-
+	
 	// allow plugin overrides
-	return apply_filters( 'bpwpapers_get_group_permalink', $permalink, $group_id );
+	return apply_filters( 'bpwpapers_get_group_permalink', $new_permalink );
 	
 }
 
-// add filter for the above
-add_filter( 'bp_get_group_permalink', 'bpwpapers_get_group_permalink', 20, 1 );
+
+
+/** 
+ * Enable the override of the group permalink only once user has joined group
+ * 
+ * @param int $blog_id the numeric ID of the blog
+ * @param int $group_id the numeric ID of the group
+ * @return void
+ */
+function bpwpapers_enable_group_permalink_filter( $group_id, $user_id ) {
+	
+	// bail if AJAX posting
+	if ( 'POST' === strtoupper( $_SERVER['REQUEST_METHOD'] ) ) return;
+	
+	// bail if not joining one of our groups
+	if ( ! isset( $_GET['bpwpaper_group'] ) ) return;
+	if ( $_GET['bpwpaper_group'] != 'true' ) return;
+	
+	// add filter for overriding the group permalink
+	add_filter( 'bp_get_group_permalink', 'bpwpapers_get_group_permalink', 20, 1 );
+	
+}
+
+// add action for the above
+add_action( 'groups_join_group', 'bpwpapers_enable_group_permalink_filter', 20, 2 );
 
 
 

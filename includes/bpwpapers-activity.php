@@ -1299,7 +1299,7 @@ class BP_Working_Papers_Activity {
 		if ( bp_has_activities( array(
 
 			'scope' => 'groups',
-			'action' => 'new_working_paper,new_working_paper_post,new_working_paper_comment',
+			'action' => 'new_working_paper_post,new_working_paper_comment',
 	
 		) ) ) {
 
@@ -1358,7 +1358,7 @@ class BP_Working_Papers_Activity {
 			if ( bp_has_activities( array(
 
 				'scope' => 'friends',
-				'action' => 'new_working_paper,new_working_paper_post,new_working_paper_comment',
+				'action' => 'new_working_paper_post,new_working_paper_comment',
 	
 			) ) ) {
 
