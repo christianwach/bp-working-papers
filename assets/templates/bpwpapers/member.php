@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BuddyPress Working Papers - Working Papers Directory
+ * BuddyPress Working Papers - Member's Working Papers Listing
  */
 
 get_header( 'buddypress' );

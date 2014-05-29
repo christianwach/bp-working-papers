@@ -59,5 +59,5 @@ get_header( 'buddypress' );
 
 
 
-<?php get_sidebar( 'buddypress' ); ?>
+<?php get_sidebar( 'working-papers' ); ?>
 <?php get_footer( 'buddypress' ); ?>

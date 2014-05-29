@@ -26,6 +26,12 @@ function bpwpapers_has_blogs( $args = '' ) {
 	// remove default exclusion filter
 	remove_filter( 'bp_has_blogs', 'bpwpapers_filter_papers', 20 );
 	
+	// user filtering
+	$user_id = 0;
+	if ( bp_displayed_user_id() ) {
+		$user_id = bp_displayed_user_id();
+	}
+	
 	// get paper IDs
 	$papers = bpwpapers_get_papers();
 	
@@ -36,7 +42,7 @@ function bpwpapers_has_blogs( $args = '' ) {
 		'per_page'     => 20, // set large default so we avoid pagination
 		'max'          => false,
 		'page_arg'     => 'bpage',
-		'user_id'      => 0,
+		'user_id'      => $user_id,
 		'include_blog_ids'  => $papers,
 		'search_terms' => null,
 		'update_meta_cache' => true,
