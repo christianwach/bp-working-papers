@@ -68,7 +68,12 @@ Provide basic styles for plugin elements
 .bpwpapers_join
 {
 	float: right;
-	margin: 20px 20px 0 0;
+	margin: 28px 20px 0 0;
+}
+
+.bpwpapers_join a.group-button.join-group
+{
+	font-size: 120%;
 }
 
 

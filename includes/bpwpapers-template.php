@@ -14,6 +14,10 @@ with no UI and create a single instance of that for the group.
 We can then point template searches at our plugin's templates directory, while
 allowing themes to override the templates by including their own copies.
 
+There are additional methods here to adapt the CommentPress instance such that
+the associated group does not appear elsewhere in the site as well as utilities
+to show working paper groups - eg the widgets
+
 --------------------------------------------------------------------------------
 */
 

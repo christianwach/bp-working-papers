@@ -111,6 +111,27 @@ if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
 
 
 /**
+ * Filter out working paper groups from the BuddyPress Event Organiser metabox
+ *
+ * @param bool $reject FALSE by default (return TRUE to reject the item)
+ * @param object $item The item to be displayed in the metabox
+ * @return bool $reject The overridden rejection/acceptance flag
+ */
+function bpwpapers_event_organiser_metabox_filter( $reject, $item ) {
+	
+	//print_r( $item ); die();
+	
+	// reject if this group is a working paper group
+	if ( bpwpapers_group_has_working_paper( $item->id ) ) return true;
+	
+}
+	
+// add filter for the above
+add_filter( 'bp_event_organiser_reject_item', 'bpwpapers_event_organiser_metabox_filter', 20, 2 );
+
+
+
+/**
  * Get all BuddyPress Groups that are working paper groups (optionally by user)
  *
  * @param int $user_id The numeric ID of a user
