@@ -64,7 +64,7 @@ class BP_Working_Papers_Template {
 	public function register_hooks() {
 		
 		// for main site
-		if ( is_main_blog() ) {
+		if ( is_main_site() ) {
 	
 			// add widget areas for working papers homepage
 			add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
