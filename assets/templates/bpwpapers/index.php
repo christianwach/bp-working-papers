@@ -85,7 +85,7 @@ get_header( 'buddypress' );
 
 					<?php endif; ?>
 
-					<?php do_action( 'bp_blogs_directory_blog_types' ); ?>
+					<?php do_action( 'bpwpapers_blogs_directory_blog_types' ); ?>
 
 				</ul>
 			</div><!-- .item-list-tabs -->
