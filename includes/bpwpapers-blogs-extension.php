@@ -35,8 +35,6 @@ function bpwpapers_has_blogs( $args = '' ) {
 	// get paper IDs
 	$papers = bpwpapers_get_papers();
 	
-	//print_r( $args ); die();
-	
 	// declare defaults
 	$defaults = array(
 		'type'         => 'active',
@@ -91,15 +89,7 @@ function bpwpapers_filter_papers( $has_blogs, $blogs_template, $params ) {
 		}
 	}
 	
-	/*
-	print_r( array( 
-		'method' => 'before', 
-		'params' => $params, 
-		'papers_excluded' => $papers_excluded,
-	) ); //die();
-	*/
-	
-	// let's exclude papers
+	// let's exclude
 	$papers_excluded = array_merge( array_diff( $blog_ids, $papers ) );
 	
 	// do we have an array of blogs to include?
@@ -525,25 +515,47 @@ function bpwpapers_add_activity_scope_filter( $qs, $object ) {
 		'follow_type' => 'blogs',
 	) );
 
-	// if $following_ids is empty, pass the largest bigint(20) value to ensure
-	// no blogs are matched
-	$following_ids = empty( $following_ids ) ? '18446744073709551615' : $following_ids;
-	
 	// convert from comma-delimited if needed
 	$following_ids = array_filter( wp_parse_id_list( $following_ids ) );
-
-	// get paper IDs
-	$papers = bpwpapers_get_papers();
 	
-	// include just papers
-	$following_ids = array_intersect( $following_ids, $papers );
+	// did we get any?
+	if ( count( $following_ids ) === 0 ) {
+		
+		// no, pass the largest bigint(20) value to ensure no blogs are matched
+		$following_ids = '18446744073709551615';
+	
+		$args = array(
+			'user_id'    => 0,
+			'object'     => 'blogs',
+			'primary_id' => $following_ids,
+		);
 
-	$args = array(
-		'user_id'    => 0,
-		'object'     => 'blogs',
-		'primary_id' => $following_ids,
-	);
-
+	} else {
+	
+		// get paper IDs
+		$papers = bpwpapers_get_papers();
+	
+		// include just papers
+		$following_ids = array_intersect( $following_ids, $papers );
+		
+		// init group IDs
+		$group_ids = array();
+	
+		// get groups for these blogs
+		if ( count( $following_ids ) > 0 ) {
+			foreach( $following_ids AS $following_id ) {
+				$group_ids[] = bpwpapers_get_group_by_blog_id( $following_id );
+			}
+		}
+	
+		$args = array(
+			'user_id'    => 0,
+			'object'     => 'groups',
+			'primary_id' => implode( ',', $group_ids ),
+		);
+		
+	}
+	
 	// make sure we add a separator if we have an existing querystring
 	if ( ! empty( $qs ) ) {
 		$qs .= '&';
@@ -551,6 +563,14 @@ function bpwpapers_add_activity_scope_filter( $qs, $object ) {
 
 	// add our follow parameters to the end of the querystring
 	$qs .= build_query( $args );
+
+	/*
+	trigger_error( print_r( array( 
+		'method' => 'bpwpapers_add_blogs_scope_filter', 
+		'qs' => $qs, 
+		'object' => $object, 
+	), true ), E_USER_ERROR ); die();
+	*/
 
 	return $qs;
 	
