@@ -90,6 +90,9 @@ class BP_Working_Papers {
 		add_action( 'bp_loaded', array( $this, 'register_hooks' ) );
 		add_action( 'bp_include', array( $this, 'register_theme_hooks' ) );
 		
+		// action for Follow Blogs compatibility
+		add_action( 'plugins_loaded', array( $this, 'follow_blogs_init' ), 25 );
+		
 		// --<
 		return $this;
 		
@@ -190,7 +193,7 @@ class BP_Working_Papers {
 		$this->activity = new BP_Working_Papers_Activity;
 		
 		// load our blogs extension
-		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-blogs-extension.php' );
+		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-blogs.php' );
 	
 		// load our sites component file
 		require( BP_WORKING_PAPERS_PATH . 'includes/bp-bpwpapers-component.php' );
@@ -244,6 +247,27 @@ class BP_Working_Papers {
 	
 		// add templates dir to BuddyPress
 		bp_register_template_stack( 'bpwpapers_templates_dir',  16 );
+		
+	}
+	
+	
+	
+	/**
+	 * Include file only when Follow Blogs is loaded
+	 */
+	public function follow_blogs_init() {
+	
+		// access BP global
+		global $bp;
+	
+		// is follow blogs present?
+		if ( ! isset( $bp->follow->blogs ) ) return;
+	
+		// load our compatibility file
+		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-follow.php' );
+		
+		// init object
+		$this->follow = new BP_Working_Papers_Follow;
 		
 	}
 	

@@ -232,38 +232,6 @@ add_action( 'bp_screens', 'bpwpapers_screen_member', 3 );
 
 
 /**
- * Load the BuddyPress Working Papers Members Follow Papers screen.
- * Action added in bpwpapers_follow_blogs_init()
- * 
- * @return void
- */
-function bpwpapers_screen_member_follow() {
-
-	// is this our target page?
-	if ( 
-		is_multisite() && 
-		bp_is_bpwpapers_component() && 
-		bp_is_user() && 
-		bp_is_current_action( constant( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ) )  
-	) {
-		
-		print_r( ( bp_is_user() ? 'yes' : 'no' ) ); die();
-		// make sure BP knows that it's our directory
-		bp_update_is_directory( true, 'bpwpapers' );
-		
-		// allow plugins to handle this
-		do_action( 'bpwpapers_screen_member_follow' );
-
-		// load our create template
-		bp_core_load_template( apply_filters( 'bpwpapers_template_member', 'bpwpapers/member' ) );
-	
-	}
-	
-}
-
-
-
-/**
  * Show the BuddyPress Working Papers create form
  * copied from bp_show_blog_signup_form and amended
  */
