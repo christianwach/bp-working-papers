@@ -76,6 +76,9 @@ class BP_Working_Papers_Follow {
 		// add menu item on papers directory
 		add_action( 'bpwpapers_blogs_directory_blog_types', array( $this, 'add_blog_directory_tab' ) );
 		
+		// add menu item on activity directory
+		add_action( 'bp_before_activity_type_tab_favorites', array( $this, 'add_activity_directory_tab' ) );
+		
 	}
 	
 	
@@ -273,6 +276,14 @@ class BP_Working_Papers_Follow {
 	 */
 	public function add_activity_scope_filter( $qs, $object ) {
 
+		/*
+		trigger_error( print_r( array( 
+			'method' => 'bpwpapers_add_blogs_scope_filter', 
+			'qs' => $qs, 
+			'object' => $object, 
+		), true ), E_USER_ERROR ); die();
+		*/
+
 		// not on the activity object? stop now!
 		if ( $object != 'activity' ) {
 			return $qs;
@@ -283,6 +294,11 @@ class BP_Working_Papers_Follow {
 
 		if ( bp_is_current_action( $this->activity_slug ) ) {
 			$r['scope'] = $this->activity_slug;
+		}
+		
+		// check for Follow Blogs slug
+		if ( constant( 'BP_FOLLOW_BLOGS_USER_ACTIVITY_SLUG' ) === $r['scope'] ) {
+			return $this->filter_followblogs_activity( $qs );
 		}
 
 		if ( $this->activity_slug !== $r['scope'] ) {
@@ -369,38 +385,38 @@ class BP_Working_Papers_Follow {
 	
 		// only handle blogs
 		if ( $params['follow_type'] != 'blogs' ) return $count;
-	
+		
 		// construct args
 		$args = array(
 			'user_id' => $user_id,
 			'follow_type' => 'blogs',
 		);
-	
+		
 		// get IDs
 		$blog_ids = bp_follow_get_following( $args );
-	
+		
 		// get paper IDs
 		$papers = bpwpapers_get_papers();
-	
+		
 		// is this our component?
 		if ( bp_is_bpwpapers_component() ) {
-	
+			
 			// let's include papers
 			$total = array_intersect( $blog_ids, $papers );
-	
+			
 		} else {
-	
+			
 			// let's exclude papers
 			$total = array_merge( array_diff( $blog_ids, $papers ) );
-	
+			
 		}
-	
+		
 		// override value in count array
 		$count['following'] = count( $total );
-
+		
 		// --<
 		return $count;
-
+		
 	}
 	
 	
@@ -429,6 +445,124 @@ class BP_Working_Papers_Follow {
 	
 		?>
 		<li id="bpwpapers-following"><a href="<?php echo esc_url( bp_loggedin_user_domain() . bpwpapers_get_slug() . '/' . constant( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ). '/' ); ?>"><?php printf( __( 'Following <span>%d</span>', 'bpwpapers' ), (int) $counts['following'] ) ?></a></li><?php
+	
+	}
+	
+	
+	
+	/**
+	 * Adds a "Followed Sites (X)" tab to the activity directory.
+	 *
+	 * This is so the logged-in user can filter the activity stream to only papers
+	 * that the current user is following.
+	 */
+	public function add_activity_directory_tab() {
+	
+		// only for logged in users
+		if ( ! is_user_logged_in() ) return;
+	
+		// get counts directly
+		$counts = $this->get_paper_follow_count( bp_loggedin_user_id() );
+
+		// don't show if none found
+		//if ( empty( $counts['following'] ) ) return false;
+		
+		?>
+		<li id="activity-<?php echo $this->activity_slug; ?>"><a href="<?php echo esc_url( bp_loggedin_user_domain() . bp_get_activity_slug() . '/' . $this->activity_slug . '/' ); ?>"><?php printf( __( 'Followed Papers <span>%d</span>', 'bpwpapers' ), (int) $counts['following'] ) ?></a></li><?php
+	}
+	
+	
+	
+	/**
+	 * Get the total number of followed working papers
+	 *
+	 * @param int $user_id The numeric ID of a WordPress user
+	 * @return array $count The count array
+	 */
+	public function get_paper_follow_count( $user_id = 0 ) {
+		
+		// construct args
+		$args = array(
+			'user_id' => $user_id,
+			'follow_type' => 'blogs',
+		);
+		
+		// get IDs
+		$blog_ids = bp_follow_get_following( $args );
+		
+		// get paper IDs
+		$papers = bpwpapers_get_papers();
+		
+		// just include papers
+		$total = array_intersect( $blog_ids, $papers );
+		
+		// define count array
+		$count = array(
+			'followers' => 0,
+			'following' => count( $total ),
+		);
+		
+		// --<
+		return $count;
+		
+	}
+	
+	
+	
+	/**
+	 * Filter the activity loop.
+	 *
+	 * Specifically, when on the activity directory and clicking on the "Followed Blogs" tab.
+	 *
+	 * @param str $qs The querystring for the BP loop
+	 * @return str Modified querystring
+	 */
+	public function filter_followblogs_activity( $qs ) {
+
+		/*
+		trigger_error( print_r( array( 
+			'method' => 'filter_followblogs_activity', 
+			'qs' => $qs, 
+		), true ), E_USER_ERROR ); die();
+		*/
+
+		// parse querystring into an array
+		wp_parse_str( $qs, $params );
+
+		// convert from comma-delimited if needed
+		$following_ids = array_filter( wp_parse_id_list( $params['primary_id'] ) );
+	
+		// did we get any?
+		if ( count( $following_ids ) === 0 ) {
+		
+			// no, pass the largest bigint(20) value to ensure no blogs are matched
+			$following_ids = array( '18446744073709551615' );
+	
+		} else {
+	
+			// get paper IDs
+			$papers = bpwpapers_get_papers();
+	
+			// let's exclude papers
+			$following_ids = array_merge( array_diff( $following_ids, $papers ) );
+
+		}
+		
+		// replace primary IDs
+		$params['primary_id'] = implode( ',', $following_ids );
+
+		// rebuild querystring
+		$qs = build_query( $params );
+
+		/*
+		trigger_error( print_r( array( 
+			'method' => 'bpwpapers_add_blogs_scope_filter', 
+			'params' => $params, 
+			'qs' => $qs, 
+		), true ), E_USER_ERROR ); die();
+		*/
+
+		return $qs;
 	
 	}
 	
