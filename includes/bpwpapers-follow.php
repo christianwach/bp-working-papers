@@ -281,6 +281,8 @@ class BP_Working_Papers_Follow {
 			'method' => 'bpwpapers_add_blogs_scope_filter', 
 			'qs' => $qs, 
 			'object' => $object, 
+			'action' => bp_current_action(),
+			'slug' => constant( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ),
 		), true ), E_USER_ERROR ); die();
 		*/
 
@@ -292,15 +294,19 @@ class BP_Working_Papers_Follow {
 		// parse querystring into an array
 		wp_parse_str( $qs, $r );
 
+		// check for Follow Blogs, so we can filter paper activity out
+		if ( 
+			bp_is_current_action( constant( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ) ) OR
+			bp_is_current_action( constant( 'BP_FOLLOW_BLOGS_USER_ACTIVITY_SLUG' ) ) OR
+			constant( 'BP_FOLLOW_BLOGS_USER_ACTIVITY_SLUG' ) === $r['scope'] 
+		) {
+			return $this->filter_followblogs_activity( $qs );
+		}
+
 		if ( bp_is_current_action( $this->activity_slug ) ) {
 			$r['scope'] = $this->activity_slug;
 		}
 		
-		// check for Follow Blogs slug
-		if ( constant( 'BP_FOLLOW_BLOGS_USER_ACTIVITY_SLUG' ) === $r['scope'] ) {
-			return $this->filter_followblogs_activity( $qs );
-		}
-
 		if ( $this->activity_slug !== $r['scope'] ) {
 			return $qs;
 		}
@@ -314,19 +320,8 @@ class BP_Working_Papers_Follow {
 		$following_ids = array_filter( wp_parse_id_list( $following_ids ) );
 	
 		// did we get any?
-		if ( count( $following_ids ) === 0 ) {
+		if ( count( $following_ids ) > 0 ) {
 		
-			// no, pass the largest bigint(20) value to ensure no blogs are matched
-			$following_ids = '18446744073709551615';
-	
-			$args = array(
-				'user_id'    => 0,
-				'object'     => 'blogs',
-				'primary_id' => $following_ids,
-			);
-
-		} else {
-	
 			// get paper IDs
 			$papers = bpwpapers_get_papers();
 	
@@ -342,6 +337,9 @@ class BP_Working_Papers_Follow {
 					$group_ids[] = bpwpapers_get_group_by_blog_id( $following_id );
 				}
 			}
+			
+			// overwrite following IDs
+			$following_ids = $group_ids;
 	
 			$args = array(
 				'user_id'    => 0,
@@ -349,6 +347,20 @@ class BP_Working_Papers_Follow {
 				'primary_id' => implode( ',', $group_ids ),
 			);
 		
+		}
+	
+		// did we get any?
+		if ( count( $following_ids ) === 0 ) {
+		
+			// no, pass the largest bigint(20) value to ensure no blogs are matched
+			$following_ids = '18446744073709551615';
+	
+			$args = array(
+				'user_id'    => 0,
+				'object'     => 'blogs',
+				'primary_id' => $following_ids,
+			);
+
 		}
 	
 		// make sure we add a separator if we have an existing querystring
@@ -533,19 +545,22 @@ class BP_Working_Papers_Follow {
 		$following_ids = array_filter( wp_parse_id_list( $params['primary_id'] ) );
 	
 		// did we get any?
-		if ( count( $following_ids ) === 0 ) {
+		if ( count( $following_ids ) > 0 ) {
 		
-			// no, pass the largest bigint(20) value to ensure no blogs are matched
-			$following_ids = array( '18446744073709551615' );
-	
-		} else {
-	
 			// get paper IDs
 			$papers = bpwpapers_get_papers();
 	
 			// let's exclude papers
 			$following_ids = array_merge( array_diff( $following_ids, $papers ) );
 
+		}
+		
+		// did we get any?
+		if ( count( $following_ids ) === 0 ) {
+		
+			// no, pass the largest bigint(20) value to ensure no blogs are matched
+			$following_ids = array( '18446744073709551615' );
+	
 		}
 		
 		// replace primary IDs
