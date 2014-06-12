@@ -338,9 +338,12 @@ class BP_Working_Papers_Follow {
 			
 			// overwrite following IDs
 			$following_ids = $group_ids;
-	
+			
+			// clear user ID if on sitewide activity page
+			$user_id = ( bp_is_activity_component() AND ! bp_is_user() ) ? 0 : $user_id;
+			
 			$args = array(
-				'user_id'    => ( bp_is_activity_component() AND ! bp_is_user() ) ? 0 : $user_id,
+				'user_id'    => $user_id,
 				'object'     => 'groups',
 				'primary_id' => implode( ',', $group_ids ),
 			);
