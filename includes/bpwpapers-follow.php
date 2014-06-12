@@ -193,8 +193,12 @@ class BP_Working_Papers_Follow {
 			return $qs;
 		}
 
+		// determine user to check
+		$user_id = ( bp_displayed_user_id() ) ? bp_displayed_user_id() : bp_loggedin_user_id();
+
 		// get blog IDs that the user is following
 		$following_ids = bp_get_following_ids( array(
+			'user_id' => $user_id,
 			'follow_type' => 'blogs',
 		) );
 
@@ -210,9 +214,9 @@ class BP_Working_Papers_Follow {
 	
 		// include just papers
 		$following_ids = array_intersect( $following_ids, $papers );
-
+		
 		$args = array(
-			'user_id'          => 0,
+			'user_id' => 0,
 			'include_blog_ids' => $following_ids,
 		);
 
@@ -276,16 +280,6 @@ class BP_Working_Papers_Follow {
 	 */
 	public function add_activity_scope_filter( $qs, $object ) {
 
-		/*
-		trigger_error( print_r( array( 
-			'method' => 'bpwpapers_add_blogs_scope_filter', 
-			'qs' => $qs, 
-			'object' => $object, 
-			'action' => bp_current_action(),
-			'slug' => constant( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ),
-		), true ), E_USER_ERROR ); die();
-		*/
-
 		// not on the activity object? stop now!
 		if ( $object != 'activity' ) {
 			return $qs;
@@ -311,8 +305,12 @@ class BP_Working_Papers_Follow {
 			return $qs;
 		}
 
+		// determine user to check
+		$user_id = ( bp_displayed_user_id() ) ? bp_displayed_user_id() : bp_loggedin_user_id();
+
 		// get blog IDs that the user is following
 		$following_ids = bp_get_following_ids( array(
+			'user_id' => $user_id,
 			'follow_type' => 'blogs',
 		) );
 
@@ -342,7 +340,7 @@ class BP_Working_Papers_Follow {
 			$following_ids = $group_ids;
 	
 			$args = array(
-				'user_id'    => 0,
+				'user_id'    => ( bp_is_activity_component() AND ! bp_is_user() ) ? 0 : $user_id,
 				'object'     => 'groups',
 				'primary_id' => implode( ',', $group_ids ),
 			);
@@ -370,14 +368,6 @@ class BP_Working_Papers_Follow {
 
 		// add our follow parameters to the end of the querystring
 		$qs .= build_query( $args );
-
-		/*
-		trigger_error( print_r( array( 
-			'method' => 'bpwpapers_add_blogs_scope_filter', 
-			'qs' => $qs, 
-			'object' => $object, 
-		), true ), E_USER_ERROR ); die();
-		*/
 
 		return $qs;
 	
@@ -531,13 +521,6 @@ class BP_Working_Papers_Follow {
 	 */
 	public function filter_followblogs_activity( $qs ) {
 
-		/*
-		trigger_error( print_r( array( 
-			'method' => 'filter_followblogs_activity', 
-			'qs' => $qs, 
-		), true ), E_USER_ERROR ); die();
-		*/
-
 		// parse querystring into an array
 		wp_parse_str( $qs, $params );
 
@@ -568,14 +551,6 @@ class BP_Working_Papers_Follow {
 
 		// rebuild querystring
 		$qs = build_query( $params );
-
-		/*
-		trigger_error( print_r( array( 
-			'method' => 'bpwpapers_add_blogs_scope_filter', 
-			'params' => $params, 
-			'qs' => $qs, 
-		), true ), E_USER_ERROR ); die();
-		*/
 
 		return $qs;
 	
