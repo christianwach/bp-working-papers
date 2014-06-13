@@ -47,10 +47,7 @@ if ( bpwpapers_has_blogs( bp_ajax_querystring( 'bpwpapers' ) ) ) {
 				// get user
 				$user_id = bpwpapers_get_author_for_blog( bp_get_blog_id() );
 				
-				// show it
-				echo esc_html( bp_core_get_user_displayname( $user_id ) );
-				
-				?></span></div>
+				?><a href="<?php echo bp_core_get_user_domain( $user_id ); ?>"><?php echo esc_html( bp_core_get_user_displayname( $user_id ) ); ?></a></span></div>
 				<div class="item-meta"><span class="activity"><?php bp_blog_last_active(); ?></span></div>
 
 				<?php do_action( 'bp_directory_blogs_item' ); ?>
