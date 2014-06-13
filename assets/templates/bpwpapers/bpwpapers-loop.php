@@ -37,11 +37,20 @@ if ( bpwpapers_has_blogs( bp_ajax_querystring( 'bpwpapers' ) ) ) {
 
 		<li class="clearfix">
 			<div class="item-avatar">
-				<a href="<?php bp_blog_permalink(); ?>"><?php bp_blog_avatar( 'type=thumb' ); ?></a>
+				<a href="<?php bp_blog_permalink(); ?>"><?php bp_blog_avatar( 'type=full&width=150&height=150' ); ?></a>
 			</div>
 
 			<div class="item">
 				<div class="item-title"><a href="<?php bp_blog_permalink(); ?>"><?php bp_blog_name(); ?></a></div>
+				<div class="item-author"><span class="bpwpapers-author"><?php 
+				
+				// get user
+				$user_id = bpwpapers_get_author_for_blog( bp_get_blog_id() );
+				
+				// show it
+				echo esc_html( bp_core_get_user_displayname( $user_id ) );
+				
+				?></span></div>
 				<div class="item-meta"><span class="activity"><?php bp_blog_last_active(); ?></span></div>
 
 				<?php do_action( 'bp_directory_blogs_item' ); ?>
