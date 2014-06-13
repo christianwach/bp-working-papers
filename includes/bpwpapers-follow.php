@@ -202,22 +202,31 @@ class BP_Working_Papers_Follow {
 			'follow_type' => 'blogs',
 		) );
 
-		// if $following_ids is empty, pass the largest bigint(20) value to ensure
-		// no blogs are matched
-		$following_ids = empty( $following_ids ) ? '18446744073709551615' : $following_ids;
-	
 		// convert from comma-delimited if needed
 		$following_ids = array_filter( wp_parse_id_list( $following_ids ) );
-
-		// get paper IDs
-		$papers = bpwpapers_get_papers();
-	
-		// include just papers
-		$following_ids = array_intersect( $following_ids, $papers );
 		
+		// did we get any?
+		if ( count( $following_ids ) > 0 ) {
+
+			// get paper IDs
+			$papers = bpwpapers_get_papers();
+	
+			// include just papers
+			$following_ids = array_intersect( $following_ids, $papers );
+		
+		}
+		
+		// do we have any left?
+		if ( count( $following_ids ) === 0 ) {
+		
+			// no, pass the largest bigint(20) value to ensure no blogs are matched
+			$following_ids = array( '18446744073709551615' );
+			
+		}
+	
 		$args = array(
 			'user_id' => 0,
-			'include_blog_ids' => $following_ids,
+			'include_blog_ids' => implode( ',', $following_ids ),
 		);
 
 		// make sure we add a separator if we have an existing querystring
