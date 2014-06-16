@@ -91,7 +91,7 @@ class BP_Working_Papers {
 		add_action( 'bp_include', array( $this, 'register_theme_hooks' ) );
 		
 		// action for Follow Blogs compatibility
-		add_action( 'plugins_loaded', array( $this, 'follow_blogs_init' ), 25 );
+		add_action( 'bp_follow_blogs_loaded', array( $this, 'follow_blogs_init' ), 25 );
 		
 		// --<
 		return $this;
@@ -256,12 +256,6 @@ class BP_Working_Papers {
 	 * Include file only when Follow Blogs is loaded
 	 */
 	public function follow_blogs_init() {
-	
-		// access BP global
-		global $bp;
-	
-		// is follow blogs present?
-		if ( ! isset( $bp->follow->blogs ) ) return;
 	
 		// load our compatibility file
 		require( BP_WORKING_PAPERS_PATH . 'includes/bpwpapers-follow.php' );
