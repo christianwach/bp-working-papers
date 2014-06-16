@@ -109,7 +109,7 @@ class BP_Working_Papers_Activity {
 			add_filter( 'commentpress_bp_activity_sidebar_before_members', array( $this, 'get_activity_sidebar_section' ) );
 			
 			// on a working paper, filter activity stream to include only items from that group
-			add_filter( 'bp_ajax_querystring', array( $this, 'filter_ajax_querystring' ), 20, 2 );
+			add_filter( 'bp_ajax_querystring', array( $this, 'filter_ajax_querystring' ), 999, 2 );
 			
 		}
 		
@@ -926,6 +926,8 @@ class BP_Working_Papers_Activity {
 	/** 
 	 * Filter the group activity feed on a working paper site to show only items from the group
 	 * 
+	 * @param string $querystring The querystring
+	 * @param string $object The filtered querystring
 	 * @return string $new_querystring The filtered querystring
 	 */
 	public function filter_ajax_querystring( $querystring = '', $object = '' ) {
@@ -934,19 +936,33 @@ class BP_Working_Papers_Activity {
 		//trigger_error( print_r( array( $querystring, $object ), true ), E_USER_ERROR ); die();
 
 		// pass through if not activity stream
-		if( $object != 'activity' ) return $querystring;
+		if ( $object != 'activity' ) return $querystring;
 		
 		// get group ID
 		$group_id = bpwpapers_get_group_by_blog_id( get_current_blog_id() );
 		
 		// set some defaults
 		$defaults = array(
+			'scope' => 'activity',
+			'object' => 'groups',
+			'user_id' => 0,
 			'action' => 'new_working_paper_post,new_working_paper_comment',
 			'primary_id' => $group_id,
 		);
 		
 		// parse defaults
 		$new_querystring = wp_parse_args( $querystring, $defaults );
+		
+		// we must override some essential settings or the group won't show if there's a cookie
+		// set for some other kind of activity
+		$new_querystring['scope'] = 'activity';
+		$new_querystring['object'] = 'groups';
+		$new_querystring['user_id'] = 0;
+		$new_querystring['primary_id'] = $group_id;
+		//print_r( array( 'blog' => get_current_blog_id(), $querystring, $object, $new_querystring ) ); die();
+		
+		// build new string
+		$new_querystring = build_query( $new_querystring );
 		
 		// allow plugins to override
 		return apply_filters( 'bpwpapers_filter_ajax_querystring', $new_querystring, $querystring );
