@@ -938,6 +938,9 @@ class BP_Working_Papers_Activity {
 		// pass through if not activity stream
 		if ( $object != 'activity' ) return $querystring;
 		
+		// handle only on a working paper
+		if ( ! bpwpapers_is_working_paper( get_current_blog_id() ) ) return $querystring;
+		
 		// get group ID
 		$group_id = bpwpapers_get_group_by_blog_id( get_current_blog_id() );
 		
@@ -1230,7 +1233,7 @@ class BP_Working_Papers_Activity {
 		*/
 		
 		// --<
-		return $link_text;
+		return apply_filters( 'bpwpapers_override_reply_to_text', $link_text, $paragraph_text );
 	
 	}
 	
@@ -1256,7 +1259,7 @@ class BP_Working_Papers_Activity {
 		$href .= '&bpwpaper_group=true&bpwpaper_caller=' . $text_sig;
 
 		// --<
-		return $href;
+		return apply_filters( 'bpwpapers_override_reply_to_href', $href, $text_sig );
 	
 	}
 	

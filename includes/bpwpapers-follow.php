@@ -79,6 +79,28 @@ class BP_Working_Papers_Follow {
 		// add menu item on activity directory
 		add_action( 'bp_before_activity_type_tab_favorites', array( $this, 'add_activity_directory_tab' ) );
 		
+		// override Follow Site button text
+		add_filter( 'bp_follow_blogs_get_follow_button', array( $this, 'filter_follow_button' ), 20, 3 );
+		
+		// override Followed Sites button text
+		add_filter( 'bp_follow_blogs_get_followed_button', array( $this, 'filter_followed_button' ), 20, 3 );
+		
+		// hook into follow/unfollow actions
+		add_action( 'bp_follow_start_following_blogs', array( $this, 'follow_paper' ), 20, 1 );
+		add_action( 'bp_follow_stop_following_blogs', array( $this, 'unfollow_paper' ), 20, 1 );
+		
+		// remove standard join button in header
+		global $bp_working_papers;
+		remove_action( 'commentpress_header_before', array( $bp_working_papers->template, 'join_button' ) );
+		
+		// override "Join the Discussion" reply-to link text
+		add_filter( 'bpwpapers_override_reply_to_text', array( $this, 'override_reply_to_text' ), 20, 2 );
+		add_filter( 'bpwpapers_override_reply_to_href', array( $this, 'override_reply_to_href' ), 20, 2 );
+		
+		
+		// add action for the above
+		add_action( 'wp_head', array( $this, 'cbox_theme_compatibility' ) );
+		
 	}
 	
 	
@@ -294,8 +316,8 @@ class BP_Working_Papers_Follow {
 			return $qs;
 		}
 
-		// parse querystring into an array
-		wp_parse_str( $qs, $r );
+		// parse defaults
+		$r = wp_parse_args( $qs );
 
 		// check for Follow Blogs, so we can filter paper activity out
 		if ( 
@@ -566,6 +588,217 @@ class BP_Working_Papers_Follow {
 
 		return $qs;
 	
+	}
+	
+	
+	
+	/**
+	 * Filter the Follow Site button
+	 *
+	 * @param array $button The button config array
+	 * @param array $params The bp-follower array
+	 * @param bool $is_following User is following the site, or not
+	 * @return str Modified querystring
+	 */
+	public function filter_follow_button( $button, $params, $is_following ) {
+	
+		// is this site a working paper?
+		if ( ! bpwpapers_is_working_paper( $params['leader_id'] ) ) return $button;
+		
+		// we need to look at these...
+		global $bp, $blogs_template;
+		
+		// setup some variables
+		if ( $is_following ) {
+		
+			// init link text
+			$link_text = _x( 'Unfollow', 'Button', 'bpwpapers' );
+			
+			if ( empty( $blogs_template->in_the_loop ) ) {
+				$paper_name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+				$link_text = _x( sprintf( 'Unfollow %s', $paper_name ), 'Button', 'bpwpapers' );
+			}
+			
+		} else {
+			
+			// init link text
+			$link_text = _x( 'Follow', 'Button', 'bpwpapers' );
+			
+			// in the loop?
+			if ( empty( $blogs_template->in_the_loop ) ) {
+				$paper_name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+				$link_text = _x( sprintf( 'Follow %s', $paper_name ), 'Button', 'bpwpapers' );
+			}
+			
+		}
+
+		// replace link title
+		$button['link_text'] = $link_text;
+		
+		// --<
+		return $button;
+		
+	}
+	
+	
+	
+	/**
+	 * Filter the Followed Sites button
+	 *
+	 * @param str $link The HTML link
+	 * @param str $url The target link
+	 * @param str $title The link title
+	 * @return str Modified HTML link
+	 */
+	public function filter_followed_button( $link, $url, $title ) {
+	
+		// is this site a working paper?
+		if ( ! bpwpapers_is_working_paper( get_current_blog_id() ) ) return $link;
+		
+		// init link text
+		$url = esc_url( bp_loggedin_user_domain() . bpwpapers_get_slug() . '/' . constant( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ). '/' );
+		$paper_name = apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) );
+		$title = _x( sprintf( 'Followed %s', $paper_name ), 'Footer button', 'bpwpapers' );
+		$link = '<a class="home" href="' . $url . '">' . $title . '</a>';
+		
+		// --<
+		return $link;
+		
+	}
+	
+	
+	
+	/**
+	 * Intercept follow site action
+	 *
+	 * @param object $object The followed object data
+	 * @return void
+	 */
+	public function follow_paper( $object ) {
+	
+		// only handle sites
+		if ( $object->follow_type != 'blogs' ) return;
+		
+		// is this site a working paper?
+		if ( ! bpwpapers_is_working_paper( $object->leader_id ) ) return;
+		
+		// get group ID
+		$group_id = bpwpapers_get_group_by_blog_id( $object->leader_id );
+		
+		// add user to group
+		groups_join_group( $group_id, $object->follower_id );
+		
+	}
+	
+	
+	
+	/**
+	 * Intercept unfollow site action
+	 *
+	 * @param object $object The followed object data
+	 * @return void
+	 */
+	public function unfollow_paper( $object ) {
+	
+		// only handle sites
+		if ( $object->follow_type != 'blogs' ) return;
+		
+		// is this site a working paper?
+		if ( ! bpwpapers_is_working_paper( $object->leader_id ) ) return;
+		
+		// get group ID
+		$group_id = bpwpapers_get_group_by_blog_id( $object->leader_id );
+		
+		// remove user from group
+		groups_leave_group( $group_id, $object->follower_id );
+		
+	}
+	
+	
+	
+	/** 
+	 * Override content of the reply to link
+	 * 
+	 * @param string $link_text the full text of the reply to link
+	 * @param string $paragraph_text paragraph text
+	 * @return string $link_text updated content of the reply to link
+	 */
+	public function override_reply_to_text( $link_text, $paragraph_text ) {
+		
+		// get name
+		$paper_name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+		
+		// construct link content
+		$link_text = __( sprintf( 'Follow this %s to leave a comment', $paper_name ), 'bpwpapers' );
+		
+		/*
+		// construct link content (alt)
+		$link_text = sprintf(
+			__( 'Join the discussion to leave a comment on %s', 'bpwpapers' ),
+			$paragraph_text
+		);
+		*/
+		
+		// --<
+		return $link_text;
+	
+	}
+	
+	
+	
+	/** 
+	 * Override content of the reply to link target and use BP Follow's target
+	 * 
+	 * @param string $href The existing target URL
+	 * @param string $text_sig The text signature of the paragraph
+	 * @return string $href Overridden target URL
+	 */
+	public function override_reply_to_href( $href, $text_sig ) {
+		
+		// init URL
+		$href = wp_nonce_url( 
+			add_query_arg( 'blog_id', get_current_blog_id(), get_permalink( get_option( 'bpwpapers_group_page' ) ) ),
+			'bp_follow_blog_follow',
+			'bpfb-follow'
+		);
+		
+		//wp_nonce_url( bp_get_group_permalink( $group ) . 'join', 'groups_join_group' );
+		
+		// do we want to set this to the follow site HREF?
+		return $href;
+	
+	}
+	
+	
+	
+	/** 
+	 * @description: adds icon to menu in CBOX theme
+	 */
+	function cbox_theme_compatibility() {
+	
+		// is CBOX theme active?
+		if ( function_exists( 'cbox_theme_register_widgets' ) ) {
+
+			// output style in head
+			?>
+		
+			<style type="text/css">
+			/* <![CDATA[ */
+			li#activity-<?php echo $this->activity_slug; ?> a:before 
+			{
+				content: "C";
+			}
+			li#activity-followblogs a:before 
+			{
+				content: "*";
+			}
+			/* ]]> */
+			</style>
+
+			<?php
+		
+		}
+
 	}
 	
 	
