@@ -71,27 +71,53 @@ class BP_Working_Papers_Paper_Widget extends WP_Widget {
 		
 			while ( bp_blogs() ) : bp_the_blog();
 				
-				///*
+				// get author ID
+				//$author_id = bpwpapers_get_author_for_blog( $instance['paper_id'] );
+				
+				// get description
+				$description = get_blog_option( $instance['paper_id'], 'blogdescription' );
+				
+				// get group ID
+				$group_id = bpwpapers_get_group_by_blog_id( $instance['paper_id'] );
+				
 				?>
 				<div class="bpwpapers-featured-paper clearfix">
 				
-					<div class="item-avatar">
-						<a href="<?php bp_blog_permalink(); ?>"><?php bp_blog_avatar( 'type=full&width=150&height=150' ); ?></a>
-					</div>
+					<div class="item-header">
 					
+						<div class="item-avatar">
+							<a href="<?php bp_blog_permalink(); ?>"><?php bp_blog_avatar( 'type=full&width=300&height=300' ); ?></a>
+						</div>
+
+						<div class="item-name">
+							<div class="item-main-title">
+								<a href="<?php bp_blog_permalink(); ?>"><?php bp_blog_name(); ?></a>
+							</div>
+							<div class="item-sub-title">
+								<a href="<?php bp_blog_permalink(); ?>"><?php echo $description; ?></a>
+							</div>
+						</div>
+
+					</div>
+
 					<div class="item">
-						<div class="item-title"><a href="<?php bp_blog_permalink(); ?>"><?php bp_blog_name(); ?></a></div>
-						<div class="item-meta"><span class="activity"><?php bp_blog_last_active(); ?></span></div>
-						<?php do_action( 'bp_directory_blogs_item' ); ?>
-					</div>
+						<div class="item-inner">
+
+							<div class="item-meta"><span class="activity"><?php bp_blog_last_active(); ?></span></div>
+							<?php do_action( 'bp_directory_blogs_item' ); ?>
 					
-					<div class="action">
-						<?php do_action( 'bp_directory_blogs_actions' ); ?>
-						<div class="meta">
-							<?php bp_blog_latest_post(); ?>
+							<?php $this->show_comments( $group_id ); ?>
+				
+							<div class="action">
+								<div class="meta">
+									<?php bp_blog_latest_post(); ?>
+								</div>
+								<?php do_action( 'bp_directory_blogs_actions' ); ?>
+							</div>
+					
 						</div>
 					</div>
-					
+
 				</div>
 				<?php
 				
@@ -211,6 +237,124 @@ class BP_Working_Papers_Paper_Widget extends WP_Widget {
 		// --<
 		return $instance;
 		
+	}
+	
+	
+	
+	/**
+	 * Show latest activity for this paper
+	 *
+	 * @param $user_id The numeric ID of a WordPress user
+	 * @return void
+	 */
+	public function show_comments( $group_id ) {
+	
+		// get activities	
+		if ( bp_has_activities( array(
+
+			//'scope' => 'groups',
+			'action' => 'new_working_paper_comment',
+			'max' => 2,
+			'primary_id' => $group_id,
+	
+		) ) ) {
+		
+			/*
+			global $activities_template;
+			print_r( array( 
+				'has_activities' => $activities_template->has_activities(),
+				'activities_template' => $activities_template,
+			) ); die();
+			*/
+		
+			// double check, since something seems not to work
+			global $activities_template;
+			if ( $activities_template->has_activities() ) {
+		
+				?>
+				
+				<div class="item-title"><?php _e( 'Latest Activity', 'bpwpapers' ); ?></div>
+		
+				<ul class="bpwpapers-widget-activity-list item-list">
+
+				<?php while ( bp_activities() ) : bp_the_activity(); ?>
+		
+					<?php do_action( 'bp_before_activity_entry' ); ?>
+
+					<li class="<?php bp_activity_css_class(); ?>" id="activity-<?php bp_activity_id(); ?>">
+
+						<div class="activity-content">
+
+							<div class="activity-header">
+								<?php bp_activity_action(); ?>
+							</div>
+
+							<?php if ( bp_activity_has_content() ) : ?>
+
+								<div class="activity-inner">
+									<?php bp_activity_content_body(); ?>
+								</div>
+
+							<?php endif; ?>
+
+							<?php do_action( 'bp_activity_entry_content' ); ?>
+
+							<?php if ( is_user_logged_in() ) : ?>
+
+								<div class="activity-meta">
+
+									<?php if ( bp_activity_can_comment() ) : ?>
+
+										<?php
+				
+										// construct comment link 
+										$comment_link = '<a href="' . bp_get_activity_comment_link() . '" class="button acomment-reply bp-primary-action" id="acomment-comment-' . bp_get_activity_id() . '">'.sprintf( __( 'Comment <span>%s</span>', 'bpwpapers' ), bp_activity_get_comment_count() ) . '</a>';
+				
+										// echo it, but allow plugin overrides first
+										echo apply_filters( 'cp_activity_entry_comment_link', $comment_link );
+				
+										?>
+
+									<?php endif; ?>
+
+									<?php do_action( 'bp_activity_entry_meta' ); ?>
+
+								</div>
+
+							<?php endif; ?>
+
+						</div>
+
+					</li>
+
+					<?php do_action( 'bp_after_activity_entry' ); ?>
+			
+				<?php endwhile; ?>
+	
+				</ul>
+	
+				<?php 
+	
+			} else {
+	
+				?>
+		
+				<p class="bpwpapers-no-activity"><?php _e( 'No Recent Comments.' ); ?></p>
+		
+				<?php
+		
+			}
+		
+		} else {
+	
+			?>
+		
+			<p class="bpwpapers-no-activity"><?php _e( 'No Recent Comments.' ); ?></p>
+		
+			<?php
+	
+		}
+	
 	}
 	
 	

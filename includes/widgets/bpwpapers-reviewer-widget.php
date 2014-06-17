@@ -270,7 +270,7 @@ class BP_Working_Papers_Reviewer_Widget extends WP_Widget {
 				
 				<div class="item-title"><?php _e( 'Latest Review', 'bpwpapers' ); ?></div>
 		
-				<ul class="bpwpapers-reviewer-widget-list item-list">
+				<ul class="bpwpapers-widget-activity-list item-list">
 
 				<?php while ( bp_activities() ) : bp_the_activity(); ?>
 		

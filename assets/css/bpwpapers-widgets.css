@@ -19,9 +19,58 @@ Provide basic styles for widgets supplied with this plugin
 Common styles
 --------------------------------------------------------------------------------
 */
-.widget.widget_bpwpapers_author_widget,
-.widget.widget_bpwpapers_paper_widget
+.widget.widget_bpwpapers_author_widget .generic-button,
+.widget.widget_bpwpapers_reviewer_widget .generic-button,
+.widget.widget_bpwpapers_paper_widget .generic-button,
+.widget.widget_bpwpapers_activity_widget .generic-button
 {
+	margin-right: 5px;
+}
+
+
+
+/* 
+--------------------------------------------------------------------------------
+Common Activity List styles
+--------------------------------------------------------------------------------
+*/
+#content .widget ul.bpwpapers-widget-activity-list
+{
+	margin: 0;
+}
+
+#content .widget ul.bpwpapers-widget-activity-list li,
+p.bpwpapers-no-activity
+{
+	padding: 10px 0 20px 0;
+	margin: 0;
+}
+
+#content .widget ul.bpwpapers-widget-activity-list li .activity-header p
+{
+	padding: 0;
+	margin: 0;
+	font-size: 90%;
+	line-height: 1.5;
+}
+
+#content .widget ul.bpwpapers-widget-activity-list li .activity-inner
+{
+	background: none;
+	background-color: #E9D6AE;
+	margin: 1em 0;
+	padding: 1px 0.5em;
+}
+
+#content .widget ul.bpwpapers-widget-activity-list li .activity-inner p
+{
+	margin: 0.4em 0;
+}
+
+#content .widget ul.bpwpapers-widget-activity-list li .activity-meta a.button
+{
+	margin: 0;
+	padding: 1px 8px;
 }
 
 
@@ -159,45 +208,6 @@ Featured Reviewer widget styles
 	margin: 0.8em 0 0 0;
 }
 
-.widget_bpwpapers_reviewer_widget ul.bpwpapers-reviewer-widget-list
-{
-	margin: 0;
-}
-
-.widget_bpwpapers_reviewer_widget ul.bpwpapers-reviewer-widget-list li,
-.widget_bpwpapers_reviewer_widget p.bpwpapers-no-activity
-{
-	padding: 10px 0 20px 0;
-	margin: 20px 0;
-}
-
-.widget_bpwpapers_reviewer_widget ul.bpwpapers-reviewer-widget-list li .activity-header p
-{
-	padding: 0;
-	margin: 0;
-	font-size: 90%;
-	line-height: 1.5;
-}
-
-.widget_bpwpapers_reviewer_widget ul.bpwpapers-reviewer-widget-list li .activity-inner
-{
-	background: none;
-	background-color: #E9D6AE;
-	margin: 1em 0;
-	padding: 1px 0.5em;
-}
-
-.widget_bpwpapers_reviewer_widget ul.bpwpapers-reviewer-widget-list li .activity-inner p
-{
-	margin: 0.4em 0;
-}
-
-.widget_bpwpapers_reviewer_widget ul.bpwpapers-reviewer-widget-list li .activity-meta a.button
-{
-	margin: 0;
-	padding: 1px 8px;
-}
-
 
 
 /*
@@ -205,16 +215,77 @@ Featured Reviewer widget styles
 Featured Paper widget styles
 --------------------------------------------------------------------------------
 */
-.widget.widget_bpwpapers_paper_widget .item-avatar
+.widget.widget_bpwpapers_paper_widget
 {
-	width: 160px;
-	height: 160px;
+}
+
+.widget.widget_bpwpapers_paper_widget .item-header
+{
+	position: relative;
+	width: 300px;
+	height: 300px;
+}
+
+.widget.widget_bpwpapers_paper_widget .item-avatar,
+.widget.widget_bpwpapers_paper_widget .item-avatar a
+{
+	display: block;
+	width: 300px;
+	height: 300px;
 }
 
 .widget.widget_bpwpapers_paper_widget img.avatar
 {
-	width: 150px;
-	height: 150px;
+	margin: 0;
+	padding: 0;
+	width: 300px;
+	height: 300px;
+}
+
+.widget.widget_bpwpapers_paper_widget .item-name
+{
+	position: absolute;
+	bottom: 0;
+	background: #000;
+	background: rgba( 0, 0, 0, 0.46);
+	width: 100%;
+	padding: 10px 0;
+}
+
+.widget.widget_bpwpapers_paper_widget .item-main-title a
+{
+	display: block;
+	font-size: 140%;
+	font-weight: bold;
+	color: #fff;
+	padding: 0 10px;
+}
+
+.widget.widget_bpwpapers_paper_widget .item-sub-title a
+{
+	display: block;
+	font-weight: bold;
+	color: #fff;
+	padding: 0 10px;
+}
+
+.widget.widget_bpwpapers_paper_widget .bpwpapers-featured-paper > .item
+{
+	width: 300px;
+	background: #f5efcb;
+}
+
+.widget.widget_bpwpapers_paper_widget .item-inner
+{
+	padding: 10px;
+}
+
+.widget_bpwpapers_paper_widget .item-title
+{
+	font-size: 120%;
+	font-family: "MuseoSlab500";
+	color: #213397;
+	margin: 0.8em 0 0 0;
 }
 
 
