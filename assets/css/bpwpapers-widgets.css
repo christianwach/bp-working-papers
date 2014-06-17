@@ -31,17 +31,62 @@ Common styles
 Featured Author widget styles
 --------------------------------------------------------------------------------
 */
-.widget.widget_bpwpapers_author_widget .item-avatar
+.widget.widget_bpwpapers_author_widget
 {
-	width: 160px;
-	height: 160px;
+}
+
+.widget.widget_bpwpapers_author_widget .item-header
+{
+	position: relative;
+	width: 300px;
+	height: 300px;
+}
+
+.widget.widget_bpwpapers_author_widget .item-author
+{
+	position: absolute;
+	bottom: 0;
+	background: #000;
+	background: rgba( 0, 0, 0, 0.46);
+	width: 100%;
+}
+
+.widget.widget_bpwpapers_author_widget .item-avatar,
+.widget.widget_bpwpapers_author_widget .item-avatar a
+{
+	display: block;
+	width: 300px;
+	height: 300px;
 }
 
 .widget.widget_bpwpapers_author_widget img.avatar
 {
-	width: 150px;
-	height: 150px;
+	margin: 0;
+	padding: 0;
+	width: 300px;
+	height: 300px;
 }
+
+.widget.widget_bpwpapers_author_widget .item-author a
+{
+	display: block;
+	font-size: 140%;
+	font-weight: bold;
+	color: #fff;
+	padding: 10px;
+}
+
+.widget.widget_bpwpapers_author_widget .bpwpapers-featured-author > .item
+{
+	width: 300px;
+	background: #f5efcb;
+}
+
+.widget.widget_bpwpapers_author_widget .item-inner
+{
+	padding: 10px;
+}
+
 
 
 

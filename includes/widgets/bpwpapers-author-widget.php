@@ -71,35 +71,45 @@ class BP_Working_Papers_Author_Widget extends WP_Widget {
 		
 			while ( bp_members() ) : bp_the_member();
 				
-				///*
+				// user link
+				$user_link = bp_core_get_user_domain( bp_get_member_user_id() ) . bpwpapers_get_slug();
+				
 				?>
 				<div class="bpwpapers-featured-author clearfix">
 
-					<div class="item-avatar">
-						<a href="<?php bp_member_permalink(); ?>"><?php bp_member_avatar( 'type=full&width=150&height=150' ); ?></a>
+					<div class="item-header">
+					
+						<div class="item-avatar">
+							<a href="<?php echo $user_link; ?>"><?php bp_member_avatar( 'type=full&width=300&height=300' ); ?></a>
+						</div>
+
+						<div class="item-author">
+							<a href="<?php echo $user_link; ?>"><?php bp_member_name(); ?></a>
+						</div>
+					
 					</div>
 
 					<div class="item">
-						<div class="item-title">
-							<a href="<?php bp_member_permalink(); ?>"><?php bp_member_name(); ?></a>
+						<div class="item-inner">
+					
+							<div class="item-title">
+								<?php if ( bp_get_member_latest_update() ) : ?>
+									<span class="update"><?php bp_member_latest_update(); ?></span>
+								<?php endif; ?>
+							</div>
 
-							<?php if ( bp_get_member_latest_update() ) : ?>
-								<span class="update"><?php bp_member_latest_update(); ?></span>
-							<?php endif; ?>
+							<div class="item-meta"><span class="activity"><?php bp_member_last_active(); ?></span></div>
 
-						</div>
+							<?php do_action( 'bp_directory_members_item' ); ?>
 
-						<div class="item-meta"><span class="activity"><?php bp_member_last_active(); ?></span></div>
-
-						<?php do_action( 'bp_directory_members_item' ); ?>
-
-						<?php do_action( 'bpwpapers_authors_directory_profile_fields' ); ?>
+							<?php do_action( 'bpwpapers_authors_directory_profile_fields' ); ?>
+							<?php do_action( 'bpwpapers_authors_directory_papers_list', 'widget-loop' ); ?>
 				
-					</div>
+						</div>
+					</div><!-- /.item -->
 
 				</div>
 				<?php
-				//*/
 				
 			endwhile;
 			

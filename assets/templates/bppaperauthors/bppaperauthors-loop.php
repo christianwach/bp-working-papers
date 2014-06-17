@@ -58,7 +58,7 @@ if ( bp_has_members( bp_ajax_querystring( 'bppaperauthors' ) ) ) {
 				<?php do_action( 'bp_directory_members_item' ); ?>
 
 				<?php
-				 /***
+				 /**
 				  * If you want to show specific profile fields here you can,
 				  * but it'll add an extra query for each member in the loop
 				  * (only one regardless of the number of fields you show):
@@ -68,9 +68,14 @@ if ( bp_has_members( bp_ajax_querystring( 'bppaperauthors' ) ) ) {
 				  * If you don't want to copy the template to your theme, you can use 
 				  * the bpwpapers_authors_directory_profile_fields action to display them 
 				  */
-				?>
-				
-				<?php do_action( 'bpwpapers_authors_directory_profile_fields' ); ?>
+				do_action( 'bpwpapers_authors_directory_profile_fields' ); ?>
+
+				<?php
+				 /**
+				  * If you want to show a list of papers you can do so contextually
+				  * via this action
+				  */
+				do_action( 'bpwpapers_authors_directory_papers_list', 'directory-loop' ); ?>
 				
 			</div>
 
