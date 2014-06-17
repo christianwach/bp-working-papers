@@ -98,7 +98,7 @@ class BP_Working_Papers_Reviewer_Widget extends WP_Widget {
 
 							<?php do_action( 'bpwpapers_authors_directory_profile_fields' ); ?>
 							
-							<?php $this->show_comments(); ?>
+							<?php $this->show_comments( bp_get_member_user_id() ); ?>
 				
 							<span class="more"><a href="<?php echo $user_link; ?>"><?php _e( 'More activity by this reviewer &rarr;', 'ihc-cbox' ); ?></a></span>
 
@@ -239,17 +239,18 @@ class BP_Working_Papers_Reviewer_Widget extends WP_Widget {
 	/**
 	 * Show activity for this reviewer
 	 *
+	 * @param $user_id The numeric ID of a WordPress user
 	 * @return void
 	 */
-	public function show_comments() {
+	public function show_comments( $user_id ) {
 	
 		// get activities	
 		if ( bp_has_activities( array(
 
-			'scope' => 'groups',
+			//'scope' => 'groups',
 			'action' => 'new_working_paper_comment',
 			'max' => 1,
-			'user_id' => bp_get_member_user_id(),
+			'user_id' => $user_id,
 	
 		) ) ) {
 		
