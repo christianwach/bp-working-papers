@@ -495,6 +495,7 @@ class BP_Working_Papers_Template {
 
 		// include widgets
 		require_once( BP_WORKING_PAPERS_PATH . '/includes/widgets/bpwpapers-author-widget.php' );
+		require_once( BP_WORKING_PAPERS_PATH . '/includes/widgets/bpwpapers-reviewer-widget.php' );
 		require_once( BP_WORKING_PAPERS_PATH . '/includes/widgets/bpwpapers-paper-widget.php' );
 		require_once( BP_WORKING_PAPERS_PATH . '/includes/widgets/bpwpapers-activity-widget.php' );
 		require_once( BP_WORKING_PAPERS_PATH . '/includes/widgets/bpwpapers-recent-widget.php' );

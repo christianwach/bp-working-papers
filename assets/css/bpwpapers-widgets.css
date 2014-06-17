@@ -92,6 +92,116 @@ Featured Author widget styles
 
 /*
 --------------------------------------------------------------------------------
+Featured Reviewer widget styles
+--------------------------------------------------------------------------------
+*/
+.widget.widget_bpwpapers_reviewer_widget
+{
+}
+
+.widget.widget_bpwpapers_reviewer_widget .item-header
+{
+	position: relative;
+	width: 300px;
+	height: 300px;
+}
+
+.widget.widget_bpwpapers_reviewer_widget .item-reviewer
+{
+	position: absolute;
+	bottom: 0;
+	background: #000;
+	background: rgba( 0, 0, 0, 0.46);
+	width: 100%;
+}
+
+.widget.widget_bpwpapers_reviewer_widget .item-avatar,
+.widget.widget_bpwpapers_reviewer_widget .item-avatar a
+{
+	display: block;
+	width: 300px;
+	height: 300px;
+}
+
+.widget.widget_bpwpapers_reviewer_widget img.avatar
+{
+	margin: 0;
+	padding: 0;
+	width: 300px;
+	height: 300px;
+}
+
+.widget.widget_bpwpapers_reviewer_widget .item-reviewer a
+{
+	display: block;
+	font-size: 140%;
+	font-weight: bold;
+	color: #fff;
+	padding: 10px;
+}
+
+.widget.widget_bpwpapers_reviewer_widget .bpwpapers-featured-reviewer > .item
+{
+	width: 300px;
+	background: #f5efcb;
+}
+
+.widget.widget_bpwpapers_reviewer_widget .item-inner
+{
+	padding: 10px;
+}
+
+.widget_bpwpapers_reviewer_widget .item-title
+{
+	font-size: 120%;
+	font-family: "MuseoSlab500";
+	color: #213397;
+	margin: 0.8em 0 0 0;
+}
+
+.widget_bpwpapers_reviewer_widget ul.bpwpapers-reviewer-widget-list
+{
+	margin: 0;
+}
+
+.widget_bpwpapers_reviewer_widget ul.bpwpapers-reviewer-widget-list li,
+.widget_bpwpapers_reviewer_widget p.bpwpapers-no-activity
+{
+	padding: 10px 0 20px 0;
+	margin: 20px 0;
+}
+
+.widget_bpwpapers_reviewer_widget ul.bpwpapers-reviewer-widget-list li .activity-header p
+{
+	padding: 0;
+	margin: 0;
+	font-size: 90%;
+	line-height: 1.5;
+}
+
+.widget_bpwpapers_reviewer_widget ul.bpwpapers-reviewer-widget-list li .activity-inner
+{
+	background: none;
+	background-color: #E9D6AE;
+	margin: 1em 0;
+	padding: 1px 0.5em;
+}
+
+.widget_bpwpapers_reviewer_widget ul.bpwpapers-reviewer-widget-list li .activity-inner p
+{
+	margin: 0.4em 0;
+}
+
+.widget_bpwpapers_reviewer_widget ul.bpwpapers-reviewer-widget-list li .activity-meta a.button
+{
+	margin: 0;
+	padding: 1px 8px;
+}
+
+
+
+/*
+--------------------------------------------------------------------------------
 Featured Paper widget styles
 --------------------------------------------------------------------------------
 */
