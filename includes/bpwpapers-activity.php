@@ -1221,6 +1221,17 @@ class BP_Working_Papers_Activity {
 	 */
 	public function override_reply_to_text( $link_text, $paragraph_text ) {
 	
+		// if not logged in...
+		if ( ! is_user_logged_in() ) {
+		
+			// show helpful message
+			return apply_filters( 
+				'bpwpapers_override_reply_to_text_denied', 
+				__( 'Create an account to leave a comment', 'bpwpapers' ) 
+			);
+		
+		}
+		
 		// construct link content
 		$link_text = __( 'Join the discussion to leave a comment', 'bpwpapers' );
 		
@@ -1247,6 +1258,17 @@ class BP_Working_Papers_Activity {
 	 * @return string $href Overridden target URL
 	 */
 	public function override_reply_to_href( $href, $text_sig ) {
+		
+		// if not logged in...
+		if ( ! is_user_logged_in() ) {
+		
+			// show helpful message
+			return apply_filters( 
+				'bpwpapers_override_reply_to_href_denied', 
+				'/create-account/' 
+			);
+		
+		}
 		
 		// get group for this blog
 		$group = groups_get_group( array( 'group_id' => $this->group_id ) );
