@@ -71,7 +71,7 @@ class BP_Working_Papers_Follow {
 		add_filter( 'bp_ajax_querystring', array( $this, 'add_activity_scope_filter' ), 20, 2 );
 		
 		// add filter for total follow count
-		add_filter( 'bp_follow_total_follow_counts', array( $this, 'filter_total_follow_count' ), 10, 3 );
+		add_filter( 'bp_follow_total_blogs_follow_counts', array( $this, 'filter_total_follow_count' ), 10, 2 );
 		
 		// add menu item on papers directory
 		add_action( 'bpwpapers_blogs_directory_blog_types', array( $this, 'add_blog_directory_tab' ) );
@@ -413,14 +413,10 @@ class BP_Working_Papers_Follow {
 	 *
 	 * @param array $count The total number of followed sites for a user (following is always 0)
 	 * @param int $user_id The numeric ID of a WordPress user
-	 * @param array $params The params used to query the followed sites
 	 * @return int $filtered_count The filtered total number of BuddyPress Groups
 	 */
-	public function filter_total_follow_count( $count, $user_id, $params ) {
+	public function filter_total_follow_count( $count, $user_id ) {
 	
-		// only handle blogs
-		if ( $params['follow_type'] != 'blogs' ) return $count;
-		
 		// construct args
 		$args = array(
 			'user_id' => $user_id,
@@ -478,8 +474,8 @@ class BP_Working_Papers_Follow {
 		// don't show if none found
 		if ( empty( $counts['following'] ) ) return false;
 	
-		?>
-		<li id="bpwpapers-following"><a href="<?php echo esc_url( bp_loggedin_user_domain() . bpwpapers_get_slug() . '/' . constant( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ). '/' ); ?>"><?php printf( __( 'Following <span>%d</span>', 'bpwpapers' ), (int) $counts['following'] ) ?></a></li><?php
+		// add list item
+		echo '<li id="bpwpapers-following"><a href="' . esc_url( bp_loggedin_user_domain() . bpwpapers_get_slug() . '/' . constant( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ). '/' ) . '">' . sprintf( __( 'Following <span>%d</span>', 'bpwpapers' ), (int) $counts['following'] ) . '</a></li>';
 	
 	}
 	
@@ -502,8 +498,9 @@ class BP_Working_Papers_Follow {
 		// don't show if none found
 		//if ( empty( $counts['following'] ) ) return false;
 		
-		?>
-		<li id="activity-<?php echo $this->activity_slug; ?>"><a href="<?php echo esc_url( bp_loggedin_user_domain() . bp_get_activity_slug() . '/' . $this->activity_slug . '/' ); ?>"><?php printf( __( 'Followed Papers <span>%d</span>', 'bpwpapers' ), (int) $counts['following'] ) ?></a></li><?php
+		// show list item
+		echo '<li id="activity-' . $this->activity_slug . '"><a href="' . esc_url( bp_loggedin_user_domain() . bp_get_activity_slug() . '/' . $this->activity_slug . '/' ) . '">' . sprintf( __( 'Followed Papers <span>%d</span>', 'bpwpapers' ), (int) $counts['following'] ) . '</a></li>';
+		
 	}
 	
 	
