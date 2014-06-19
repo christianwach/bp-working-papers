@@ -82,8 +82,8 @@ class BP_Working_Papers_Follow {
 		// override Follow Site button text
 		add_filter( 'bp_follow_blogs_get_follow_button', array( $this, 'filter_follow_button' ), 20, 3 );
 		
-		// override Followed Sites button text
-		add_filter( 'bp_follow_blogs_get_followed_button', array( $this, 'filter_followed_button' ), 20, 3 );
+		// override Followed Sites button args
+		add_filter( 'bp_follow_blogs_get_sites_button_args', array( $this, 'filter_followed_button' ), 20, 3 );
 		
 		// hook into follow/unfollow actions
 		add_action( 'bp_follow_start_following_blogs', array( $this, 'follow_paper' ), 20, 1 );
@@ -96,7 +96,6 @@ class BP_Working_Papers_Follow {
 		// override "Join the Discussion" reply-to link text
 		add_filter( 'bpwpapers_override_reply_to_text', array( $this, 'override_reply_to_text' ), 20, 2 );
 		add_filter( 'bpwpapers_override_reply_to_href', array( $this, 'override_reply_to_href' ), 20, 2 );
-		
 		
 		// add action for the above
 		add_action( 'wp_head', array( $this, 'cbox_theme_compatibility' ) );
@@ -645,24 +644,26 @@ class BP_Working_Papers_Follow {
 	/**
 	 * Filter the Followed Sites button
 	 *
-	 * @param str $link The HTML link
-	 * @param str $url The target link
-	 * @param str $title The link title
-	 * @return str Modified HTML link
+	 * @param array $params The setup params for the button
+	 * @return array Modified setup params for the button
 	 */
-	public function filter_followed_button( $link, $url, $title ) {
+	public function filter_followed_button( $params ) {
 	
 		// is this site a working paper?
-		if ( ! bpwpapers_is_working_paper( get_current_blog_id() ) ) return $link;
+		if ( ! bpwpapers_is_working_paper( get_current_blog_id() ) ) return $params;
 		
-		// init link text
-		$url = esc_url( bp_loggedin_user_domain() . bpwpapers_get_slug() . '/' . constant( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ). '/' );
+		// configure the link the way we want it
 		$paper_name = apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) );
-		$title = _x( sprintf( 'Followed %s', $paper_name ), 'Footer button', 'bpwpapers' );
-		$link = '<a class="home" href="' . $url . '">' . $title . '</a>';
+		
+		// new URL
+		$params['link'] = esc_url( bp_loggedin_user_domain() . bpwpapers_get_slug() . '/' . 
+						  constant( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ). '/' );
+		
+		// new title
+		$params['text'] = _x( sprintf( 'Followed %s', $paper_name ), 'Footer button', 'bpwpapers' );
 		
 		// --<
-		return $link;
+		return $params;
 		
 	}
 	
