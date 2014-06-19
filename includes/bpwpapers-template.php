@@ -272,6 +272,9 @@ class BP_Working_Papers_Template {
 			// override BuddyPress flag
 			$commentpress_core->buddypress_init();
 			
+			// override is_buddypress_special_page()
+			add_filter( 'cp_is_buddypress_special_page', array( $this, 'is_buddypress_special_page' ), 100, 1 );
+		
 			// override commentable flag
 			add_filter( 'cp_is_commentable', array( $this, 'is_commentable' ), 100, 1 );
 		
@@ -603,6 +606,20 @@ class BP_Working_Papers_Template {
 		
 		// --<
 		return $text;
+		
+	}
+	
+	
+	
+	/** 
+	 * Tell CommentPress that the group page is a BuddyPress page
+	 * 
+	 * @return boolean True, because this is a BuddyPress page
+	 */
+	public function is_buddypress_special_page( $is_bp_page ) {
+		
+		// --<
+		return true;
 		
 	}
 	
