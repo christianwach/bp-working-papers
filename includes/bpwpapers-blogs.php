@@ -538,8 +538,11 @@ function bpwpapers_configure_blog_options( $blog_id, $group_id ) {
 	// Save original author
 	// -------------------------------------------------------------------------
 	
-	// add an option for easy access
+	// add an option for easy access to the author's user ID
 	add_option( 'bpwpapers_original_author', bp_loggedin_user_id() );
+	
+	// add an option for easy access to the author's name
+	add_option( 'bpwpapers_original_author_name', bp_get_loggedin_user_fullname() );
 	
 	// -------------------------------------------------------------------------
 	// Site setup
