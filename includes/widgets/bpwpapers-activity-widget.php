@@ -71,7 +71,7 @@ class BP_Working_Papers_Activity_Widget extends WP_Widget {
 	
 			'scope' => 'groups',
 			'action' => 'new_working_paper_comment',
-			'max' => 5,
+			'max' => 3,
 		
 		) ) ) {
 			

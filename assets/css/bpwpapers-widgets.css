@@ -22,9 +22,34 @@ Common styles
 .widget.widget_bpwpapers_author_widget .generic-button,
 .widget.widget_bpwpapers_reviewer_widget .generic-button,
 .widget.widget_bpwpapers_paper_widget .generic-button,
+.widget.widget_bpwpapers_recent_widget .generic-button,
 .widget.widget_bpwpapers_activity_widget .generic-button
 {
 	margin-right: 5px;
+	color: #000;
+}
+
+.widget.widget_bpwpapers_author_widget .generic-button a,
+.widget.widget_bpwpapers_reviewer_widget .generic-button a,
+.widget.widget_bpwpapers_paper_widget .generic-button a,
+.widget.widget_bpwpapers_recent_widget .generic-button a,
+.widget.widget_bpwpapers_activity_widget .generic-button a
+{
+	color: #000;
+}
+
+.widget_bpwpapers_author_widget a.button,
+.widget_bpwpapers_reviewer_widget a.button,
+.widget_bpwpapers_paper_widget a.button,
+.widget_bpwpapers_recent_widget a.button,
+.widget_bpwpapers_activity_widget a.button,
+#sidebar .widget_bpwpapers_author_widget a.button,
+#sidebar .widget_bpwpapers_reviewer_widget a.button,
+#sidebar .widget_bpwpapers_paper_widget a.button,
+#sidebar .widget_bpwpapers_recent_widget a.button,
+#sidebar .widget_bpwpapers_activity_widget a.button
+{
+	color: #000;
 }
 
 
@@ -204,7 +229,7 @@ Featured Reviewer widget styles
 {
 	font-size: 120%;
 	font-family: "MuseoSlab500";
-	color: #213397;
+	color: #000;
 	margin: 0.8em 0 0 0;
 }
 
@@ -284,7 +309,7 @@ Featured Paper widget styles
 {
 	font-size: 120%;
 	font-family: "MuseoSlab500";
-	color: #213397;
+	color: #000;
 	margin: 0.8em 0 0 0;
 }
 

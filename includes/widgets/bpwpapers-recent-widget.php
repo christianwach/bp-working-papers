@@ -71,7 +71,7 @@ class BP_Working_Papers_Recent_Papers_Widget extends WP_Widget {
 	
 			'scope' => 'blogs',
 			'action' => 'new_working_paper',
-			'max' => 5,
+			'max' => 3,
 		
 		) ) ) {
 			
