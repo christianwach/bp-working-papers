@@ -100,6 +100,12 @@ class BP_Working_Papers_Follow {
 		// add action for the above
 		add_action( 'wp_head', array( $this, 'cbox_theme_compatibility' ) );
 		
+		// intercept group joining
+		add_action( 'groups_join_group', array( $this, 'joined_group' ), 20, 2 );
+		
+		// intercept group leaving
+		add_action( 'groups_leave_group', array( $this, 'left_group' ), 20, 2 );
+		
 	}
 	
 	
@@ -683,8 +689,14 @@ class BP_Working_Papers_Follow {
 		// get group ID
 		$group_id = bpwpapers_get_group_by_blog_id( $object->leader_id );
 		
+		// unhook our action to prevent recursion
+		remove_action( 'groups_join_group', array( $this, 'joined_group' ), 20 );
+		
 		// add user to group
-		groups_join_group( $group_id, $object->follower_id );
+		$success = groups_join_group( $group_id, $object->follower_id );
+		
+		// re-hook our action
+		add_action( 'groups_join_group', array( $this, 'joined_group' ), 20, 2 );
 		
 	}
 	
@@ -709,6 +721,96 @@ class BP_Working_Papers_Follow {
 		
 		// remove user from group
 		groups_leave_group( $group_id, $object->follower_id );
+		
+	}
+	
+	
+	
+	/**
+	 * Intercept group create action and auto-follow site for creator
+	 *
+	 * @param int $group_id The numeric ID of the BP group
+	 * @param object $member The BP member
+	 * @param object $group The BP group
+	 * @return void
+	 */
+	public function created_group( $group_id, $member, $group ) {
+		
+		// only handle working paper groups
+		if ( ! bpwpapers_group_has_working_paper( $group_id ) ) return;
+		
+		// auto-follow
+		$this->joined_group( $group_id, $member->user_id );
+		
+	}
+	
+	
+	
+	/**
+	 * Intercept group join action
+	 *
+	 * @param int $group_id The numeric ID of the BP group
+	 * @param int $user_id The numeric ID of the WP user
+	 * @return void
+	 */
+	public function joined_group( $group_id, $user_id ) {
+		
+		// only handle working paper groups
+		if ( ! bpwpapers_group_has_working_paper( $group_id ) ) return;
+		
+		// get blog ID
+		$blog_id = bpwpapers_get_blog_by_group_id( $group_id );
+		
+		// remove our action to prevent recursion
+		remove_action( 'bp_follow_start_following_blogs', array( $this, 'follow_paper' ), 20 );
+		
+		// set up follow
+		$args = array(
+			'leader_id'   => $blog_id,
+			'follower_id' => $user_id,
+			'follow_type' => 'blogs',
+		);
+		
+		// follow
+		$success = bp_follow_start_following( $args );
+		
+		// re-add our action
+		add_action( 'bp_follow_start_following_blogs', array( $this, 'follow_paper' ), 20, 1 );
+		
+	}
+	
+	
+	
+	/**
+	 * Intercept group leave action
+	 *
+	 * @param int $group_id The numeric ID of the BP group
+	 * @param int $user_id The numeric ID of the WP user
+	 * @return void
+	 */
+	public function left_group( $group_id, $user_id ) {
+	
+		// only handle working paper groups
+		if ( ! bpwpapers_group_has_working_paper( $group_id ) ) return;
+		
+		// get blog ID
+		$blog_id = bpwpapers_get_blog_by_group_id( $group_id );
+		
+		// remove our action to prevent recursion
+		remove_action( 'bp_follow_stop_following_blogs', array( $this, 'unfollow_paper' ), 20 );
+		
+		// set up follow
+		$args = array(
+			'leader_id'   => $blog_id,
+			'follower_id' => $user_id,
+			'follow_type' => 'blogs',
+		);
+		
+		// follow
+		$success = bp_follow_stop_following( $args );
+		
+		// re-add our action
+		add_action( 'bp_follow_stop_following_blogs', array( $this, 'unfollow_paper' ), 20, 1 );
 		
 	}
 	
