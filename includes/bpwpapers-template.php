@@ -145,7 +145,7 @@ class BP_Working_Papers_Template {
 		// working paper group
 		register_post_type( 'bpwpaper', array( 
 		
-			'label' => __( 'Working Paper Groups' ),
+			'label' => __( 'Working Paper Groups', 'bpwpapers' ),
 			'description' => '',
 			'public' => true,
 			'show_ui' => false,
@@ -154,7 +154,7 @@ class BP_Working_Papers_Template {
 			'capability_type' => 'post',
 			'hierarchical' => false,
 			'rewrite' => array( 
-				'slug' => 'group',
+				'slug' => apply_filters( 'bpwpapers_group_cpt_slug', 'group' ),
 			),
 			'has_archive' => false,
 			'query_var' => true,
@@ -162,20 +162,20 @@ class BP_Working_Papers_Template {
 			'can_export' => false,
 			'supports' => array( 'title' ),
 			'labels' => array (
-				'name' => 'Groups',
-				'singular_name' => 'Group',
-				'menu_name' => 'Groups',
-				'add_new' => 'Add Group',
-				'add_new_item' => 'Add New Group',
-				'edit' => 'Edit',
-				'edit_item' => 'Edit Group',
-				'new_item' => 'New Group',
-				'view' => 'View Group',
-				'view_item' => 'View Group',
-				'search_items' => 'Search Groups',
-				'not_found' => 'No Groups found',
-				'not_found_in_trash' => 'No Groups found in Trash',
-				'parent' => 'Parent Group',
+				'name' => __( 'Groups', 'bpwpapers' ),
+				'singular_name' => __( 'Group', 'bpwpapers' ),,
+				'menu_name' => __( 'Groups', 'bpwpapers' ),
+				'add_new' => __( 'Add Group', 'bpwpapers' ),
+				'add_new_item' => __( 'Add New Group', 'bpwpapers' ),
+				'edit' => __( 'Edit', 'bpwpapers' ),
+				'edit_item' => __( 'Edit Group', 'bpwpapers' ),
+				'new_item' => __( 'New Group', 'bpwpapers' ),
+				'view' => __( 'View Group', 'bpwpapers' ),
+				'view_item' => __( 'View Group', 'bpwpapers' ),
+				'search_items' => __( 'Search Groups', 'bpwpapers' ),
+				'not_found' => __( 'No Groups found', 'bpwpapers' ),
+				'not_found_in_trash' => __( 'No Groups found in Trash', 'bpwpapers' ),
+				'parent' => __( 'Parent Group', 'bpwpapers' ),
 			)
 			
 		) );
