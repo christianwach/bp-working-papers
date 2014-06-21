@@ -163,7 +163,7 @@ class BP_Working_Papers_Template {
 			'supports' => array( 'title' ),
 			'labels' => array (
 				'name' => __( 'Groups', 'bpwpapers' ),
-				'singular_name' => __( 'Group', 'bpwpapers' ),,
+				'singular_name' => __( 'Group', 'bpwpapers' ),
 				'menu_name' => __( 'Groups', 'bpwpapers' ),
 				'add_new' => __( 'Add Group', 'bpwpapers' ),
 				'add_new_item' => __( 'Add New Group', 'bpwpapers' ),
