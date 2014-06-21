@@ -983,7 +983,10 @@ Globally available utility functions
 
 
 /** 
- * @description: test existence of a specified site option
+ * Test existence of a specified site option
+ *
+ * @param str $option_name The name of the option
+ * @return bool $exists Whether or not the option exists
  */
 function bpwpapers_site_option_exists( $option_name = '' ) {
 
@@ -1004,7 +1007,11 @@ function bpwpapers_site_option_exists( $option_name = '' ) {
 
 
 /** 
- * @description: return a value for a specified site option
+ * Return a value for a specified site option
+ *
+ * @param str $option_name The name of the option
+ * @param str $default The default value of the option if it has no value
+ * @return mixed $value the value of the option
  */
 function bpwpapers_site_option_get( $option_name = '', $default = false ) {
 
@@ -1021,7 +1028,11 @@ function bpwpapers_site_option_get( $option_name = '', $default = false ) {
 
 
 /** 
- * @description: set a value for a specified site option
+ * Set a value for a specified site option
+ *
+ * @param str $option_name The name of the option
+ * @param mixed $value The value to set the option to
+ * @return bool $success If the value of the option was successfully saved
  */
 function bpwpapers_site_option_set( $option_name = '', $value = '' ) {
 
