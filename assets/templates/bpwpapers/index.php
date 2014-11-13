@@ -10,9 +10,9 @@ get_header( 'buddypress' );
 
 	<!-- bpwpapers/index.php -->
 	<?php do_action( 'bp_before_directory_blogs_page' ); ?>
-	
-	
-	
+
+
+
 	<div id="content" role="main" class="<?php do_action( 'content_class' ); ?>">
 		<div class="padder">
 
@@ -20,34 +20,34 @@ get_header( 'buddypress' );
 
 		<form action="" method="post" id="bpwpapers-directory-form" class="dir-form">
 
-			<h3><?php 
-			
+			<h3><?php
+
 			// show title
-			echo sprintf( 
-				__( '%s Directory', 'bpwpapers' ), 
+			echo sprintf(
+				__( '%s Directory', 'bpwpapers' ),
 				apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
 			);
-			
+
 			// show "create" if logged in
 			if ( is_user_logged_in() ) {
-			
-				?> &nbsp;<a class="button" href="<?php 
-			
+
+				?> &nbsp;<a class="button" href="<?php
+
 				// print link to create page
-				echo bp_get_root_domain() . '/' . bpwpapers_get_root_slug() . '/create/' 
-			
-				?>"><?php 
-			
+				echo bp_get_root_domain() . '/' . bpwpapers_get_root_slug() . '/create/'
+
+				?>"><?php
+
 				// show create link
-				echo sprintf( 
-					__( 'Create a %s', 'bpwpapers' ), 
+				echo sprintf(
+					__( 'Create a %s', 'bpwpapers' ),
 					apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
 				);
 
 				?></a><?php
-			
+
 			}
-			
+
 			?></h3>
 
 			<?php do_action( 'bp_before_directory_blogs_content' ); ?>
@@ -60,27 +60,27 @@ get_header( 'buddypress' );
 
 			<div class="item-list-tabs" role="navigation">
 				<ul>
-					<li class="selected" id="bpwpapers-all"><a href="<?php bp_root_domain(); ?>/<?php bpwpapers_root_slug(); ?>"><?php 
-						
+					<li class="selected" id="bpwpapers-all"><a href="<?php bp_root_domain(); ?>/<?php bpwpapers_root_slug(); ?>"><?php
+
 						// filter subnav title
-						printf( 
-							__( 'All %1$s <span>%2$s</span>', 'bpwpapers' ), 
+						printf(
+							__( 'All %1$s <span>%2$s</span>', 'bpwpapers' ),
 							apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ),
 							bpwpapers_get_total_paper_count()
-						); 
-							
+						);
+
 					?></a></li>
 
 					<?php if ( is_user_logged_in() && bpwpapers_get_total_paper_count_for_user( bp_loggedin_user_id() ) ) : ?>
 
-						<li id="bpwpapers-personal"><a href="<?php echo bp_loggedin_user_domain() . bpwpapers_get_slug(); ?>"><?php 
-						
-						printf( 
-							__( 'My %1$s <span>%2$s</span>', 'bpwpapers' ), 
+						<li id="bpwpapers-personal"><a href="<?php echo bp_loggedin_user_domain() . bpwpapers_get_slug(); ?>"><?php
+
+						printf(
+							__( 'My %1$s <span>%2$s</span>', 'bpwpapers' ),
 							apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ),
-							bpwpapers_get_total_paper_count_for_user( bp_loggedin_user_id() ) 
-						); 
-						
+							bpwpapers_get_total_paper_count_for_user( bp_loggedin_user_id() )
+						);
+
 						?></a></li>
 
 					<?php endif; ?>
@@ -128,9 +128,9 @@ get_header( 'buddypress' );
 
 		</div><!-- .padder -->
 	</div><!-- #content -->
-	
-	
-	
+
+
+
 	<?php do_action( 'bp_after_directory_blogs_page' ); ?>
 
 

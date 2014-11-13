@@ -10,9 +10,9 @@ get_header( 'buddypress' );
 
 	<!-- bpwpapers/member.php -->
 	<?php do_action( 'bp_before_directory_blogs_page' ); ?>
-	
-	
-	
+
+
+
 	<div id="content" role="main" class="<?php do_action( 'content_class' ); ?>">
 		<div class="padder">
 
@@ -21,82 +21,82 @@ get_header( 'buddypress' );
 		<div class="dir-form">
 
 			<h3><?php
-			
+
 			// get current user
 			$current_user = wp_get_current_user();
-			
+
 			// BP Follow compatibility
-			if ( 
+			if (
 				defined( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ) AND
-				bp_is_current_action( constant( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ) )  
+				bp_is_current_action( constant( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ) )
 			) {
-			
+
 				// if not my papers
 				if ( !is_user_logged_in() OR bp_displayed_user_id() != bp_loggedin_user_id() ) {
-			
+
 					// show title for other users
-					echo sprintf( 
+					echo sprintf(
 						__( '%1$s followed by %2$s', 'bpwpapers' ),
 						apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ),
 						bp_get_displayed_user_fullname()
 					);
-			
+
 				} else {
-			
+
 					// show "my working papers" title
-					echo sprintf( 
+					echo sprintf(
 						__( 'My Followed %s', 'bpwpapers' ),
 						apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
 					);
-			
+
 				}
-			
+
 			} else {
-				
+
 				// if not my papers
 				if ( !is_user_logged_in() OR bp_displayed_user_id() != bp_loggedin_user_id() ) {
-			
+
 					// show title for other users
-					echo sprintf( 
+					echo sprintf(
 						__( '%1$s by %2$s', 'bpwpapers' ),
 						apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ),
 						bp_get_displayed_user_fullname()
 					);
-			
+
 				} else {
-			
+
 					// show "my working papers" title
-					echo sprintf( 
+					echo sprintf(
 						__( 'My %s', 'bpwpapers' ),
 						apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
 					);
-			
+
 				}
-			
+
 			}
-			
+
 			// optionally show "create" button
 			if ( is_user_logged_in() AND bp_displayed_user_id() == bp_loggedin_user_id() ) {
-			
-				?> &nbsp;<a class="button" href="<?php 
-			
+
+				?> &nbsp;<a class="button" href="<?php
+
 				// print link to create page
-				echo bp_get_root_domain() . '/' . bpwpapers_get_root_slug() . '/create/' 
-			
-				?>"><?php 
-			
+				echo bp_get_root_domain() . '/' . bpwpapers_get_root_slug() . '/create/'
+
+				?>"><?php
+
 				// show create link
-				echo sprintf( 
-					__( 'Create a %s', 'bpwpapers' ), 
+				echo sprintf(
+					__( 'Create a %s', 'bpwpapers' ),
 					apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
 				);
 
 				?></a><?php
-			
+
 			}
-			
+
 			?></h3>
-			
+
 		</div>
 
 		<?php do_action( 'bp_before_directory_blogs_content' ); ?>
@@ -137,9 +137,9 @@ get_header( 'buddypress' );
 
 		</div><!-- .padder -->
 	</div><!-- #content -->
-	
-	
-	
+
+
+
 	<?php do_action( 'bp_after_directory_blogs_page' ); ?>
 
 

@@ -18,11 +18,11 @@ get_header( 'buddypress' );
 
 		<form action="" method="post" id="bppaperauthors-directory-form" class="dir-form">
 
-			<h3><?php 
-			
+			<h3><?php
+
 			// show title
-			echo sprintf( 
-				__( '%s Directory', 'bpwpapers' ), 
+			echo sprintf(
+				__( '%s Directory', 'bpwpapers' ),
 				apply_filters( 'bppaperauthors_extension_plural', __( 'Working Paper Authors', 'bpwpapers' ) )
 			);
 
@@ -38,18 +38,18 @@ get_header( 'buddypress' );
 
 			<div class="item-list-tabs" role="navigation">
 				<ul>
-					
-					<li class="selected" id="bppaperauthors-all"><a href="<?php 
-						echo trailingslashit( bp_get_root_domain() . '/' . bppaperauthors_get_root_slug() ); 
-					?>"><?php 
-					
+
+					<li class="selected" id="bppaperauthors-all"><a href="<?php
+						echo trailingslashit( bp_get_root_domain() . '/' . bppaperauthors_get_root_slug() );
+					?>"><?php
+
 						// filter subnav title
-						printf( 
-							__( 'All %1$s <span>%2$s</span>', 'bpwpapers' ), 
+						printf(
+							__( 'All %1$s <span>%2$s</span>', 'bpwpapers' ),
 							apply_filters( 'bppaperauthors_extension_plural', __( 'Working Paper Authors', 'bpwpapers' ) ),
 							bpwpapers_get_total_member_count()
-						); 
-						
+						);
+
 					?></a></li>
 
 					<?php /* if ( is_user_logged_in() && bp_is_active( 'friends' ) && bp_get_total_friend_count( bp_loggedin_user_id() ) ) : ?>

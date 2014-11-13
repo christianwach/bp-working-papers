@@ -64,9 +64,9 @@ if ( bp_has_members( bp_ajax_querystring( 'bppaperauthors' ) ) ) {
 				  * (only one regardless of the number of fields you show):
 				  *
 				  * bp_member_profile_data( 'field=the field name' );
-				  * 
-				  * If you don't want to copy the template to your theme, you can use 
-				  * the bpwpapers_authors_directory_profile_fields action to display them 
+				  *
+				  * If you don't want to copy the template to your theme, you can use
+				  * the bpwpapers_authors_directory_profile_fields action to display them
 				  */
 				do_action( 'bpwpapers_authors_directory_profile_fields' ); ?>
 
@@ -76,7 +76,7 @@ if ( bp_has_members( bp_ajax_querystring( 'bppaperauthors' ) ) ) {
 				  * via this action
 				  */
 				do_action( 'bpwpapers_authors_directory_papers_list', 'directory-loop' ); ?>
-				
+
 			</div>
 
 			<div class="action">
@@ -111,29 +111,29 @@ if ( bp_has_members( bp_ajax_querystring( 'bppaperauthors' ) ) ) {
 		</div>
 
 	</div>
-	
-	<?php 
-	
+
+	<?php
+
 } else {
 
 	?>
 
 	<div id="message" class="info">
-		<p><?php 
-		
+		<p><?php
+
 		// show nothing found message
-		echo sprintf( 
-			__( 'Sorry, there were no %s found.', 'bpwpapers' ), 
+		echo sprintf(
+			__( 'Sorry, there were no %s found.', 'bpwpapers' ),
 			apply_filters( 'bppaperauthors_extension_plural', __( 'Working Paper Authors', 'bpwpapers' ) )
 		);
-		
+
 		?></p>
 	</div>
-	
-	<?php 
-	
+
+	<?php
+
 }
 
-do_action( 'bp_after_members_loop' ); 
+do_action( 'bp_after_members_loop' );
 
 ?>

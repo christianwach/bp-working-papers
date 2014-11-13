@@ -5,10 +5,10 @@
 <div id="group-header-content">
 
 	<h2><?php
-	
+
 	// show title
-	echo sprintf( 
-		__( 'Activity in this %s', 'bpwpapers' ), 
+	echo sprintf(
+		__( 'Activity in this %s', 'bpwpapers' ),
 		apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
 	);
 
@@ -28,7 +28,7 @@
 		<?php do_action( 'bp_group_header_meta' ); ?>
 
 	</div>
-	
+
 </div><!-- #group-header-content -->
 
 <?php

@@ -15,7 +15,7 @@ do_action( 'bp_before_blogs_loop' ); ?>
 if ( bpwpapers_has_blogs( bp_ajax_querystring( 'bpwpapers' ) ) ) {
 
 	?>
-	
+
 	<div id="pag-top" class="pagination">
 
 		<div class="pag-count" id="blog-dir-count-top">
@@ -42,11 +42,11 @@ if ( bpwpapers_has_blogs( bp_ajax_querystring( 'bpwpapers' ) ) ) {
 
 			<div class="item">
 				<div class="item-title"><a href="<?php bp_blog_permalink(); ?>"><?php bp_blog_name(); ?></a></div>
-				<div class="item-author"><span class="bpwpapers-author"><?php 
-				
+				<div class="item-author"><span class="bpwpapers-author"><?php
+
 				// get user
 				$user_id = bpwpapers_get_author_for_blog( bp_get_blog_id() );
-				
+
 				?><a href="<?php echo bp_core_get_user_domain( $user_id ); ?>"><?php echo esc_html( bp_core_get_user_displayname( $user_id ) ); ?></a></span></div>
 				<div class="item-meta"><span class="activity"><?php bp_blog_last_active(); ?></span></div>
 
@@ -92,21 +92,21 @@ if ( bpwpapers_has_blogs( bp_ajax_querystring( 'bpwpapers' ) ) ) {
 
 	</div>
 
-	<?php 
-	
-} else { 
+	<?php
+
+} else {
 
 	?>
 
 	<div id="message" class="info">
-		<p><?php 
-		
+		<p><?php
+
 		// show nothing found message
-		echo sprintf( 
-			__( 'Sorry, there were no %s found.', 'bpwpapers' ), 
+		echo sprintf(
+			__( 'Sorry, there were no %s found.', 'bpwpapers' ),
 			apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
 		);
-		
+
 		?></p>
 	</div>
 

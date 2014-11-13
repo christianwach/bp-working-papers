@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
 Template Name: Group Home
 */
@@ -57,7 +57,7 @@ get_header( 'buddypress' );
 			<div id="item-body">
 
 				<?php do_action( 'bp_before_group_body' );
-				
+
 				/*
 				if ( bp_is_group_admin_page() && bp_group_is_visible() ) :
 					locate_template( array( 'groups/single/admin.php' ), true );
@@ -93,7 +93,7 @@ get_header( 'buddypress' );
 
 				else :
 				*/
-				
+
 					// If nothing sticks, just load a group front template if one exists.
 					bpwpapers_locate_template( array( 'bpwpaper/single/bpwpaper-group-front.php' ), true );
 

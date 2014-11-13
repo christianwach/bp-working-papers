@@ -7,14 +7,14 @@
 		<?php do_action( 'bp_group_activity_syndication_options' ) ?>
 
 		<li id="activity-filter-select" class="last">
-			<label for="activity-filter-by"><?php _e( 'Show:', 'bpwpapers' ); ?></label> 
+			<label for="activity-filter-by"><?php _e( 'Show:', 'bpwpapers' ); ?></label>
 			<select id="activity-filter-by">
 				<option value="-1"><?php _e( 'Everything', 'bpwpapers' ) ?></option>
 				<option value="joined_group"><?php _e( 'Group Memberships', 'bpwpapers' ) ?></option>
 				<?php do_action( 'bp_group_activity_filter_options' ) ?>
 			</select>
 		</li>
-		
+
 	</ul>
 </div><!-- .item-list-tabs -->
 

@@ -16,36 +16,36 @@ NOTES
  * Makes a custom Widget for displaying Working Papers Activity
  */
 class BP_Working_Papers_Recent_Papers_Widget extends WP_Widget {
-	
-	
-	
+
+
+
 	/**
 	 * Constructor registers widget with WordPress
 	 *
 	 * @return void
 	 */
 	function __construct() {
-		
+
 		// init parent
 		parent::__construct(
-			
+
 			// base ID
-			'bpwpapers_recent_widget', 
-			
+			'bpwpapers_recent_widget',
+
 			// name
-			__( 'Recent Working Papers', 'bpwpapers' ), 
-			
+			__( 'Recent Working Papers', 'bpwpapers' ),
+
 			// args
-			array( 
-				'description' => __( 'Use this widget to display Recent Working Papers', 'bpwpapers' ), 
+			array(
+				'description' => __( 'Use this widget to display Recent Working Papers', 'bpwpapers' ),
 			)
-			
+
 		);
-		
+
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Outputs the HTML for this widget
 	 *
@@ -54,36 +54,36 @@ class BP_Working_Papers_Recent_Papers_Widget extends WP_Widget {
 	 * @return void Echoes its output
 	 */
 	public function widget( $args, $instance ) {
-		
+
 		// get widget title
 		$title = apply_filters( 'widget_title', $instance['title'] );
-		
+
 		// show before
 		echo $args['before_widget'];
-		
+
 		// if we have a title, show it
 		if ( ! empty( $title ) ) {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
-		
-		// get activities	
+
+		// get activities
 		if ( bp_has_activities( array(
-	
+
 			'scope' => 'blogs',
 			'action' => 'new_working_paper',
 			'max' => 3,
-		
+
 		) ) ) {
-			
+
 			global $activities_template, $bp_working_papers;
 			//print_r( $activities_template ); die();
-			
+
 			?>
-			
+
 			<ul class="bpwpapers-activity-widget-list item-list">
-	
+
 			<?php while ( bp_activities() ) : bp_the_activity(); ?>
-			
+
 				<?php do_action( 'bp_before_activity_entry' ); ?>
 
 				<li class="<?php bp_activity_css_class(); ?>" id="activity-<?php bp_activity_id(); ?>">
@@ -111,15 +111,15 @@ class BP_Working_Papers_Recent_Papers_Widget extends WP_Widget {
 						<div class="activity-meta">
 
 							<?php
-			
-							// construct "View Site" link 
-							$comment_link = '<a href="' . bp_get_activity_feed_item_link() . '" class="button acomment-reply">' . 
-												__( 'Visit Paper', 'bpwpapers' ) . 
+
+							// construct "View Site" link
+							$comment_link = '<a href="' . bp_get_activity_feed_item_link() . '" class="button acomment-reply">' .
+												__( 'Visit Paper', 'bpwpapers' ) .
 											'</a>';
-			
+
 							// echo it
 							echo $comment_link;
-			
+
 							?>
 
 							<?php do_action( 'bp_activity_entry_meta' ); ?>
@@ -131,24 +131,24 @@ class BP_Working_Papers_Recent_Papers_Widget extends WP_Widget {
 				</li>
 
 				<?php do_action( 'bp_after_activity_entry' ); ?>
-				
+
 			<?php endwhile; ?>
-		
+
 			</ul>
-		
-			<?php 
-		
+
+			<?php
+
 		}
-		
+
 		// show after
 		echo $args['after_widget'];
-		
+
 		//print_r( $args ); die();
-		
+
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Back-end widget form.
 	 *
@@ -157,27 +157,27 @@ class BP_Working_Papers_Recent_Papers_Widget extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		
+
 		//print_r( $instance ); die();
-		
+
 		// get title
 		if ( isset( $instance['title'] ) ) {
 			$title = $instance['title'];
 		} else {
 			$title = __( 'Recent Working Papers', 'bpwpapers' );
 		}
-		
+
 		?>
 		<p>
-		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'bpwpapers' ); ?></label> 
+		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'bpwpapers' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 		</p>
 		<?php
-		
+
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Sanitize widget form values as they are saved.
 	 *
@@ -189,17 +189,17 @@ class BP_Working_Papers_Recent_Papers_Widget extends WP_Widget {
 	 * @return array $instance Updated safe values to be saved.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		
+
 		// never lose a value
 		$instance = wp_parse_args( $new_instance, $old_instance );
-		
+
 		// --<
 		return $instance;
-		
+
 	}
-	
-	
-	
+
+
+
 } // ends class BP_Working_Papers_Recent_Papers_Widget
 
 
