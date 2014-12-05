@@ -191,6 +191,9 @@ if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
  */
 function bpwpapers_filter_total_blog_count_for_user( $count ) {
 
+	// get user ID if none passed
+	$user_id = ( bp_displayed_user_id() ) ? bp_displayed_user_id() : bp_loggedin_user_id();
+
 	// get working papers for this user
 	$paper_count = bpwpapers_get_total_paper_count_for_user( $user_id );
 
