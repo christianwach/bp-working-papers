@@ -872,7 +872,9 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * @description: adds icon to menu in CBOX theme
+	 * Adds icon to menu in CBOX theme
+	 *
+	 * @return void
 	 */
 	function cbox_theme_compatibility() {
 
