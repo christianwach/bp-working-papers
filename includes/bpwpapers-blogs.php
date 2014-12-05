@@ -35,6 +35,9 @@ function bpwpapers_has_blogs( $args = '' ) {
 	// get paper IDs
 	$papers = bpwpapers_get_papers();
 
+	// if empty, create array guaranteed to produce no result
+	if ( empty( $papers ) ) $papers = array( PHP_INT_MAX );
+
 	// declare defaults
 	$defaults = array(
 		'type'         => 'active',
