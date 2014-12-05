@@ -75,14 +75,6 @@ class BP_Working_Papers_Activity_Widget extends WP_Widget {
 
 		) ) ) {
 
-			/*
-			global $activities_template;
-			print_r( array(
-				'has_activities' => $activities_template->has_activities(),
-				'activities_template' => $activities_template,
-			) ); die();
-			*/
-
 			// double check, since something seems not to work
 			global $activities_template;
 			if ( $activities_template->has_activities() ) {

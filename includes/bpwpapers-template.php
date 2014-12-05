@@ -537,15 +537,6 @@ class BP_Working_Papers_Template {
 	 */
 	public function intercept_email_login_url( $url ) {
 
-		/*
-		trigger_error( print_r( array(
-			'method' => 'intercept_email_login_url',
-			'url' => $url,
-			'group_id' => $this->group_id,
-			//'permalink' => $permalink,
-		), true ), E_USER_ERROR ); die();
-		*/
-
 		// sanity check
 		if ( ! isset( $this->group_id ) ) return $url;
 

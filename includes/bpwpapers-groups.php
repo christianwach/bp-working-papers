@@ -344,7 +344,7 @@ function bpwpapers_group_deleted( $group_id ) {
 
 
 
-/*
+/**
  * Creates a BuddyPress Group Membership given a title and description
  *
  * @param int $group_id the numeric ID of the BP group

@@ -189,11 +189,6 @@ class BP_Working_Papers_Paper_Widget extends WP_Widget {
 			// get papers
 			if ( bpwpapers_has_blogs( $params ) ) {
 
-				/*
-				global $blogs_template;
-				print_r( $blogs_template ); die();
-				*/
-
 				while ( bp_blogs() ) : bp_the_blog();
 
 					// get blog ID
@@ -258,14 +253,6 @@ class BP_Working_Papers_Paper_Widget extends WP_Widget {
 			'primary_id' => $group_id,
 
 		) ) ) {
-
-			/*
-			global $activities_template;
-			print_r( array(
-				'has_activities' => $activities_template->has_activities(),
-				'activities_template' => $activities_template,
-			) ); die();
-			*/
 
 			// double check, since something seems not to work
 			global $activities_template;

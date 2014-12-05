@@ -878,17 +878,18 @@ add_filter( 'bpwpapers_extension_slug', 'bpwpapers_override_extension_slug', 10,
  */
 function bpwpapers_get_visit_site_button( $button ) {
 
-	/*
-	[id] => visit_blog
-	[component] => blogs
-	[must_be_logged_in] =>
-	[block_self] =>
-	[wrapper_class] => blog-button visit
-	[link_href] => http://domain/site-slug/
-	[link_class] => blog-button visit
-	[link_text] => Visit Site
-	[link_title] => Visit Site
-	*/
+	/**
+	 * [id] => visit_blog
+	 * [component] => blogs
+	 * [must_be_logged_in] =>
+	 * [block_self] =>
+	 * [wrapper_class] => blog-button visit
+	 * [link_href] => http://domain/site-slug/
+	 * [link_class] => blog-button visit
+	 * [link_text] => Visit Site
+	 * [link_title] => Visit Site
+	 */
+
 	//print_r( $button ); die();
 
 	// switch by blogtype

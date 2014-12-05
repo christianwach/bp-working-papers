@@ -285,7 +285,7 @@ register_activation_hook( __FILE__, array( $bp_working_papers, 'activate' ) );
 // deactivation
 register_deactivation_hook( __FILE__, array( $bp_working_papers, 'deactivate' ) );
 
-// will use the 'uninstall.php' method
+// this plugin uses the 'uninstall.php' method
 // see: http://codex.wordpress.org/Function_Reference/register_uninstall_hook
 
 
@@ -302,13 +302,6 @@ function bpwpapers_templates_dir() {
 		'bpwpapers_templates_dir', // hook
 		BP_WORKING_PAPERS_PATH . 'assets/templates' // path
 	);
-
-	/*
-	print_r( array(
-		'method' => 'bpwpapers_theme_dir',
-		'path' => $path,
-	) ); die();
-	*/
 
 	// --<
 	return $path;
