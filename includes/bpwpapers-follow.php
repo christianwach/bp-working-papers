@@ -100,8 +100,8 @@ class BP_Working_Papers_Follow {
 		// add action for the above
 		add_action( 'wp_head', array( $this, 'cbox_theme_compatibility' ) );
 
-		// intercept group creation
-		add_action( 'groups_create_group', array( $this, 'created_group' ), 20, 3 );
+		// intercept blog creation
+		add_action( 'bpwpapers_signup_validated', array( $this, 'created_blog' ), 20, 3 );
 
 		// intercept group joining
 		add_action( 'groups_join_group', array( $this, 'joined_group' ), 20, 2 );
@@ -730,20 +730,23 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Intercept group create action and auto-follow site for creator
+	 * Intercept blog created action and auto-follow site for creator
+	 *
+	 * This is done via the 'bpwpapers_signup_validated' hook because the linkage
+	 * is not established until after the group has been created.
 	 *
 	 * @param int $group_id The numeric ID of the BP group
 	 * @param object $member The BP member
 	 * @param object $group The BP group
 	 * @return void
 	 */
-	public function created_group( $group_id, $member, $group ) {
+	public function created_blog( $user_id, $blog_id, $group_id ) {
 
 		// only handle working paper groups
 		if ( ! bpwpapers_group_has_working_paper( $group_id ) ) return;
 
 		// auto-follow
-		$this->joined_group( $group_id, $member->user_id );
+		$this->joined_group( $group_id, $user_id );
 
 	}
 
