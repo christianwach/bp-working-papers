@@ -100,6 +100,9 @@ class BP_Working_Papers_Follow {
 		// add action for the above
 		add_action( 'wp_head', array( $this, 'cbox_theme_compatibility' ) );
 
+		// intercept group creation
+		add_action( 'groups_create_group', array( $this, 'created_group' ), 20, 3 );
+
 		// intercept group joining
 		add_action( 'groups_join_group', array( $this, 'joined_group' ), 20, 2 );
 
