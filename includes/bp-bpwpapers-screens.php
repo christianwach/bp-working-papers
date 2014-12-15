@@ -490,6 +490,9 @@ function bpwpapers_validate_signup() {
 	// show confirmation markup
 	bpwpapers_confirm_signup( $domain, $path, $blog_title, $current_user->user_login, $current_user->user_email, $meta );
 
+	// broadcast
+	do_action( 'bpwpapers_signup_validated', $current_user->ID, $new_blog_id, $new_group_id );
+
 	// --<
 	return true;
 
