@@ -475,7 +475,7 @@ function bpwpapers_get_current_group_id() {
 /**
  * Check if a group has a Working Paper
  *
- * @return bool True if group has CommentPress groupblog, false otherwise
+ * @return bool True if group has working paper, false otherwise
  */
 function bpwpapers_group_has_working_paper( $group_id = null ) {
 

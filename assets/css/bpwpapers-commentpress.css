@@ -81,10 +81,20 @@ Provide basic styles for plugin elements
 /* BuddyPress Followers compatibility */
 body #bpf-blogs-ftr
 {
-	top: 60px;
+	top: 45px;
 	bottom: auto;
 	right: 20px;
 }
 
+
+
+body .bpwpapers_publish_button
+{
+	position: fixed;
+	top: 70px;
+	right: 20px;
+	z-index: 9999;
+	text-align: right;
+}
 
 
