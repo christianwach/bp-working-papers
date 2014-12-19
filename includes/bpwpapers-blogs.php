@@ -302,8 +302,11 @@ function bpwpapers_total_papers() {
 		// get current list
 		$blog_authors = $bp_working_papers->admin->option_get( 'bpwpapers_blog_authors' );
 
+		// filter by visibility
+		$filtered = bpwpapers_filter_total_papers_by_visibility( $blog_authors );
+
 		// get total
-		$total = bp_core_number_format( count( $blog_authors ) );
+		$total = bp_core_number_format( count( $filtered ) );
 
 		// stash it
 		wp_cache_set( 'bpwpapers_total_papers', $count, 'bpwpapers' );
@@ -312,6 +315,55 @@ function bpwpapers_total_papers() {
 
 	// --<
 	return $total;
+
+}
+
+
+
+/**
+ * Filter papers depending on their visibility
+ *
+ * @param array $blog_authors The unfiltered list of author IDs, keyed by blog ID
+ * @return array $blog_authors The filtered list of author IDs, keyed by blog ID
+ */
+function bpwpapers_filter_total_papers_by_visibility( $blog_authors ) {
+
+	// init filtered
+	$filtered = array();
+
+	// filter these by whether the blog is public or not
+	if ( count( $blog_authors ) > 0 ) {
+
+		// get current user
+		$user_id = bp_loggedin_user_id();
+
+		// let's see...
+		foreach( $blog_authors AS $blog_id => $author_id ) {
+
+			// get status
+			$status = get_blog_status( $blog_id, 'public' );
+
+			// is this blog public?
+			if ( $status == '1' ) {
+
+				// keep it
+				$filtered[$blog_id] = $author_id;
+
+			} else {
+
+				// otherwise only add it if it's the author's blog
+				if ( $author_id == $user_id ) {
+					$filtered[$blog_id] = $author_id;
+				}
+
+			}
+
+		}
+
+	}
+
+	// --<
+	return $filtered;
 
 }
 
