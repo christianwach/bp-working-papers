@@ -465,7 +465,13 @@ function bpwpapers_validate_signup() {
 
 	}
 
-	$public = (int) $_POST['blog_public'];
+	// default to "not visible"
+	$public = '0';
+
+	// optionally make visible only to site owner
+	if ( class_exists( 'ds_more_privacy_options' ) ) {
+		$public = '-3';
+	}
 
 	$meta = apply_filters( 'signup_create_blog_meta', array( 'lang_id' => 1, 'public' => $public ) ); // deprecated
 	$meta = apply_filters( 'add_signup_meta', $meta );
