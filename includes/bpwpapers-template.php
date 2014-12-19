@@ -123,8 +123,14 @@ class BP_Working_Papers_Template {
 				// filter join button content
 				add_filter( 'bp_get_group_join_button', array( $this, 'join_button_content' ), 20, 1 );
 
-				// add action for the above
-				add_action( 'wp_footer', array( $this, 'add_publish_button' ), 999 );
+				// insert publish button in footer by default
+				add_action( 'wp_footer', array( $this, 'publish_button' ) );
+
+				// if CommentPress is present, this hook will fire
+				add_action( 'commentpress_loaded', array( $this, 'publish_button_hook' ) );
+
+				// if CommentPress Editor class is present, this hook will fire
+				add_action( 'commentpress_editor_present', array( $this, 'publish_button_editor' ) );
 
 			}
 
@@ -823,11 +829,90 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Add a publish button to the footer.
+	 * Decide how to add a publish button
 	 *
 	 * @return void
 	 */
-	public function add_publish_button() {
+	public function publish_button_hook() {
+
+		// remove from footer
+		remove_action( 'wp_footer', array( $this, 'publish_button' ) );
+
+		// add to Contents column
+		add_action( 'cp_content_tab_before_search', array( $this, 'publish_button_wrapper' ) );
+
+	}
+
+
+
+	/**
+	 * Decide how to add a publish button
+	 *
+	 * @return void
+	 */
+	public function publish_button_editor() {
+
+		// add to Contents column
+		remove_action( 'cp_content_tab_before_search', array( $this, 'publish_button_wrapper' ) );
+
+		// add to Contents column
+		add_action( 'cp_content_tab_editor_toggle_before', array( $this, 'publish_button' ) );
+
+	}
+
+
+
+	/**
+	 * Create a wrapper for a publish button
+	 *
+	 * @return void
+	 */
+	public function publish_button_wrapper() {
+
+		// bail if not logged in
+		if ( ! is_user_logged_in() ) return;
+
+		// get author for blog
+		$author_id = bpwpapers_get_author_for_blog( get_current_blog_id() );
+
+		// bail if not site owner
+		if ( bp_loggedin_user_id() != $author_id ) return;
+
+		// define heading title
+		$heading = apply_filters( 'cp_content_tab_editor_toggle_title', __( 'Document Status', 'commentpress-core' ) );
+
+		echo '
+		<h3 class="activity_heading">' . $heading . '</h3>
+
+		<div class="paragraph_wrapper editor_toggle_wrapper">
+
+		';
+
+		//do_action( 'cp_content_tab_editor_toggle_before' );
+
+		echo '
+
+		<div class="editor_toggle">
+			' . $this->publish_button() . '
+		</div><!-- /editor_toggle -->
+
+		';
+
+		//do_action( 'cp_content_tab_editor_toggle_after' );
+
+		echo '</div>
+
+		';
+	}
+
+
+
+	/**
+	 * Print a publish button to the screen
+	 *
+	 * @return void
+	 */
+	public function publish_button() {
 
 		// bail if not logged in
 		if ( ! is_user_logged_in() ) return;
@@ -874,7 +959,7 @@ class BP_Working_Papers_Template {
 		}
 
 		// link url
-		$url = wp_nonce_url( get_permalink( $post->ID ), 'editor_toggle', 'cp_editor_nonce' );
+		$url = wp_nonce_url( get_permalink( $post->ID ), 'publish_button', 'bpwpapers_publish_button_nonce' );
 
 		// link class
 		$class = 'button';
