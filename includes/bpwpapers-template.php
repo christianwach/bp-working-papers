@@ -123,6 +123,9 @@ class BP_Working_Papers_Template {
 				// filter join button content
 				add_filter( 'bp_get_group_join_button', array( $this, 'join_button_content' ), 20, 1 );
 
+				// add action for the above
+				add_action( 'wp_footer', array( $this, 'add_publish_button' ), 999 );
+
 			}
 
 		}
@@ -814,6 +817,80 @@ class BP_Working_Papers_Template {
 
 		// --<
 		return $button;
+
+	}
+
+
+
+	/**
+	 * Add a publish button to the footer.
+	 *
+	 * @return void
+	 */
+	public function add_publish_button() {
+
+		// bail if not logged in
+		if ( ! is_user_logged_in() ) return;
+
+		// get author for blog
+		$author_id = bpwpapers_get_author_for_blog( get_current_blog_id() );
+
+		// bail if not site owner
+		if ( bp_loggedin_user_id() != $author_id ) return;
+
+		// get status
+		$status = get_blog_status( $blog_id, 'public' );
+
+		// change text depending on toggle state
+		if ( $status == '1' ) {
+
+			// link text
+			$text = sprintf(
+				__( 'Unpublish %s', 'bpwpapers' ),
+				apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+			);
+
+			// link title
+			$title = sprintf(
+				__( 'Unpublish this %s', 'bpwpapers' ),
+				apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+			);
+
+		} else {
+
+			// link text
+			$text = sprintf(
+				__( 'Publish %s', 'bpwpapers' ),
+				apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+			);
+
+
+			// link title
+			$title = sprintf(
+				__( 'Publish this %s', 'bpwpapers' ),
+				apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+			);
+
+		}
+
+		// link url
+		$url = wp_nonce_url( get_permalink( $post->ID ), 'editor_toggle', 'cp_editor_nonce' );
+
+		// link class
+		$class = 'button';
+
+		// construct link
+		$link = '<a href="' . $url . '" class="' . $class . '" title="' . esc_attr( $title ) . '">' . $text . '</a>';
+
+		// construct button
+		$button = apply_filters( 'bpwpapers_publish_button_link', $link, $text, $title, $url, $class );
+
+		// show button
+		echo '
+		<div class="bpwpapers_publish_button">
+			' . $button . '
+		</div><!-- /bpwpapers_publish_button -->
+		';
 
 	}
 
