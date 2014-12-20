@@ -668,3 +668,63 @@ function bpwpapers_reset_blog_options( $blog_id ) {
 
 
 
+/**
+ * Publish blog
+ *
+ * @param int $blog_id the numeric ID of the blog
+ * @return void
+ */
+function bpwpapers_publish_blog( $blog_id ) {
+
+	// kick out if not a working paper
+	if ( ! bpwpapers_is_working_paper( $blog_id ) ) return;
+
+	// get status
+	$status = get_blog_status( $blog_id, 'public' );
+
+	// set status
+	if ( $status != '1' ) {
+
+		// save new value
+		update_option( 'blog_public', '1' );
+
+	}
+
+}
+
+
+
+/**
+ * Unublish blog
+ *
+ * @param int $blog_id the numeric ID of the blog
+ * @return void
+ */
+function bpwpapers_unpublish_blog( $blog_id ) {
+
+	// kick out if not a working paper
+	if ( ! bpwpapers_is_working_paper( $blog_id ) ) return;
+
+	// get status
+	$status = get_blog_status( $blog_id, 'public' );
+
+	// change text depending on toggle state
+	if ( $status == '1' ) {
+
+		// default to "not visible"
+		$public = '0';
+
+		// optionally make visible only to site owner
+		if ( class_exists( 'ds_more_privacy_options' ) ) {
+			$public = '-3';
+		}
+
+		// save new value
+		update_option( 'blog_public', $public );
+
+	}
+
+}
+
+
+

@@ -127,10 +127,7 @@ class BP_Working_Papers_Template {
 				add_action( 'wp_footer', array( $this, 'publish_button' ) );
 
 				// if CommentPress is present, this hook will fire
-				add_action( 'commentpress_loaded', array( $this, 'publish_button_hook' ) );
-
-				// if CommentPress Editor class is present, this hook will fire
-				add_action( 'commentpress_editor_present', array( $this, 'publish_button_editor' ) );
+				add_action( 'commentpress_loaded', array( $this, 'publish_button_commentpress' ) );
 
 			}
 
@@ -734,6 +731,10 @@ class BP_Working_Papers_Template {
 
 
 
+	//==========================================================================
+
+
+
 	/**
 	 * Show author avatar in Contents column
 	 *
@@ -775,6 +776,10 @@ class BP_Working_Papers_Template {
 		return get_avatar( $author_id, $size='48' );
 
 	}
+
+
+
+	//==========================================================================
 
 
 
@@ -828,35 +833,67 @@ class BP_Working_Papers_Template {
 
 
 
+	//==========================================================================
+
+
+
 	/**
-	 * Decide how to add a publish button
+	 * Intercept publish toggling once plugins are loaded
 	 *
 	 * @return void
 	 */
-	public function publish_button_hook() {
+	public function publish_toggle_intercept() {
 
-		// remove from footer
-		remove_action( 'wp_footer', array( $this, 'publish_button' ) );
+		// access globals
+		global $post;
 
-		// add to Contents column
-		add_action( 'cp_content_tab_before_search', array( $this, 'publish_button_wrapper' ) );
+		// check publish toggle button
+		if (
+			! isset( $_GET['bpwpapers_publish_button_nonce'] ) OR
+			! wp_verify_nonce( $_GET['bpwpapers_publish_button_nonce'], 'bpwpapers_publish_button' )
+		) {
+
+			// kick out
+			return;
+
+		}
+
+		// plain old permalink
+		$url = get_permalink( $post->ID );
+
+		// get blog ID
+		$blog_id = get_current_blog_id();
+
+		// get current status
+		$status = get_blog_status( $blog_id, 'public' );
+
+		// toggle published status
+		if ( $status != '1' ) {
+			bpwpapers_publish_blog( $blog_id );
+		} else {
+			bpwpapers_unpublish_blog( $blog_id );
+		}
+
+		// redirect
+		wp_redirect( $url );
+		exit();
 
 	}
 
 
 
 	/**
-	 * Decide how to add a publish button
+	 * Add a publish button to the CommentPress "Contents" column
 	 *
 	 * @return void
 	 */
-	public function publish_button_editor() {
+	public function publish_button_commentpress() {
+
+		// remove from footer
+		remove_action( 'wp_footer', array( $this, 'publish_button' ) );
 
 		// add to Contents column
-		remove_action( 'cp_content_tab_before_search', array( $this, 'publish_button_wrapper' ) );
-
-		// add to Contents column
-		add_action( 'cp_content_tab_editor_toggle_before', array( $this, 'publish_button' ) );
+		add_action( 'cp_content_tab_before_search', array( $this, 'publish_button_wrapper' ) );
 
 	}
 
@@ -879,28 +916,31 @@ class BP_Working_Papers_Template {
 		if ( bp_loggedin_user_id() != $author_id ) return;
 
 		// define heading title
-		$heading = apply_filters( 'cp_content_tab_editor_toggle_title', __( 'Document Status', 'commentpress-core' ) );
+		$heading = sprintf(
+			__( '%s Status', 'bpwpapers' ),
+			apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+		);
 
 		echo '
 		<h3 class="activity_heading">' . $heading . '</h3>
 
-		<div class="paragraph_wrapper editor_toggle_wrapper">
+		<div class="paragraph_wrapper bpwpapers_publish_toggle_wrapper">
 
 		';
 
-		//do_action( 'cp_content_tab_editor_toggle_before' );
+		do_action( 'bpwpapers_publish_toggle_before' );
 
 		echo '
-
-		<div class="editor_toggle">
+		<div class="bpwpapers_publish_toggle">
 			' . $this->publish_button() . '
-		</div><!-- /editor_toggle -->
+		</div><!-- /bpwpapers_publish_toggle -->
 
 		';
 
-		//do_action( 'cp_content_tab_editor_toggle_after' );
+		do_action( 'bpwpapers_publish_toggle_after' );
 
-		echo '</div>
+		echo '
+		</div>
 
 		';
 	}
@@ -959,7 +999,7 @@ class BP_Working_Papers_Template {
 		}
 
 		// link url
-		$url = wp_nonce_url( get_permalink( $post->ID ), 'publish_button', 'bpwpapers_publish_button_nonce' );
+		$url = wp_nonce_url( get_permalink( $post->ID ), 'bpwpapers_publish_button', 'bpwpapers_publish_button_nonce' );
 
 		// link class
 		$class = 'button';
