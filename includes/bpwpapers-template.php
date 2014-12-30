@@ -86,6 +86,9 @@ class BP_Working_Papers_Template {
 			// register post type
 			add_action( 'init', array( $this, 'register_cpt' ) );
 
+			// intercept publish toggle when WP is set up
+			add_action( 'wp', array( $this, 'publish_toggle_intercept' ) );
+
 			// intercept BuddyPress Group Email Subscription stuff
 			add_action( 'ass_group_all_mail_login_redirect_url', array( $this, 'intercept_email_login_url' ), 10, 1 );
 			add_filter( 'bp_ass_activity_notification_message', array( $this, 'intercept_email_text' ), 10, 2 );
