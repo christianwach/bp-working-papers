@@ -559,34 +559,46 @@ class BP_Working_Papers_Follow {
 	 * @return str Modified querystring
 	 */
 	public function filter_followblogs_activity( $qs ) {
-
+		
+		// init params
+		$params = array();
+	
 		// parse querystring into an array
-		wp_parse_str( $qs, $params );
-
-		// convert from comma-delimited if needed
-		$following_ids = array_filter( wp_parse_id_list( $params['primary_id'] ) );
-
-		// did we get any?
-		if ( count( $following_ids ) > 0 ) {
-
-			// get paper IDs
-			$papers = bpwpapers_get_papers();
-
-			// let's exclude papers
-			$following_ids = array_merge( array_diff( $following_ids, $papers ) );
-
+		if ( ! is_array( $qs ) ) {
+			wp_parse_str( $qs, $params );
+		} else {
+			$params = $qs;
 		}
+		
+		// skip if there's no primary blog ID
+		if ( isset( $params['primary_id'] ) ) {
 
-		// did we get any?
-		if ( count( $following_ids ) === 0 ) {
+			// convert from comma-delimited if needed
+			$following_ids = array_filter( wp_parse_id_list( $params['primary_id'] ) );
 
-			// no, pass the largest bigint(20) value to ensure no blogs are matched
-			$following_ids = array( '18446744073709551615' );
+			// did we get any?
+			if ( count( $following_ids ) > 0 ) {
 
+				// get paper IDs
+				$papers = bpwpapers_get_papers();
+
+				// let's exclude papers
+				$following_ids = array_merge( array_diff( $following_ids, $papers ) );
+
+			}
+
+			// did we get any?
+			if ( count( $following_ids ) === 0 ) {
+
+				// no, pass the largest bigint(20) value to ensure no blogs are matched
+				$following_ids = array( '18446744073709551615' );
+
+			}
+
+			// replace primary IDs
+			$params['primary_id'] = implode( ',', $following_ids );
+		
 		}
-
-		// replace primary IDs
-		$params['primary_id'] = implode( ',', $following_ids );
 
 		// rebuild querystring
 		$qs = build_query( $params );
