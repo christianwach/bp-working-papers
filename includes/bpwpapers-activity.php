@@ -183,7 +183,7 @@ class BP_Working_Papers_Activity {
 		// default name, but allow plugins to override
 		$post_name = apply_filters(
 			'bpwpapers_site_name',
-			__( 'New Working Papers', 'bpwpapers' )
+			sprintf( __( 'New %s', 'bpwpapers' ), bpwpapers_extension_plural() )
 		);
 
 		// construct option
@@ -206,7 +206,7 @@ class BP_Working_Papers_Activity {
 		// default name, but allow plugins to override
 		$group_name = apply_filters(
 			'bpwpapers_group_name',
-			__( 'Working Paper Memberships', 'bpwpapers' )
+			sprintf( __( '%s Memberships', 'bpwpapers' ), bpwpapers_extension_name() )
 		);
 
 		// construct option
@@ -229,7 +229,7 @@ class BP_Working_Papers_Activity {
 		// default name, but allow plugins to override
 		$post_name = apply_filters(
 			'bpwpapers_post_name',
-			__( 'Working Paper Posts', 'bpwpapers' )
+			sprintf( __( '%s Posts', 'bpwpapers' ), bpwpapers_extension_name() )
 		);
 
 		// construct option
@@ -252,7 +252,7 @@ class BP_Working_Papers_Activity {
 		// default name, but allow plugins to override
 		$comment_name = apply_filters(
 			'bpwpapers_comment_name',
-			__( 'Working Paper Comments', 'bpwpapers' )
+			sprintf( __( '%s Comments', 'bpwpapers' ), bpwpapers_extension_name() )
 		);
 
 		// construct option
