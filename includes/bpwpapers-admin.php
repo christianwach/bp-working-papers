@@ -757,10 +757,12 @@ Primary filters for overrides
 /**
  * Override group extension title
  *
- * @param str $title The existing title
- * @return str $title The overridden title
+ * @return str $title The group extension title
  */
-function bpwpapers_override_extension_title( $title ) {
+function bpwpapers_extension_title() {
+	
+	// set default
+	$title = __( 'Working Papers', 'bpwpapers' );
 
 	// access object
 	global $bp_working_papers;
@@ -774,12 +776,9 @@ function bpwpapers_override_extension_title( $title ) {
 	}
 
 	// --<
-	return $title;
+	return apply_filters( 'bpwpapers_extension_title', $title );
 
 }
-
-// add filter for the above
-add_filter( 'bpwpapers_extension_title', 'bpwpapers_override_extension_title', 10, 1 );
 
 
 
