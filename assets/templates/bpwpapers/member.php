@@ -37,7 +37,7 @@ get_header( 'buddypress' );
 					// show title for other users
 					echo sprintf(
 						__( '%1$s followed by %2$s', 'bpwpapers' ),
-						apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ),
+						bpwpapers_extension_plural(),
 						bp_get_displayed_user_fullname()
 					);
 
@@ -46,7 +46,7 @@ get_header( 'buddypress' );
 					// show "my working papers" title
 					echo sprintf(
 						__( 'My Followed %s', 'bpwpapers' ),
-						apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
+						bpwpapers_extension_plural()
 					);
 
 				}
@@ -59,7 +59,7 @@ get_header( 'buddypress' );
 					// show title for other users
 					echo sprintf(
 						__( '%1$s by %2$s', 'bpwpapers' ),
-						apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ),
+						bpwpapers_extension_plural(),
 						bp_get_displayed_user_fullname()
 					);
 
@@ -68,7 +68,7 @@ get_header( 'buddypress' );
 					// show "my working papers" title
 					echo sprintf(
 						__( 'My %s', 'bpwpapers' ),
-						apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
+						bpwpapers_extension_plural()
 					);
 
 				}

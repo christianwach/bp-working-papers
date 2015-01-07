@@ -1352,7 +1352,7 @@ class BP_Working_Papers_Activity {
 					'bpwpapers_activity_tab_recent_title_all_yours',
 					sprintf(
 						__( 'Recent Activity in your %s', 'bpwpapers' ),
-						apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
+						bpwpapers_extension_plural()
 					)
 				);
 
@@ -1363,7 +1363,7 @@ class BP_Working_Papers_Activity {
 					'bpwpapers_activity_tab_recent_title_all_public',
 					sprintf(
 						__( 'Recent Activity in Public %s', 'bpwpapers' ),
-						apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
+						bpwpapers_extension_plural()
 					)
 				);
 
@@ -1408,7 +1408,7 @@ class BP_Working_Papers_Activity {
 					'bpwpapers_activity_tab_recent_title_all_yours',
 					sprintf(
 						__( 'Friends Activity in your %s', 'bpwpapers' ),
-						apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
+						bpwpapers_extension_plural()
 					)
 				);
 

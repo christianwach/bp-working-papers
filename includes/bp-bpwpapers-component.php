@@ -86,7 +86,7 @@ class BP_Working_Papers_Component extends BP_Component {
 		// construct search string
 		$search_string = sprintf(
 			__( 'Search %s...', 'bpwpapers' ),
-			apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
+			bpwpapers_extension_plural()
 		);
 
 		// construct args
@@ -117,7 +117,7 @@ class BP_Working_Papers_Component extends BP_Component {
 			// construct name
 			$name = sprintf(
 				__( '%s <span>%d</span>', 'bpwpapers' ),
-				apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ),
+				bpwpapers_extension_plural(),
 				bpwpapers_get_total_paper_count_for_user( bp_displayed_user_id() )
 			);
 

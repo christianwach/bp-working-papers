@@ -101,7 +101,7 @@ class BP_Working_Papers_Theme_Compat {
 	public function directory_dummy_post() {
 
 		// set title
-		$title = apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) );
+		$title = bpwpapers_extension_plural();
 
 		// create dummy post
 		bp_theme_compat_reset_post( array(
@@ -265,7 +265,7 @@ function bpwpapers_show_working_paper_create_form( $blogname = '', $blog_title =
 		$errors = $filtered_results['errors'];
 
 		$singular = strtolower( bpwpapers_extension_name() );
-		$plural = strtolower( apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ) );
+		$plural = strtolower( bpwpapers_extension_plural() );
 
 		?>
 

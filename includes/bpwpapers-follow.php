@@ -659,7 +659,7 @@ class BP_Working_Papers_Follow {
 		if ( ! bpwpapers_is_working_paper( get_current_blog_id() ) ) return $params;
 
 		// configure the link the way we want it
-		$paper_name = apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) );
+		$paper_name = bpwpapers_extension_plural();
 
 		// new URL
 		$params['link'] = esc_url( bp_loggedin_user_domain() . bpwpapers_get_slug() . '/' .

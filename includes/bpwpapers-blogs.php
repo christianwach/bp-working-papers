@@ -241,7 +241,7 @@ function bpwpapers_blogs_pagination_count() {
 	$singular = strtolower( bpwpapers_extension_name() );
 
 	// get plural name
-	$plural = strtolower( apply_filters( 'bpwpapers_extension_plural', __( 'working papers', 'bpwpapers' ) ) );
+	$plural = strtolower( bpwpapers_extension_plural() );
 
 	// we need to override the singular name
 	echo sprintf(

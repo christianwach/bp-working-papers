@@ -25,7 +25,7 @@ get_header( 'buddypress' );
 			// show title
 			echo sprintf(
 				__( '%s Directory', 'bpwpapers' ),
-				apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
+				bpwpapers_extension_plural()
 			);
 
 			// show "create" if logged in
@@ -65,7 +65,7 @@ get_header( 'buddypress' );
 						// filter subnav title
 						printf(
 							__( 'All %1$s <span>%2$s</span>', 'bpwpapers' ),
-							apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ),
+							bpwpapers_extension_plural(),
 							bpwpapers_get_total_paper_count()
 						);
 
@@ -77,7 +77,7 @@ get_header( 'buddypress' );
 
 						printf(
 							__( 'My %1$s <span>%2$s</span>', 'bpwpapers' ),
-							apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ),
+							bpwpapers_extension_plural(),
 							bpwpapers_get_total_paper_count_for_user( bp_loggedin_user_id() )
 						);
 

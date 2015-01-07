@@ -104,7 +104,7 @@ if ( bpwpapers_has_blogs( bp_ajax_querystring( 'bpwpapers' ) ) ) {
 		// show nothing found message
 		echo sprintf(
 			__( 'Sorry, there were no %s found.', 'bpwpapers' ),
-			apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
+			bpwpapers_extension_plural()
 		);
 
 		?></p>

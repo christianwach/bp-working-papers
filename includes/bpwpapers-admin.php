@@ -813,10 +813,12 @@ function bpwpapers_extension_name() {
 /**
  * Override group extension plural
  *
- * @param str $plural The existing plural name
  * @return str $plural The overridden plural name
  */
-function bpwpapers_override_extension_plural( $plural ) {
+function bpwpapers_extension_plural() {
+	
+	// set default
+	$plural = __( 'Working Papers', 'bpwpapers' );
 
 	// access object
 	global $bp_working_papers;
@@ -830,12 +832,9 @@ function bpwpapers_override_extension_plural( $plural ) {
 	}
 
 	// --<
-	return $plural;
+	return apply_filters( 'bpwpapers_extension_plural', $plural );
 
 }
-
-// add filter for the above
-add_filter( 'bpwpapers_extension_plural', 'bpwpapers_override_extension_plural', 10, 1 );
 
 
 

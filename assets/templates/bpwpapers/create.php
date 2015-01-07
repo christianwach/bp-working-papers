@@ -35,7 +35,7 @@ get_header( 'buddypress' );
 			// show title
 			echo sprintf(
 				__( '%s Directory', 'bpwpapers' ),
-				apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) )
+				bpwpapers_extension_plural()
 			);
 
 			?></a></h3>
