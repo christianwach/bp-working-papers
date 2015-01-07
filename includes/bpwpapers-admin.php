@@ -755,7 +755,7 @@ Primary filters for overrides
 
 
 /**
- * Override group extension title
+ * Get group extension title
  *
  * @return str $title The group extension title
  */
@@ -783,7 +783,7 @@ function bpwpapers_extension_title() {
 
 
 /**
- * Override group extension singular name
+ * Get group extension singular name
  *
  * @return str $name The overridden name
  */
@@ -811,7 +811,7 @@ function bpwpapers_extension_name() {
 
 
 /**
- * Override group extension plural
+ * Get group extension plural
  *
  * @return str $plural The overridden plural name
  */
@@ -839,7 +839,7 @@ function bpwpapers_extension_plural() {
 
 
 /**
- * Override group extension slug
+ * Get group extension slug
  *
  * @return str $slug The overridden slug
  */
