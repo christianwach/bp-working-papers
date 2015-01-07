@@ -25,7 +25,7 @@ function bpwpapers_cbox_theme_compatibility() {
 	if ( function_exists( 'cbox_theme_register_widgets' ) ) {
 
 		// get group slug
-		$group_slug = apply_filters( 'bpwpapers_extension_slug', 'working-paper' );
+		$group_slug = bpwpapers_extension_slug();
 
 		// init member li
 		$member_li = '';

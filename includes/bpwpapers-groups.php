@@ -398,11 +398,11 @@ function bpwpapers_group_setup_nav() {
 	// construct args for subnav item
 	$args = array(
 		'name'            => bpwpapers_extension_name(),
-		'slug'            => apply_filters( 'bpwpapers_extension_slug', 'working-paper' ),
+		'slug'            => bpwpapers_extension_slug(),
 		'parent_slug'     => bp_get_current_group_slug(),
 		'parent_url'      => bp_get_group_permalink( groups_get_current_group() ),
 		'position'        => apply_filters( 'bpwpapers_extension_pos', 31 ),
-		'item_css_id'     => 'nav-' . apply_filters( 'bpwpapers_extension_slug', 'working-paper' ),
+		'item_css_id'     => 'nav-' . bpwpapers_extension_slug(),
 		'screen_function' => 'bpwpapers_redirect_to_site',
 		'user_has_access' => $group->user_has_access
 	);

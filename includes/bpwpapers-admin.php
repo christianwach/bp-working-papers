@@ -841,10 +841,12 @@ function bpwpapers_extension_plural() {
 /**
  * Override group extension slug
  *
- * @param str $slug The existing slug
  * @return str $slug The overridden slug
  */
-function bpwpapers_override_extension_slug( $slug ) {
+function bpwpapers_extension_slug() {
+	
+	// set default
+	$slug = 'working-paper';
 
 	// access object
 	global $bp_working_papers;
@@ -858,12 +860,9 @@ function bpwpapers_override_extension_slug( $slug ) {
 	}
 
 	// --<
-	return $slug;
+	return apply_filters( 'bpwpapers_extension_slug', $slug );
 
 }
-
-// add filter for the above
-add_filter( 'bpwpapers_extension_slug', 'bpwpapers_override_extension_slug', 10, 1 );
 
 
 
