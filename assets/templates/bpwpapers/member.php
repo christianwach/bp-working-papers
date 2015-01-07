@@ -88,7 +88,7 @@ get_header( 'buddypress' );
 				// show create link
 				echo sprintf(
 					__( 'Create a %s', 'bpwpapers' ),
-					apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+					bpwpapers_extension_name()
 				);
 
 				?></a><?php

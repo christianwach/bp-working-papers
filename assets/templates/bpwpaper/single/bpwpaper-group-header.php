@@ -9,7 +9,7 @@
 	// show title
 	echo sprintf(
 		__( 'Activity in this %s', 'bpwpapers' ),
-		apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+		bpwpapers_extension_name()
 	);
 
 	?></h2>

@@ -264,7 +264,7 @@ function bpwpapers_show_working_paper_create_form( $blogname = '', $blog_title =
 		$blog_title = $filtered_results['blog_title'];
 		$errors = $filtered_results['errors'];
 
-		$singular = strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) );
+		$singular = strtolower( bpwpapers_extension_name() );
 		$plural = strtolower( apply_filters( 'bpwpapers_extension_plural', __( 'Working Papers', 'bpwpapers' ) ) );
 
 		?>
@@ -313,7 +313,7 @@ function bpwpapers_show_working_paper_create_form( $blogname = '', $blog_title =
 
 				echo sprintf(
 					__( 'Create %s', 'bpwpapers' ),
-					apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+					bpwpapers_extension_name()
 				);
 
 				?>" />
@@ -342,7 +342,7 @@ function bpwpapers_signup_blog( $blogname = '', $blog_title = '', $errors = '' )
 	global $current_site;
 
 	// get name
-	$name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+	$name = bpwpapers_extension_name();
 
 	?>
 
@@ -525,7 +525,7 @@ function bpwpapers_confirm_signup( $domain, $path, $blog_title, $user_name, $use
 
 	echo sprintf(
 		__( 'Congratulations! You have successfully created a new %s.', 'bpwpapers' ),
-		strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) )
+		strtolower( bpwpapers_extension_name() )
 	);
 
 	?></p>
@@ -534,7 +534,7 @@ function bpwpapers_confirm_signup( $domain, $path, $blog_title, $user_name, $use
 
 	printf(
 		__( 'The URL for your new %1$s is <a href="%2$s">%3$s</a>', 'bpwpapers' ),
-		strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) ),
+		strtolower( bpwpapers_extension_name() ),
 		$blog_url,
 		$blog_url
 	);

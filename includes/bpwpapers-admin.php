@@ -785,10 +785,12 @@ function bpwpapers_extension_title() {
 /**
  * Override group extension singular name
  *
- * @param str $name The existing name
  * @return str $name The overridden name
  */
-function bpwpapers_override_extension_name( $name ) {
+function bpwpapers_extension_name() {
+
+	// set default
+	$name = __( 'Working Paper', 'bpwpapers' );
 
 	// access object
 	global $bp_working_papers;
@@ -802,12 +804,9 @@ function bpwpapers_override_extension_name( $name ) {
 	}
 
 	// --<
-	return $name;
+	return apply_filters( 'bpwpapers_extension_name', $name );
 
 }
-
-// add filter for the above
-add_filter( 'bpwpapers_extension_name', 'bpwpapers_override_extension_name', 10, 1 );
 
 
 

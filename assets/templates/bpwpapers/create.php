@@ -27,7 +27,7 @@ get_header( 'buddypress' );
 			// show title
 			echo sprintf(
 				__( 'Create a %s', 'bpwpapers' ),
-				apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+				bpwpapers_extension_name()
 			);
 
 			?> &nbsp;<a class="button" href="<?php echo trailingslashit( bp_get_root_domain() . '/' . bpwpapers_get_root_slug() ); ?>"><?php

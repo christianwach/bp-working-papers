@@ -340,7 +340,7 @@ class BP_Working_Papers_Activity {
 
 				__( '%s joined the discussion on the %s %s', 'bpwpapers' ),
 				bp_core_get_userlink( $activity->user_id ),
-				strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) ),
+				strtolower( bpwpapers_extension_name() ),
 				'<a href="' . get_home_url( $blog_id ) . '">' . esc_attr( $name ) . '</a>'
 
 			);
@@ -352,7 +352,7 @@ class BP_Working_Papers_Activity {
 
 				__( '%s joined the discussion on the %s %s', 'bpwpapers' ),
 				bp_core_get_userlink( $activity->user_id ),
-				strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) ),
+				strtolower( bpwpapers_extension_name() ),
 				'<a href="' . get_home_url( $blog_id ) . '">' . esc_attr( $name ) . '</a>'
 
 			);
@@ -448,7 +448,7 @@ class BP_Working_Papers_Activity {
 
 				__( '%s updated the %s %s', 'bpwpapers' ),
 				bp_core_get_userlink( $activity->user_id ),
-				strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) ),
+				strtolower( bpwpapers_extension_name() ),
 				'<a href="' . get_home_url( $blog_id ) . '">' . esc_attr( $name ) . '</a>'
 
 			);
@@ -460,7 +460,7 @@ class BP_Working_Papers_Activity {
 
 				__( '%s created the %s %s', 'bpwpapers' ),
 				bp_core_get_userlink( $activity->user_id ),
-				strtolower( apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ) ),
+				strtolower( bpwpapers_extension_name() ),
 				'<a href="' . get_home_url( $blog_id ) . '">' . esc_attr( $name ) . '</a>'
 
 			);
@@ -531,7 +531,7 @@ class BP_Working_Papers_Activity {
 		$blog_link = '<a href="'.$home_url.'" title="'.esc_attr( $blog_name ).'">'.$blog_name.'</a>';
 
 		// get name
-		$name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+		$name = bpwpapers_extension_name();
 
 		// set activity type
 		$type = 'new_working_paper_post';
@@ -896,7 +896,7 @@ class BP_Working_Papers_Activity {
 		$blog_link = '<a href="'.$home_url.'" title="'.esc_attr( $blog_name ).'">'.$blog_name.'</a>';
 
 		// get name
-		$name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+		$name = bpwpapers_extension_name();
 
 		// replace any necessary values to display in the activity stream
 		$action = sprintf(
@@ -1317,7 +1317,7 @@ class BP_Working_Papers_Activity {
 		// set title, but allow plugins to override
 		$title = sprintf(
 			__( 'Recent Comments in this %s', 'bpwpapers' ),
-			apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+			bpwpapers_extension_name()
 		);
 
 		// --<

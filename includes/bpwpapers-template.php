@@ -595,7 +595,7 @@ class BP_Working_Papers_Template {
 		if ( ! isset( $this->group_id ) ) return $text;
 
 		// get name
-		$name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+		$name = bpwpapers_extension_name();
 
 		// replace instances of "group"
 		$text = str_replace(
@@ -667,7 +667,7 @@ class BP_Working_Papers_Template {
 			// get title
 			$title = sprintf(
 				__( 'Activity in this %s', 'bpwpapers' ),
-				apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+				bpwpapers_extension_name()
 			);
 
 			// construct link
@@ -710,7 +710,7 @@ class BP_Working_Papers_Template {
 		// construct title
 		$title = sprintf(
 			__( '%s Home Page', 'bpwpapers' ),
-			apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+			bpwpapers_extension_name()
 		);
 
 		// --<
@@ -921,7 +921,7 @@ class BP_Working_Papers_Template {
 		// define heading title
 		$heading = sprintf(
 			__( '%s Status', 'bpwpapers' ),
-			apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+			bpwpapers_extension_name()
 		);
 
 		echo '
@@ -975,13 +975,13 @@ class BP_Working_Papers_Template {
 			// link text
 			$text = sprintf(
 				__( 'Unpublish %s', 'bpwpapers' ),
-				apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+				bpwpapers_extension_name()
 			);
 
 			// link title
 			$title = sprintf(
 				__( 'Unpublish this %s', 'bpwpapers' ),
-				apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+				bpwpapers_extension_name()
 			);
 
 		} else {
@@ -989,14 +989,14 @@ class BP_Working_Papers_Template {
 			// link text
 			$text = sprintf(
 				__( 'Publish %s', 'bpwpapers' ),
-				apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+				bpwpapers_extension_name()
 			);
 
 
 			// link title
 			$title = sprintf(
 				__( 'Publish this %s', 'bpwpapers' ),
-				apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) )
+				bpwpapers_extension_name()
 			);
 
 		}

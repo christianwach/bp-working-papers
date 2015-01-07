@@ -238,7 +238,7 @@ function bpwpapers_blogs_pagination_count() {
 	$total     = bp_core_number_format( $blogs_template->total_blog_count );
 
 	// get singular name
-	$singular = strtolower( apply_filters( 'bpwpapers_extension_name', __( 'working paper', 'bpwpapers' ) ) );
+	$singular = strtolower( bpwpapers_extension_name() );
 
 	// get plural name
 	$plural = strtolower( apply_filters( 'bpwpapers_extension_plural', __( 'working papers', 'bpwpapers' ) ) );
@@ -588,7 +588,7 @@ function bpwpapers_configure_blog_options( $blog_id, $group_id ) {
 	// set new, more descriptive tagline
 	update_option( 'blogdescription', sprintf(
 		__( 'A %1$s by %2$s', 'bpwpapers' ),
-		apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ),
+		bpwpapers_extension_name(),
 		bp_get_loggedin_user_fullname()
 	) );
 

@@ -397,7 +397,7 @@ function bpwpapers_group_setup_nav() {
 
 	// construct args for subnav item
 	$args = array(
-		'name'            => apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) ),
+		'name'            => bpwpapers_extension_name(),
 		'slug'            => apply_filters( 'bpwpapers_extension_slug', 'working-paper' ),
 		'parent_slug'     => bp_get_current_group_slug(),
 		'parent_url'      => bp_get_group_permalink( groups_get_current_group() ),

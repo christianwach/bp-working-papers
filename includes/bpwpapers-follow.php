@@ -620,7 +620,7 @@ class BP_Working_Papers_Follow {
 			$link_text = _x( 'Unfollow', 'Button', 'bpwpapers' );
 
 			if ( empty( $blogs_template->in_the_loop ) ) {
-				$paper_name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+				$paper_name = bpwpapers_extension_name();
 				$link_text = _x( sprintf( 'Unfollow %s', $paper_name ), 'Button', 'bpwpapers' );
 			}
 
@@ -631,7 +631,7 @@ class BP_Working_Papers_Follow {
 
 			// in the loop?
 			if ( empty( $blogs_template->in_the_loop ) ) {
-				$paper_name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+				$paper_name = bpwpapers_extension_name();
 				$link_text = _x( sprintf( 'Follow %s', $paper_name ), 'Button', 'bpwpapers' );
 			}
 
@@ -832,7 +832,7 @@ class BP_Working_Papers_Follow {
 	public function override_reply_to_text( $link_text, $paragraph_text ) {
 
 		// get name
-		$paper_name = apply_filters( 'bpwpapers_extension_name', __( 'Working Paper', 'bpwpapers' ) );
+		$paper_name = bpwpapers_extension_name();
 
 		// construct link content
 		$link_text = __( sprintf( 'Follow this %s to leave a comment', $paper_name ), 'bpwpapers' );
