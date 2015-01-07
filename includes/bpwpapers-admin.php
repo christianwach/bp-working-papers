@@ -982,7 +982,7 @@ function bppaperauthors_extension_name() {
  *
  * @return str $plural The  author component plural name
  */
-function bppaperauthors_override_extension_plural() {
+function bppaperauthors_extension_plural() {
 	
 	// set default
 	$plural = __( 'Working Paper Authors', 'bpwpapers' );
