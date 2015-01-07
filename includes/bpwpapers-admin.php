@@ -925,12 +925,14 @@ add_filter( 'bp_get_blogs_visit_blog_button', 'bpwpapers_get_visit_site_button',
 
 
 /**
- * Override author component title
+ * Get author component title
  *
- * @param str $title The existing title
- * @return str $title The overridden title
+ * @return str $title The author component title
  */
-function bppaperauthors_override_extension_title( $title ) {
+function bppaperauthors_extension_title() {
+	
+	// set default
+	$title = __( 'Working Paper Authors', 'bpwpapers' );
 
 	// access object
 	global $bp_working_papers;
@@ -944,12 +946,9 @@ function bppaperauthors_override_extension_title( $title ) {
 	}
 
 	// --<
-	return $title;
+	return apply_filters( 'bppaperauthors_extension_title', $title );
 
 }
-
-// add filter for the above
-add_filter( 'bppaperauthors_extension_title', 'bppaperauthors_override_extension_title', 10, 1 );
 
 
 

@@ -34,7 +34,7 @@ class BP_Working_Papers_Author_Component extends BP_Component {
 
 		// store component name
 		// NOTE: ideally we'll use BP theme compatibility - see bppaperauthors_author_load_template_filter() below
-		$this->name = apply_filters( 'bppaperauthors_extension_title', __( 'Working Paper Authors', 'bpwpapers' ) );
+		$this->name = bppaperauthors_extension_title();
 
 		// add this component to active components
 		$bp->active_components[$this->id] = '1';
