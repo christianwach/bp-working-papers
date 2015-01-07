@@ -992,7 +992,6 @@ class BP_Working_Papers_Template {
 				bpwpapers_extension_name()
 			);
 
-
 			// link title
 			$title = sprintf(
 				__( 'Publish this %s', 'bpwpapers' ),

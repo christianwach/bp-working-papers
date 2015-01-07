@@ -295,7 +295,7 @@ class BP_Working_Papers_Paper_Widget extends WP_Widget {
 										<?php
 
 										// construct comment link
-										$comment_link = '<a href="' . bp_get_activity_comment_link() . '" class="button acomment-reply bp-primary-action" id="acomment-comment-' . bp_get_activity_id() . '">'.sprintf( __( 'Comment <span>%s</span>', 'bpwpapers' ), bp_activity_get_comment_count() ) . '</a>';
+										$comment_link = '<a href="' . bp_get_activity_comment_link() . '" class="button acomment-reply bp-primary-action" id="acomment-comment-' . bp_get_activity_id() . '">' . sprintf( __( 'Comment <span>%s</span>', 'bpwpapers' ), bp_activity_get_comment_count() ) . '</a>';
 
 										// echo it, but allow plugin overrides first
 										echo apply_filters( 'cp_activity_entry_comment_link', $comment_link );

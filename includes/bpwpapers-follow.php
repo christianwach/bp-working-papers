@@ -559,17 +559,17 @@ class BP_Working_Papers_Follow {
 	 * @return str Modified querystring
 	 */
 	public function filter_followblogs_activity( $qs ) {
-		
+
 		// init params
 		$params = array();
-	
+
 		// parse querystring into an array
 		if ( ! is_array( $qs ) ) {
 			wp_parse_str( $qs, $params );
 		} else {
 			$params = $qs;
 		}
-		
+
 		// skip if there's no primary blog ID
 		if ( isset( $params['primary_id'] ) ) {
 
@@ -597,7 +597,7 @@ class BP_Working_Papers_Follow {
 
 			// replace primary IDs
 			$params['primary_id'] = implode( ',', $following_ids );
-		
+
 		}
 
 		// rebuild querystring

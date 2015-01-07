@@ -760,7 +760,7 @@ Primary filters for overrides
  * @return str $title The group extension title
  */
 function bpwpapers_extension_title() {
-	
+
 	// set default
 	$title = __( 'Working Papers', 'bpwpapers' );
 
@@ -816,7 +816,7 @@ function bpwpapers_extension_name() {
  * @return str $plural The overridden plural name
  */
 function bpwpapers_extension_plural() {
-	
+
 	// set default
 	$plural = __( 'Working Papers', 'bpwpapers' );
 
@@ -844,7 +844,7 @@ function bpwpapers_extension_plural() {
  * @return str $slug The overridden slug
  */
 function bpwpapers_extension_slug() {
-	
+
 	// set default
 	$slug = 'working-paper';
 
@@ -930,7 +930,7 @@ add_filter( 'bp_get_blogs_visit_blog_button', 'bpwpapers_get_visit_site_button',
  * @return str $title The author component title
  */
 function bppaperauthors_extension_title() {
-	
+
 	// set default
 	$title = __( 'Working Paper Authors', 'bpwpapers' );
 
@@ -983,7 +983,7 @@ function bppaperauthors_extension_name() {
  * @return str $plural The  author component plural name
  */
 function bppaperauthors_extension_plural() {
-	
+
 	// set default
 	$plural = __( 'Working Paper Authors', 'bpwpapers' );
 
