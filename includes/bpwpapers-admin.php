@@ -978,12 +978,14 @@ function bppaperauthors_extension_name() {
 
 
 /**
- * Override author component plural
+ * Get author component plural
  *
- * @param str $plural The existing plural name
- * @return str $plural The overridden plural name
+ * @return str $plural The  author component plural name
  */
-function bppaperauthors_override_extension_plural( $plural ) {
+function bppaperauthors_override_extension_plural() {
+	
+	// set default
+	$plural = __( 'Working Paper Authors', 'bpwpapers' );
 
 	// access object
 	global $bp_working_papers;
@@ -997,12 +999,9 @@ function bppaperauthors_override_extension_plural( $plural ) {
 	}
 
 	// --<
-	return $plural;
+	return apply_filters( 'bppaperauthors_extension_plural', $plural );
 
 }
-
-// add filter for the above
-add_filter( 'bppaperauthors_extension_plural', 'bppaperauthors_override_extension_plural', 10, 1 );
 
 
 

@@ -23,7 +23,7 @@ get_header( 'buddypress' );
 			// show title
 			echo sprintf(
 				__( '%s Directory', 'bpwpapers' ),
-				apply_filters( 'bppaperauthors_extension_plural', __( 'Working Paper Authors', 'bpwpapers' ) )
+				bppaperauthors_extension_plural()
 			);
 
 			?></h3>
@@ -46,7 +46,7 @@ get_header( 'buddypress' );
 						// filter subnav title
 						printf(
 							__( 'All %1$s <span>%2$s</span>', 'bpwpapers' ),
-							apply_filters( 'bppaperauthors_extension_plural', __( 'Working Paper Authors', 'bpwpapers' ) ),
+							bppaperauthors_extension_plural(),
 							bpwpapers_get_total_member_count()
 						);
 

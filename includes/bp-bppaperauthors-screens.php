@@ -101,7 +101,7 @@ class BP_Working_Paper_Authors_Theme_Compat {
 	public function directory_dummy_post() {
 
 		// set title
-		$title = apply_filters( 'bppaperauthors_extension_plural', __( 'Working Paper Authors', 'bpwpapers' ) );
+		$title = bppaperauthors_extension_plural();
 
 		// create dummy post
 		bp_theme_compat_reset_post( array(

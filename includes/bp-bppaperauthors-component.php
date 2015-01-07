@@ -86,7 +86,7 @@ class BP_Working_Papers_Author_Component extends BP_Component {
 		// construct search string
 		$search_string = sprintf(
 			__( 'Search %s...', 'bpwpapers' ),
-			apply_filters( 'bppaperauthors_extension_plural', __( 'Working Paper Authors', 'bpwpapers' ) )
+			bppaperauthors_extension_plural()
 		);
 
 		// construct args

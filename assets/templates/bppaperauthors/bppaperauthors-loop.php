@@ -124,7 +124,7 @@ if ( bp_has_members( bp_ajax_querystring( 'bppaperauthors' ) ) ) {
 		// show nothing found message
 		echo sprintf(
 			__( 'Sorry, there were no %s found.', 'bpwpapers' ),
-			apply_filters( 'bppaperauthors_extension_plural', __( 'Working Paper Authors', 'bpwpapers' ) )
+			bppaperauthors_extension_plural()
 		);
 
 		?></p>
