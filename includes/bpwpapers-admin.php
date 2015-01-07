@@ -953,12 +953,11 @@ function bppaperauthors_extension_title() {
 
 
 /**
- * Override author component singular name
+ * Get author component singular name
  *
- * @param str $name The existing name
- * @return str $name The overridden name
+ * @return str $name The author component singular name
  */
-function bppaperauthors_override_extension_name( $name ) {
+function bppaperauthors_extension_name() {
 
 	// access object
 	global $bp_working_papers;
@@ -972,12 +971,9 @@ function bppaperauthors_override_extension_name( $name ) {
 	}
 
 	// --<
-	return $name;
+	return apply_filters( 'bppaperauthors_extension_name', $name );
 
 }
-
-// add filter for the above
-add_filter( 'bppaperauthors_extension_name', 'bppaperauthors_override_extension_name', 10, 1 );
 
 
 
