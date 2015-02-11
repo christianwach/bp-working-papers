@@ -33,11 +33,17 @@ class BP_Working_Papers_Reviewer_Widget extends WP_Widget {
 			'bpwpapers_reviewer_widget',
 
 			// name
-			__( 'Featured Paper Reviewer', 'bpwpapers' ),
+			sprintf(
+				__( 'Featured %s Reviewer', 'bpwpapers' ),
+				bpwpapers_extension_name()
+			),
 
 			// args
 			array(
-				'description' => __( 'Use this widget to choose your Featured Working Papers Reviewer', 'bpwpapers' ),
+				'description' => sprintf(
+					__( 'Use this widget to choose your Featured %s Reviewer', 'bpwpapers' ),
+					bpwpapers_extension_plural()
+				),
 			)
 
 		);
@@ -100,7 +106,7 @@ class BP_Working_Papers_Reviewer_Widget extends WP_Widget {
 
 							<?php $this->show_comments( bp_get_member_user_id() ); ?>
 
-							<span class="more"><a href="<?php echo $user_link; ?>"><?php _e( 'More activity by this reviewer &rarr;', 'ihc-cbox' ); ?></a></span>
+							<span class="more"><a href="<?php echo $user_link; ?>"><?php _e( 'More activity by this reviewer &rarr;', 'bpwpapers' ); ?></a></span>
 
 						</div>
 					</div><!-- /.item -->

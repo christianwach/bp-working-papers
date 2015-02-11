@@ -33,11 +33,17 @@ class BP_Working_Papers_Recent_Papers_Widget extends WP_Widget {
 			'bpwpapers_recent_widget',
 
 			// name
-			__( 'Recent Working Papers', 'bpwpapers' ),
+			sprintf(
+				__( 'Recent %s', 'bpwpapers' ),
+				bpwpapers_extension_plural()
+			),
 
 			// args
 			array(
-				'description' => __( 'Use this widget to display Recent Working Papers', 'bpwpapers' ),
+				'description' => sprintf(
+					__( 'Use this widget to display Recent %s', 'bpwpapers' ),
+					bpwpapers_extension_plural()
+				),
 			)
 
 		);
@@ -164,7 +170,7 @@ class BP_Working_Papers_Recent_Papers_Widget extends WP_Widget {
 		if ( isset( $instance['title'] ) ) {
 			$title = $instance['title'];
 		} else {
-			$title = __( 'Recent Working Papers', 'bpwpapers' );
+			$title = sprintf( __( 'Recent %s', 'bpwpapers' ), bpwpapers_extension_plural() );
 		}
 
 		?>

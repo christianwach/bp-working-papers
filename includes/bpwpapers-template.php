@@ -419,9 +419,9 @@ class BP_Working_Papers_Template {
 
 		// define an area where a widget may be placed
 		register_sidebar( array(
-			'name' => __( 'Working Papers Top', 'ihc-cbox' ),
+			'name' => __( 'Working Papers Top', 'bpwpapers' ),
 			'id' => 'working-papers-top',
-			'description' => __( 'A widget area at the top of the Working Papers Homepage', 'ihc-cbox' ),
+			'description' => __( 'A widget area at the top of the Working Papers Homepage', 'bpwpapers' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget' => "</div>",
 			'before_title' => '<h3 class="widget-title">',
@@ -430,9 +430,9 @@ class BP_Working_Papers_Template {
 
 		// define an area where a widget may be placed
 		register_sidebar( array(
-			'name' => __( 'Working Papers Middle Left', 'ihc-cbox' ),
+			'name' => __( 'Working Papers Middle Left', 'bpwpapers' ),
 			'id' => 'working-papers-middle-left',
-			'description' => __( 'A widget area at the middle left of the Working Papers Homepage', 'ihc-cbox' ),
+			'description' => __( 'A widget area at the middle left of the Working Papers Homepage', 'bpwpapers' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget' => "</div>",
 			'before_title' => '<h3 class="widget-title">',
@@ -441,9 +441,9 @@ class BP_Working_Papers_Template {
 
 		// define an area where a widget may be placed
 		register_sidebar( array(
-			'name' => __( 'Working Papers Middle Right', 'ihc-cbox' ),
+			'name' => __( 'Working Papers Middle Right', 'bpwpapers' ),
 			'id' => 'working-papers-middle-right',
-			'description' => __( 'A widget area at the middle right of the Working Papers Homepage', 'ihc-cbox' ),
+			'description' => __( 'A widget area at the middle right of the Working Papers Homepage', 'bpwpapers' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget' => "</div>",
 			'before_title' => '<h3 class="widget-title">',
@@ -452,9 +452,9 @@ class BP_Working_Papers_Template {
 
 		// define an area where a widget may be placed
 		register_sidebar( array(
-			'name' => __( 'Working Papers Lower', 'ihc-cbox' ),
+			'name' => __( 'Working Papers Lower', 'bpwpapers' ),
 			'id' => 'working-papers-lower',
-			'description' => __( 'A spanning widget area below the middle of the Working Papers Homepage', 'ihc-cbox' ),
+			'description' => __( 'A spanning widget area below the middle of the Working Papers Homepage', 'bpwpapers' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget' => "</div>",
 			'before_title' => '<h3 class="widget-title">',
@@ -463,9 +463,9 @@ class BP_Working_Papers_Template {
 
 		// define an area where a widget may be placed
 		register_sidebar( array(
-			'name' => __( 'Working Papers Bottom Left', 'ihc-cbox' ),
+			'name' => __( 'Working Papers Bottom Left', 'bpwpapers' ),
 			'id' => 'working-papers-bottom-left',
-			'description' => __( 'A widget area at the bottom left of the Working Papers Homepage', 'ihc-cbox' ),
+			'description' => __( 'A widget area at the bottom left of the Working Papers Homepage', 'bpwpapers' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget' => "</div>",
 			'before_title' => '<h3 class="widget-title">',
@@ -474,9 +474,9 @@ class BP_Working_Papers_Template {
 
 		// define an area where a widget may be placed
 		register_sidebar( array(
-			'name' => __( 'Working Papers Bottom Right', 'ihc-cbox' ),
+			'name' => __( 'Working Papers Bottom Right', 'bpwpapers' ),
 			'id' => 'working-papers-bottom-right',
-			'description' => __( 'A widget area at the bottom right of the Working Papers Homepage', 'ihc-cbox' ),
+			'description' => __( 'A widget area at the bottom right of the Working Papers Homepage', 'bpwpapers' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget' => "</div>",
 			'before_title' => '<h3 class="widget-title">',
@@ -485,9 +485,9 @@ class BP_Working_Papers_Template {
 
 		// define an area where a widget may be placed
 		register_sidebar( array(
-			'name' => __( 'Working Papers Sidebar', 'ihc-cbox' ),
+			'name' => __( 'Working Papers Sidebar', 'bpwpapers' ),
 			'id' => 'working-papers-sidebar',
-			'description' => __( 'A widget area in the sidebar of the Working Papers pages', 'ihc-cbox' ),
+			'description' => __( 'A widget area in the sidebar of the Working Papers pages', 'bpwpapers' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget' => "</div>",
 			'before_title' => '<h3 class="widget-title">',

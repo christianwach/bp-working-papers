@@ -33,11 +33,17 @@ class BP_Working_Papers_Activity_Widget extends WP_Widget {
 			'bpwpapers_activity_widget',
 
 			// name
-			__( 'Comments in Working Papers', 'bpwpapers' ),
+			sprintf(
+				__( 'Comments in %s', 'bpwpapers' ),
+				bpwpapers_extension_plural()
+			),
 
 			// args
 			array(
-				'description' => __( 'Use this widget to display Activity in Working Papers', 'bpwpapers' ),
+				'description' => sprintf(
+					__( 'Use this widget to display Activity in %s', 'bpwpapers' ),
+					bpwpapers_extension_plural()
+				),
 			)
 
 		);
@@ -189,7 +195,7 @@ class BP_Working_Papers_Activity_Widget extends WP_Widget {
 		if ( isset( $instance['title'] ) ) {
 			$title = $instance['title'];
 		} else {
-			$title = __( 'Comments in Working Papers', 'bpwpapers' );
+			$title = sprintf( __( 'Comments in %s', 'bpwpapers' ), bpwpapers_extension_plural() );
 		}
 
 		?>
