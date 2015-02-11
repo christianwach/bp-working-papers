@@ -3,7 +3,7 @@
 --------------------------------------------------------------------------------
 Plugin Name: BuddyPress Working Papers
 Description: Create a relationship between BuddyPress Groups and WordPress Sites for Peer Review of Working Papers.
-Version: 0.1
+Version: 0.2
 Author: Christian Wach
 Author URI: http://haystack.co.uk
 Plugin URI: http://haystack.co.uk
@@ -14,7 +14,7 @@ Network: true
 
 
 // set our version here
-define( 'BP_WORKING_PAPERS_VERSION', '0.1' );
+define( 'BP_WORKING_PAPERS_VERSION', '0.2' );
 
 // store reference to this file
 if ( !defined( 'BP_WORKING_PAPERS_FILE' ) ) {

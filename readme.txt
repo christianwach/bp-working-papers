@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: buddypress, commentpress, working papers, peer review, collaboration
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 0.1
+Stable tag: 0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,10 @@ The BuddyPress Working Papers plugin creates a relationship between BuddyPress G
 
 
 == Changelog ==
+
+= 0.2 =
+
+Initial release
 
 = 0.1 =
 
