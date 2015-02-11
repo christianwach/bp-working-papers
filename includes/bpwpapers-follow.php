@@ -71,7 +71,7 @@ class BP_Working_Papers_Follow {
 		add_filter( 'bp_ajax_querystring', array( $this, 'add_activity_scope_filter' ), 20, 2 );
 
 		// add filter for total follow count
-		add_filter( 'bp_follow_total_blogs_follow_counts', array( $this, 'filter_total_follow_count' ), 10, 2 );
+		add_filter( 'bp_follow_total_follow_blogs_counts', array( $this, 'filter_total_follow_count' ), 10, 2 );
 
 		// add menu item on papers directory
 		add_action( 'bpwpapers_blogs_directory_blog_types', array( $this, 'add_blog_directory_tab' ) );
