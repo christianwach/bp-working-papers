@@ -90,7 +90,7 @@ class BP_Working_Papers_Template {
 			add_action( 'wp', array( $this, 'publish_toggle_intercept' ) );
 
 			// intercept BuddyPress Group Email Subscription stuff
-			add_action( 'ass_group_all_mail_login_redirect_url', array( $this, 'intercept_email_login_url' ), 10, 1 );
+			add_action( 'ass_login_redirect_to', array( $this, 'intercept_email_login_url' ), 10, 2 );
 			add_filter( 'bp_ass_activity_notification_message', array( $this, 'intercept_email_text' ), 10, 2 );
 
 			// front end
@@ -542,9 +542,13 @@ class BP_Working_Papers_Template {
 	 * Override the login URL that BuddyPress Group Email Subscription prints in emails
 	 *
 	 * @param string $url The existing BuddyPress Group Email Subscription login URL
+	 * @param string $context The BuddyPress Group Email Subscription context
 	 * @return string $url The overridden login URL
 	 */
-	public function intercept_email_login_url( $url ) {
+	public function intercept_email_login_url( $url, $context ) {
+
+		// target the settings link
+		if ( $context != 'notifications' ) return $url;
 
 		// sanity check
 		if ( ! isset( $this->group_id ) ) return $url;
