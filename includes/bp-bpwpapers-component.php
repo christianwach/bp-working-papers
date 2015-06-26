@@ -62,7 +62,7 @@ class BP_Working_Papers_Component extends BP_Component {
 	 *
 	 * @return void
 	 */
-	public function includes() {
+	public function includes( $includes = array() ) {
 
 		// include screens file
 		include( BP_WORKING_PAPERS_PATH . 'includes/bp-bpwpapers-screens.php' );
