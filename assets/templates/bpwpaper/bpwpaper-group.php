@@ -3,6 +3,10 @@
 Template Name: Group Home
 */
 
+// enqueue BP styles
+do_action('bp_enqueue_scripts');
+commentpress_bp_enqueue_styles();
+
 $group_id = bpwpapers_get_group_by_blog_id( get_current_blog_id() );
 //print_r($group_id); die();
 
@@ -30,7 +34,7 @@ get_header( 'buddypress' );
 
 
 	<div id="content">
-		<div class="padder">
+		<div id="buddypress">
 
 			<?php if ( bpwpapers_has_groups( $params ) ) : while ( bp_groups() ) : bp_the_group(); ?>
 
@@ -107,7 +111,7 @@ get_header( 'buddypress' );
 
 			<?php endwhile; endif; ?>
 
-		</div><!-- .padder -->
+		</div><!-- .buddypress -->
 	</div><!-- #content -->
 
 </div><!-- /page_wrapper -->
