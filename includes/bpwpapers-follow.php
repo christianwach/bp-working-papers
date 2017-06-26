@@ -219,6 +219,10 @@ class BP_Working_Papers_Follow {
 			$r['scope'] = 'following';
 		}
 
+		if ( ! isset( $r['scope'] ) ) {
+			return $qs;
+		}
+
 		if ( 'following' !== $r['scope'] ) {
 			return $qs;
 		}
@@ -287,7 +291,7 @@ class BP_Working_Papers_Follow {
 		$scope = $this->activity_slug;
 
 		// if we have a post value already, let's add our scope to the existing cookie value
-		if ( !empty( $_POST['cookie'] ) ) {
+		if ( isset( $_POST['cookie'] ) AND ! empty( $_POST['cookie'] ) ) {
 			$_POST['cookie'] .= "%3B%20bp-activity-scope%3D{$scope}";
 		} else {
 			$_POST['cookie'] .= "bp-activity-scope%3D{$scope}";
@@ -331,13 +335,17 @@ class BP_Working_Papers_Follow {
 		if (
 			bp_is_current_action( constant( 'BP_FOLLOW_BLOGS_USER_FOLLOWING_SLUG' ) ) OR
 			bp_is_current_action( constant( 'BP_FOLLOW_BLOGS_USER_ACTIVITY_SLUG' ) ) OR
-			constant( 'BP_FOLLOW_BLOGS_USER_ACTIVITY_SLUG' ) === $r['scope']
+			( isset( $r['scope'] ) AND constant( 'BP_FOLLOW_BLOGS_USER_ACTIVITY_SLUG' ) === $r['scope'] )
 		) {
 			return $this->filter_followblogs_activity( $qs );
 		}
 
 		if ( bp_is_current_action( $this->activity_slug ) ) {
 			$r['scope'] = $this->activity_slug;
+		}
+
+		if ( ! isset( $r['scope'] ) ) {
+			return $qs;
 		}
 
 		if ( $this->activity_slug !== $r['scope'] ) {
