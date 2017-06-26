@@ -16,7 +16,9 @@ working paper authorship, whilst retaining useful stuff like pagination.
 
 
 /**
- * Parse the query
+ * Parse the query.
+ *
+ * @since 0.1
  *
  * @param object $query_obj Query object passed by reference
  * @return array $retval Array of WordPress users
@@ -75,6 +77,8 @@ Functions which may only be used in the loop
 
 /**
  * Output the total working paper author count for the site.
+ *
+ * @since 0.1
  */
 function bpwpapers_total_member_count() {
 	echo bpwpapers_get_total_member_count();
@@ -105,8 +109,11 @@ function bpwpapers_total_member_count() {
 
 
 /**
- * Print pagination count to screen
- * copied from bp_members_pagination_count()
+ * Print pagination count to screen.
+ *
+ * Copied from bp_members_pagination_count()
+ *
+ * @since 0.1
  */
 function bpwpapers_members_pagination_count() {
 	echo bpwpapers_get_members_pagination_count();
@@ -115,8 +122,11 @@ function bpwpapers_members_pagination_count() {
 
 
 	/**
-	 * Get pagination count
-	 * copied from bp_get_members_pagination_count() and adapted
+	 * Get pagination count.
+	 *
+	 * Copied from bp_get_members_pagination_count() and adapted.
+	 *
+	 * @since 0.1
 	 *
 	 * @return string $pag The pagination text including number of members
 	 */
@@ -198,8 +208,11 @@ function bpwpapers_members_pagination_count() {
 
 /**
  * Override the working paper authors search form because bp_get_search_default_text() is not
- * allowed to take the value set for the current component
- * copied from bp_directory_members_search_form() and amended
+ * allowed to take the value set for the current component.
+ *
+ * Copied from bp_directory_members_search_form() and amended.
+ *
+ * @since 0.1
  */
 function bppaperauthors_directory_members_search_form() {
 
@@ -222,7 +235,9 @@ function bppaperauthors_directory_members_search_form() {
 
 
 /**
- * Get all working paper author IDs
+ * Get all working paper author IDs.
+ *
+ * @since 0.1
  *
  * @return bool True if the user is a working paper author, false otherwise
  */
@@ -247,7 +262,9 @@ function bpwpapers_get_authors() {
 
 
 /**
- * Get working papers by author ID
+ * Get working papers by author ID.
+ *
+ * @since 0.1
  *
  * @param int $author_id The numeric ID of the working paper author
  * @return array An array of the numeric IDs of the working papers
@@ -280,7 +297,9 @@ function bpwpapers_get_author_papers( $author_id ) {
 
 
 /**
- * Get total count of working paper authors
+ * Get total count of working paper authors.
+ *
+ * @since 0.1
  *
  * @return int Total number of working paper authors
  */
@@ -305,7 +324,9 @@ function bpwpapers_total_authors() {
 
 
 /**
- * Check if a user is a working paper author
+ * Check if a user is a working paper author.
+ *
+ * @since 0.1
  *
  * @param int $author_id the numeric ID of the user
  * @return bool True if the user is a working paper author, false otherwise
@@ -329,7 +350,9 @@ function bpwpapers_is_author( $author_id ) {
 
 
 /**
- * Get the user ID that created a working paper
+ * Get the user ID that created a working paper.
+ *
+ * @since 0.1
  *
  * @param int $blog_id the numeric ID of the blog
  * @return int The numeric ID of the user that created a working paper, false otherwise
@@ -356,12 +379,13 @@ function bpwpapers_get_author_for_blog( $blog_id ) {
 
 /**
  * Save a user's ID because it's too expensive to recalculate every time we want to list users
- * in the Working Paper Authors Directory
+ * in the Working Paper Authors Directory.
+ *
+ * @since 0.1
  *
  * @param int $author_id the numeric ID of the user
  * @param int $blog_id the numeric ID of the working paper site
  * @param bool $save Optionally pass 'false' to override saving the option
- * @return void
  */
 function bpwpapers_grant_authorship( $author_id, $blog_id, $save = true ) {
 
@@ -413,12 +437,13 @@ function bpwpapers_grant_authorship( $author_id, $blog_id, $save = true ) {
 
 
 /**
- * Maybe remove user from the list of authors, depending on the number of papers
+ * Maybe remove user from the list of authors, depending on the number of papers.
+ *
+ * @since 0.1
  *
  * @param int $author_id the numeric ID of the user
  * @param int $blog_id the numeric ID of the working paper site
  * @param bool $save Optionally pass 'false' to override saving the option
- * @return void
  */
 function bpwpapers_revoke_authorship( $author_id, $blog_id, $save = true ) {
 

@@ -15,9 +15,9 @@ Throw any functions which build markup in here.
 
 
 /**
- * Adds icon to menu in CBOX theme
+ * Adds icon to menu in CBOX theme.
  *
- * @return void
+ * @since 0.1
  */
 function bpwpapers_cbox_theme_compatibility() {
 

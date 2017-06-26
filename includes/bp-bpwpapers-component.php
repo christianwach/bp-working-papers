@@ -21,7 +21,7 @@ class BP_Working_Papers_Component extends BP_Component {
 	/**
 	 * Start the component creation process.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	function __construct() {
 
@@ -58,9 +58,9 @@ class BP_Working_Papers_Component extends BP_Component {
 
 
 	/**
-	 * Include our component's files
+	 * Include our component's files.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function includes( $includes = array() ) {
 
@@ -74,9 +74,10 @@ class BP_Working_Papers_Component extends BP_Component {
 	/**
 	 * Set up global settings for this component.
 	 *
+	 * @since 0.1
+	 *
 	 * @see BP_Component::setup_globals() for description of parameters.
 	 * @param array $args See {@link BP_Component::setup_globals()}.
-	 * @return void
 	 */
 	public function setup_globals( $args = array() ) {
 
@@ -107,7 +108,7 @@ class BP_Working_Papers_Component extends BP_Component {
 	/**
 	 * Create component navigation (Member > Working Papers)
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function setup_nav( $main_nav = array(), $sub_nav = array() ) {
 
@@ -153,6 +154,8 @@ buddypress()->bpwpapers = new BP_Working_Papers_Component();
 /**
  * Check whether the current page is part of the BuddyPress Working Papers component.
  *
+ * @since 0.1
+ *
  * @return bool True if the current page is part of the BuddyPress Working Papers component.
  */
 function bp_is_bpwpapers_component() {
@@ -173,7 +176,9 @@ function bp_is_bpwpapers_component() {
 
 
 /**
- * A custom load template filter for this component
+ * A custom load template filter for this component.
+ *
+ * @since 0.1
  *
  * @return string $found_template Path to the found template
  */
@@ -216,9 +221,9 @@ add_filter( 'bp_located_template', 'bpwpapers_load_template_filter', 10, 2 );
 
 
 /**
- * Load our loop when requested
+ * Load our loop when requested.
  *
- * @return void
+ * @since 0.1
  */
 function bpwpapers_object_template_loader() {
 
@@ -270,7 +275,10 @@ add_action( 'wp_ajax_nopriv_bpwpapers_filter', 'bpwpapers_object_template_loader
 
 
 /**
- * Output the working papers slug
+ * Output the working papers slug.
+ *
+ * @since 0.1
+ *
  * @uses bpwpapers_get_slug()
  */
 function bpwpapers_slug() {
@@ -290,6 +298,9 @@ function bpwpapers_slug() {
 
 /**
  * Output the working papers component root slug.
+ *
+ * @since 0.1
+ *
  * @uses bpwpapers_get_root_slug()
  */
 function bpwpapers_root_slug() {
@@ -297,7 +308,9 @@ function bpwpapers_root_slug() {
 }
 
 	/**
-	 * Return the working papers component root slug
+	 * Return the working papers component root slug.
+	 *
+	 * @since 0.1
 	 *
 	 * @return string The 'blogs' root slug.
 	 */

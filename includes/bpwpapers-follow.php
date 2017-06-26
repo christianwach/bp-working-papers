@@ -32,9 +32,9 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	function __construct() {
 
@@ -46,9 +46,9 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Register hooks for this class
+	 * Register hooks for this class.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function register_hooks() {
 
@@ -113,7 +113,7 @@ class BP_Working_Papers_Follow {
 	/**
 	 * Load the Members Follow Papers screen.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function screen_member_follow() {
 
@@ -141,9 +141,9 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Setup profile nav
+	 * Setup profile nav.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function follow_blogs_setup_nav() {
 
@@ -275,9 +275,9 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Set activity scope on a user's "Activity > Followed Papers" page
+	 * Set activity scope on a user's "Activity > Followed Papers" page.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function set_activity_scope_on_user_activity() {
 
@@ -423,7 +423,9 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Override the total number of followed sites, excluding working papers
+	 * Override the total number of followed sites, excluding working papers.
+	 *
+	 * @since 0.1
 	 *
 	 * @param array $count The total number of followed sites for a user (following is always 0)
 	 * @param int $user_id The numeric ID of a WordPress user
@@ -469,10 +471,10 @@ class BP_Working_Papers_Follow {
 	/**
 	 * Add a "Following (X)" tab to the papers directory.
 	 *
+	 * @since 0.1
+	 *
 	 * This is so the logged-in user can filter the papers directory to only
 	 * papers that the current user is following.
-	 *
-	 * @return void
 	 */
 	public function add_blog_directory_tab() {
 
@@ -520,7 +522,9 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Get the total number of followed working papers
+	 * Get the total number of followed working papers.
+	 *
+	 * @since 0.1
 	 *
 	 * @param int $user_id The numeric ID of a WordPress user
 	 * @return array $count The count array
@@ -559,6 +563,8 @@ class BP_Working_Papers_Follow {
 	 * Filter the activity loop.
 	 *
 	 * Specifically, when on the activity directory and clicking on the "Followed Blogs" tab.
+	 *
+	 * @since 0.1
 	 *
 	 * @param str $qs The querystring for the BP loop
 	 * @return str Modified querystring
@@ -615,7 +621,9 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Filter the Follow Site button
+	 * Filter the Follow Site button.
+	 *
+	 * @since 0.1
 	 *
 	 * @param array $button The button config array
 	 * @param array $params The bp-follower array
@@ -665,7 +673,9 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Filter the Followed Sites button
+	 * Filter the Followed Sites button.
+	 *
+	 * @since 0.1
 	 *
 	 * @param array $params The setup params for the button
 	 * @return array Modified setup params for the button
@@ -693,10 +703,11 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Intercept follow site action
+	 * Intercept follow site action.
+	 *
+	 * @since 0.1
 	 *
 	 * @param object $object The followed object data
-	 * @return void
 	 */
 	public function follow_paper( $object ) {
 
@@ -723,10 +734,11 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Intercept unfollow site action
+	 * Intercept unfollow site action.
+	 *
+	 * @since 0.1
 	 *
 	 * @param object $object The followed object data
-	 * @return void
 	 */
 	public function unfollow_paper( $object ) {
 
@@ -752,10 +764,11 @@ class BP_Working_Papers_Follow {
 	 * This is done via the 'bpwpapers_signup_validated' hook because the linkage
 	 * is not established until after the group has been created.
 	 *
+	 * @since 0.1
+	 *
 	 * @param int $group_id The numeric ID of the BP group
 	 * @param object $member The BP member
 	 * @param object $group The BP group
-	 * @return void
 	 */
 	public function created_blog( $user_id, $blog_id, $group_id ) {
 
@@ -770,11 +783,12 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Intercept group join action
+	 * Intercept group join action.
+	 *
+	 * @since 0.1
 	 *
 	 * @param int $group_id The numeric ID of the BP group
 	 * @param int $user_id The numeric ID of the WP user
-	 * @return void
 	 */
 	public function joined_group( $group_id, $user_id ) {
 
@@ -805,11 +819,12 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Intercept group leave action
+	 * Intercept group leave action.
+	 *
+	 * @since 0.1
 	 *
 	 * @param int $group_id The numeric ID of the BP group
 	 * @param int $user_id The numeric ID of the WP user
-	 * @return void
 	 */
 	public function left_group( $group_id, $user_id ) {
 
@@ -840,7 +855,9 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Override content of the reply to link
+	 * Override content of the reply to link.
+	 *
+	 * @since 0.1
 	 *
 	 * @param string $link_text the full text of the reply to link
 	 * @param string $paragraph_text paragraph text
@@ -870,7 +887,9 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Override content of the reply to link target and use BP Follow's target
+	 * Override content of the reply to link target and use BP Follow's target.
+	 *
+	 * @since 0.1
 	 *
 	 * @param string $href The existing target URL
 	 * @param string $text_sig The text signature of the paragraph
@@ -895,9 +914,9 @@ class BP_Working_Papers_Follow {
 
 
 	/**
-	 * Adds icon to menu in CBOX theme
+	 * Adds icon to menu in CBOX theme.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	function cbox_theme_compatibility() {
 

@@ -13,7 +13,9 @@ NOTES
 
 
 /**
- * Query all groups
+ * Query all groups.
+ *
+ * @since 0.1
  *
  * @param array $params Array of arguments with which the query was configured
  * @return bool $has_groups Whether or not our modified query has found groups
@@ -37,7 +39,9 @@ function bpwpapers_has_groups( $params ) {
 
 
 /**
- * Parse the query passed to bp_has_groups() and exclude paper groups
+ * Parse the query passed to bp_has_groups() and exclude paper groups.
+ *
+ * @since 0.1
  *
  * @param bool $has_groups Whether or not this query has found groups
  * @param object $groups_template BuddyPress groups template object
@@ -111,7 +115,9 @@ if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
 
 
 /**
- * Filter out working paper groups from the BuddyPress Event Organiser metabox
+ * Filter out working paper groups from the BuddyPress Event Organiser metabox.
+ *
+ * @since 0.1
  *
  * @param bool $reject FALSE by default (return TRUE to reject the item)
  * @param object $item The item to be displayed in the metabox
@@ -132,7 +138,9 @@ add_filter( 'bp_event_organiser_reject_item', 'bpwpapers_event_organiser_metabox
 
 
 /**
- * Get all BuddyPress Groups that are working paper groups (optionally by user)
+ * Get all BuddyPress Groups that are working paper groups. (optionally by user)
+ *
+ * @since 0.1
  *
  * @param int $user_id The numeric ID of a user
  * @return array $groups The full array of working paper groups
@@ -198,7 +206,9 @@ function bpwpapers_get_paper_groups( $user_id = 0 ) {
 
 
 /**
- * Override the total number of BuddyPress Groups, excluding working paper groups
+ * Override the total number of BuddyPress Groups, excluding working paper groups.
+ *
+ * @since 0.1
  *
  * @return int $filtered_count The filtered total number of BuddyPress Groups
  */
@@ -235,7 +245,9 @@ if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
 
 
 /**
- * Override the total number of BuddyPress Groups for a user, excluding working paper groups
+ * Override the total number of BuddyPress Groups for a user, excluding working paper groups.
+ *
+ * @since 0.1
  *
  * @return int $filtered_count The filtered total number of BuddyPress Groups for a user
  */
@@ -263,11 +275,12 @@ if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
 
 
 /**
- * Creates a BuddyPress Group given a title and description
+ * Creates a BuddyPress Group given a title and description.
+ *
+ * @since 0.1
  *
  * @param string $title the title of the BP group
  * @param string $description the description of the BP group
- * @return void
  */
 function bpwpapers_create_group( $title, $description, $user_id = null ) {
 
@@ -317,7 +330,9 @@ function bpwpapers_create_group( $title, $description, $user_id = null ) {
 
 
 /**
- * Sever link and delete blog before a group gets deleted so we can still access meta
+ * Sever link and delete blog before a group gets deleted so we can still access meta.
+ *
+ * @since 0.1
  *
  * @param int $group_id the numeric ID of the group
  */
@@ -345,7 +360,9 @@ function bpwpapers_group_deleted( $group_id ) {
 
 
 /**
- * Creates a BuddyPress Group Membership given a title and description
+ * Creates a BuddyPress Group Membership given a title and description.
+ *
+ * @since 0.1
  *
  * @param int $group_id the numeric ID of the BP group
  * @param int $user_id the numeric ID of the WP user
@@ -378,7 +395,9 @@ function bpwpapers_create_group_member( $group_id, $user_id, $is_admin = 0 ) {
 
 
 /**
- * Configure the custom subnav item for a Working Paper group
+ * Configure the custom subnav item for a Working Paper group.
+ *
+ * @since 0.1
  */
 function bpwpapers_group_setup_nav() {
 
@@ -417,7 +436,9 @@ add_action( 'bp_setup_nav', 'bpwpapers_group_setup_nav' );
 
 
 /**
- * Redirects to the working paper site
+ * Redirects to the working paper site.
+ *
+ * @since 0.1
  */
 function bpwpapers_redirect_to_site() {
 
@@ -444,7 +465,9 @@ function bpwpapers_redirect_to_site() {
 
 
 /**
- * Get group ID outside the groups loop
+ * Get group ID outside the groups loop.
+ *
+ * @since 0.1
  *
  * @return int $group_id the current group ID
  */
@@ -473,7 +496,9 @@ function bpwpapers_get_current_group_id() {
 
 
 /**
- * Check if a group has a Working Paper
+ * Check if a group has a Working Paper.
+ *
+ * @since 0.1
  *
  * @return bool True if group has working paper, false otherwise
  */
@@ -525,7 +550,9 @@ function bpwpapers_group_has_working_paper( $group_id = null ) {
 
 
 /**
- * Override the group permalink
+ * Override the group permalink.
+ *
+ * @since 0.1
  *
  * @param string $permalink The permalink of the group on the main site
  * @return string $permalink The permalink of the group on the working paper site
@@ -561,11 +588,12 @@ function bpwpapers_get_group_permalink( $permalink ) {
 
 
 /**
- * Enable the override of the group permalink only once user has joined group
+ * Enable the override of the group permalink only once user has joined group.
+ *
+ * @since 0.1
  *
  * @param int $blog_id the numeric ID of the blog
  * @param int $group_id the numeric ID of the group
- * @return void
  */
 function bpwpapers_enable_group_permalink_filter( $group_id, $user_id ) {
 
@@ -587,7 +615,9 @@ add_action( 'groups_join_group', 'bpwpapers_enable_group_permalink_filter', 20, 
 
 
 /**
- * Filter media buttons by authoritative groups context
+ * Filter media buttons by authoritative groups context.
+ *
+ * @since 0.1
  *
  * @param bool $enabled if media buttons are enabled
  * @return bool $enabled if media buttons are enabled
@@ -616,7 +646,9 @@ function bpwpapers_authoritative_group_media_buttons( $allowed ) {
 
 
 /**
- * Filter quicktags by authoritative groups context
+ * Filter quicktags by authoritative groups context.
+ *
+ * @since 0.1
  *
  * @param array $quicktags the quicktags
  * @return array/bool $quicktags false if quicktags are disabled, array of buttons otherwise

@@ -26,7 +26,7 @@ class BP_Working_Papers_Theme_Compat {
 	/**
 	 * Set up theme compatibility for the BuddyPress Working Papers component.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	function __construct() {
 
@@ -40,7 +40,7 @@ class BP_Working_Papers_Theme_Compat {
 	/**
 	 * Are we looking at something that needs BuddyPress Working Papers theme compatability?
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function is_bpwpapers() {
 
@@ -70,6 +70,8 @@ class BP_Working_Papers_Theme_Compat {
 	/**
 	 * Add template hierarchy to theme compat for the BuddyPress Working Papers directory page.
 	 *
+	 * @since 0.1
+	 *
 	 * @param string $templates The templates from bp_get_theme_compat_templates().
 	 * @return array $templates Array of custom templates to look for.
 	 */
@@ -96,7 +98,7 @@ class BP_Working_Papers_Theme_Compat {
 	/**
 	 * Update the global $post with directory data.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function directory_dummy_post() {
 
@@ -122,6 +124,8 @@ class BP_Working_Papers_Theme_Compat {
 
 	/**
 	 * Filter the_content with the BuddyPress Working Papers index template part.
+	 *
+	 * @since 0.1
 	 *
 	 * @return string $content Buffered content
 	 */
@@ -150,7 +154,7 @@ new BP_Working_Papers_Theme_Compat();
 /**
  * Load the top-level BuddyPress Working Papers directory.
  *
- * @return void
+ * @since 0.1
  */
 function bpwpapers_screen_index() {
 
@@ -180,7 +184,7 @@ add_action( 'bp_screens', 'bpwpapers_screen_index', 20 );
 /**
  * Load the BuddyPress Working Papers create screen.
  *
- * @return void
+ * @since 0.1
  */
 function bpwpapers_screen_create_a_blog() {
 
@@ -205,7 +209,7 @@ add_action( 'bp_screens', 'bpwpapers_screen_create_a_blog', 3 );
 /**
  * Load the BuddyPress Working Papers Members screen.
  *
- * @return void
+ * @since 0.1
  */
 function bpwpapers_screen_member() {
 
@@ -232,8 +236,11 @@ add_action( 'bp_screens', 'bpwpapers_screen_member', 3 );
 
 
 /**
- * Show the BuddyPress Working Papers create form
- * copied from bp_show_blog_signup_form and amended
+ * Show the BuddyPress Working Papers create form.
+ *
+ * Copied from bp_show_blog_signup_form and amended
+ *
+ * @since 0.1
  */
 function bpwpapers_show_working_paper_create_form( $blogname = '', $blog_title = '', $errors = '' ) {
 
@@ -334,8 +341,11 @@ function bpwpapers_show_working_paper_create_form( $blogname = '', $blog_title =
 
 
 /**
- * Show the BuddyPress Working Papers create form content
- * copied from bp_blogs_signup_blog and amended
+ * Show the BuddyPress Working Papers create form content.
+ *
+ * Copied from bp_blogs_signup_blog and amended
+ *
+ * @since 0.1
  */
 function bpwpapers_signup_blog( $blogname = '', $blog_title = '', $errors = '' ) {
 
@@ -433,8 +443,11 @@ function bpwpapers_signup_blog( $blogname = '', $blog_title = '', $errors = '' )
 
 
 /**
- * Validate the BuddyPress Working Papers create form content
- * copied from bp_blogs_validate_blog_signup and amended
+ * Validate the BuddyPress Working Papers create form content.
+ *
+ * Copied from bp_blogs_validate_blog_signup and amended
+ *
+ * @since 0.1
  *
  * @return bool True if successful, false otherwise
  */
@@ -507,10 +520,11 @@ function bpwpapers_validate_signup() {
 
 
 /**
- * Confirm BuddyPress Working Papers creation
- * copied from bp_blogs_confirm_blog_signup and amended
+ * Confirm BuddyPress Working Papers creation.
  *
- * @return void
+ * Copied from bp_blogs_confirm_blog_signup and amended
+ *
+ * @since 0.1
  */
 function bpwpapers_confirm_signup( $domain, $path, $blog_title, $user_name, $user_email = '', $meta = '' ) {
 
@@ -567,6 +581,8 @@ function bpwpapers_confirm_signup( $domain, $path, $blog_title, $user_name, $use
 
 /**
  * Output button for visiting a group in the working papers loop.
+ *
+ * @since 0.1
  *
  * @see bp_get_blogs_visit_blog_button() for description of arguments.
  *

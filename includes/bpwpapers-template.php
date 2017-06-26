@@ -43,9 +43,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
-	 * @return object
+	 * @since 0.1
 	 */
 	function __construct() {
 
@@ -56,9 +56,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Register hooks for this class
+	 * Register hooks for this class.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function register_hooks() {
 
@@ -140,7 +140,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Register custom post type
+	 * Register custom post type.
+	 *
+	 * @since 0.1
 	 */
 	public function register_cpt() {
 
@@ -198,7 +200,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Create a page for the Working Paper group
+	 * Create a page for the Working Paper group.
+	 *
+	 * @since 0.1
 	 *
 	 * @return int $page_id The numeric ID of the new page
 	 */
@@ -242,7 +246,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Intercept template for our custom group page
+	 * Intercept template for our custom group page.
+	 *
+	 * @since 0.1
 	 *
 	 * @param string $template Absolute path to template
 	 * @return string $found_template Absolute path to template
@@ -306,7 +312,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Find a template file
+	 * Find a template file.
+	 *
+	 * @since 0.1
 	 *
 	 * @param string $template Relative path to a template file
 	 * @return string $full_path The full path to the template file if one is located, false otherwise
@@ -356,9 +364,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Register stylesheets on working paper sub-sites
+	 * Register stylesheets on working paper sub-sites.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function enqueue_styles() {
 
@@ -386,9 +394,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Register Javascripts on working paper sub-sites
+	 * Register Javascripts on working paper sub-sites.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function enqueue_scripts() {
 
@@ -410,9 +418,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Register widget areas for BP Working Papers plugin
+	 * Register widget areas for BP Working Papers plugin.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function register_sidebars() {
 
@@ -498,9 +506,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Register widgets for BP Working Papers plugin
+	 * Register widgets for BP Working Papers plugin.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function register_widgets() {
 
@@ -516,9 +524,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Register stylesheets on working paper sub-sites
+	 * Register stylesheets on working paper sub-sites.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function enqueue_widget_styles() {
 
@@ -538,7 +546,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Override the login URL that BuddyPress Group Email Subscription prints in emails
+	 * Override the login URL that BuddyPress Group Email Subscription prints in emails.
+	 *
+	 * @since 0.1
 	 *
 	 * @param string $url The existing BuddyPress Group Email Subscription login URL
 	 * @param string $context The BuddyPress Group Email Subscription context
@@ -566,7 +576,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Override the text that BuddyPress Group Email Subscription sends in emails
+	 * Override the text that BuddyPress Group Email Subscription sends in emails.
+	 *
+	 * @since 0.1
 	 *
 	 * @param string $text The existing BuddyPress Group Email Subscription email text
 	 * @param array $params The params that BuddyPress Group Email Subscription uses to construct the text
@@ -615,7 +627,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Tell CommentPress that the group page is a BuddyPress page
+	 * Tell CommentPress that the group page is a BuddyPress page.
+	 *
+	 * @since 0.1
 	 *
 	 * @return boolean True, because this is a BuddyPress page
 	 */
@@ -629,7 +643,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Tell CommentPress that the group page is not commentable
+	 * Tell CommentPress that the group page is not commentable.
+	 *
+	 * @since 0.1
 	 *
 	 * @return boolean False, because this is never commentable
 	 */
@@ -643,9 +659,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Adds a link to the Special Pages menu in CommentPress themes
+	 * Adds a link to the Special Pages menu in CommentPress themes.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function group_navigation_link() {
 
@@ -704,7 +720,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Filter the title of the link to the document homepage
+	 * Filter the title of the link to the document homepage.
+	 *
+	 * @since 0.1
 	 *
 	 * @return boolean False, because this is never commentable
 	 */
@@ -724,7 +742,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Filter the link to the "new site" page
+	 * Filter the link to the "new site" page.
+	 *
+	 * @since 0.1
 	 *
 	 * @return string Empty string because we don't want that link
 	 */
@@ -742,9 +762,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Show author avatar in Contents column
+	 * Show author avatar in Contents column.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function show_author() {
 
@@ -766,9 +786,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Show author avatar in Header
+	 * Show author avatar in Header.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function author_avatar() {
 
@@ -790,9 +810,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Show the "join group" button
+	 * Show the "join group" button.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function join_button() {
 
@@ -819,7 +839,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Filter the "join group" button content
+	 * Filter the "join group" button content.
+	 *
+	 * @since 0.1
 	 *
 	 * @return array $button The overridden button array
 	 */
@@ -844,9 +866,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Intercept publish toggling once plugins are loaded
+	 * Intercept publish toggling once plugins are loaded.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function publish_toggle_intercept() {
 
@@ -889,9 +911,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Add a publish button to the CommentPress "Contents" column
+	 * Add a publish button to the CommentPress "Contents" column.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function publish_button_commentpress() {
 
@@ -906,9 +928,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Create a wrapper for a publish button
+	 * Create a wrapper for a publish button.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function publish_button_wrapper() {
 
@@ -954,9 +976,9 @@ class BP_Working_Papers_Template {
 
 
 	/**
-	 * Print a publish button to the screen
+	 * Print a publish button to the screen.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function publish_button() {
 

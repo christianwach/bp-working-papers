@@ -70,9 +70,9 @@ class BP_Working_Papers {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	function __construct() {
 
@@ -102,9 +102,9 @@ class BP_Working_Papers {
 
 
 	/**
-	 * Actions to perform on plugin activation
+	 * Actions to perform on plugin activation.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function activate() {
 
@@ -118,7 +118,7 @@ class BP_Working_Papers {
 	/**
 	 * Actions to perform on plugin deactivation (NOT deletion)
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function deactivate() {
 
@@ -134,12 +134,12 @@ class BP_Working_Papers {
 
 
 	/**
-	 * Load translation files
+	 * Load translation files.
+	 *
+	 * @since 0.1
 	 *
 	 * A good reference on how to implement translation in WordPress:
 	 * http://ottopress.com/2012/internationalization-youre-probably-doing-it-wrong/
-	 *
-	 * @return void
 	 */
 	public function enable_translation() {
 
@@ -162,9 +162,9 @@ class BP_Working_Papers {
 
 
 	/**
-	 * Do stuff on plugin init
+	 * Do stuff on plugin init.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function initialise() {
 
@@ -206,9 +206,9 @@ class BP_Working_Papers {
 
 
 	/**
-	 * Register hooks on plugin init
+	 * Register hooks on plugin init.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function register_hooks() {
 
@@ -222,9 +222,9 @@ class BP_Working_Papers {
 
 
 	/**
-	 * Register theme hooks on bp include
+	 * Register theme hooks on bp include.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function register_theme_hooks() {
 
@@ -236,9 +236,9 @@ class BP_Working_Papers {
 
 
 	/**
-	 * Add our templates to the theme stack
+	 * Add our templates to the theme stack.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function theme_compat() {
 
@@ -250,7 +250,9 @@ class BP_Working_Papers {
 
 
 	/**
-	 * Include file only when Follow Blogs is loaded
+	 * Include file only when Follow Blogs is loaded.
+	 *
+	 * @since 0.1
 	 */
 	public function follow_blogs_init() {
 
@@ -288,7 +290,9 @@ register_deactivation_hook( __FILE__, array( $bp_working_papers, 'deactivate' ) 
 
 
 /**
- * Returns the path to our templates directory
+ * Returns the path to our templates directory.
+ *
+ * @since 0.1
  *
  * @return string $path Path to this plugin's templates directory
  */

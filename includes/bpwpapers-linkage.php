@@ -15,7 +15,9 @@ Logic functions which don't need to be in the loop.
 
 
 /**
- * For a given blog ID, get the group ID
+ * For a given blog ID, get the group ID.
+ *
+ * @since 0.1
  *
  * @param int $blog_id the numeric ID of the blog
  */
@@ -32,7 +34,9 @@ function bpwpapers_get_group_by_blog_id( $blog_id ) {
 
 
 /**
- * For a given group ID, get the blog ID
+ * For a given group ID, get the blog ID.
+ *
+ * @since 0.1
  *
  * @param int $group_id the numeric ID of the group
  */
@@ -52,7 +56,9 @@ function bpwpapers_get_blog_by_group_id( $group_id ) {
 
 
 /**
- * Reciprocal addition of IDs
+ * Reciprocal addition of IDs.
+ *
+ * @since 0.1
  *
  * @param int $group_id the numeric ID of the group
  * @param int $blog_id the numeric ID of the blog
@@ -73,7 +79,9 @@ function bpwpapers_link_blog_and_group( $blog_id, $group_id ) {
 
 
 /**
- * Reciprocal deletion of IDs
+ * Reciprocal deletion of IDs.
+ *
+ * @since 0.1
  *
  * @param int $group_id the numeric ID of the group
  * @param int $blog_id the numeric ID of the blog
@@ -94,7 +102,9 @@ function bpwpapers_unlink_blog_and_group( $blog_id, $group_id ) {
 
 
 /**
- * For a given blog ID, add a given group ID
+ * For a given blog ID, add a given group ID.
+ *
+ * @since 0.1
  *
  * @param int $blog_id the numeric ID of the blog
  * @param int $group_id the numeric ID of the group
@@ -109,7 +119,9 @@ function bpwpapers_add_group_to_blog( $blog_id, $group_id ) {
 
 
 /**
- * For a given group ID, add a given blog ID
+ * For a given group ID, add a given blog ID.
+ *
+ * @since 0.1
  *
  * @param int $group_id the numeric ID of the group
  * @param int $blog_id the numeric ID of the blog
@@ -124,7 +136,9 @@ function bpwpapers_add_blog_to_group( $group_id, $blog_id ) {
 
 
 /**
- * For a given blog ID, remove a given group ID
+ * For a given blog ID, remove a given group ID.
+ *
+ * @since 0.1
  *
  * @param int $blog_id the numeric ID of the blog
  * @param int $group_id the numeric ID of the group
@@ -139,7 +153,9 @@ function bpwpapers_remove_group_from_blog( $blog_id, $group_id ) {
 
 
 /**
- * For a given group ID, remove a given blog ID
+ * For a given group ID, remove a given blog ID.
+ *
+ * @since 0.1
  *
  * @param int $group_id the numeric ID of the group
  * @param int $blog_id the numeric ID of the blog

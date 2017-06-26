@@ -34,9 +34,9 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
-	 * @return object
+	 * @since 0.1
 	 */
 	function __construct() {
 
@@ -47,9 +47,9 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Register hooks for this class
+	 * Register hooks for this class.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function register_hooks() {
 
@@ -121,9 +121,9 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Remove actions for filter options on group activity stream
+	 * Remove actions for filter options on group activity stream.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function remove_external_filter_options() {
 
@@ -136,9 +136,9 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Add actions for filter options on group activity stream
+	 * Add actions for filter options on group activity stream.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function add_filter_options() {
 
@@ -173,9 +173,9 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Add a filter option to the filter select box on activity pages
+	 * Add a filter option to the filter select box on activity pages.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function filter_option_sites( $slug ) {
 
@@ -196,9 +196,9 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Add a filter option to the filter select box on activity pages
+	 * Add a filter option to the filter select box on activity pages.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function filter_option_groups( $slug ) {
 
@@ -219,9 +219,9 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Add a filter option to the filter select box on activity pages
+	 * Add a filter option to the filter select box on activity pages.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function filter_option_posts( $slug ) {
 
@@ -242,9 +242,9 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Add a filter option to the filter select box on activity pages
+	 * Add a filter option to the filter select box on activity pages.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function filter_option_comments() {
 
@@ -269,7 +269,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Record the blog post activity for the group
+	 * Record the blog post activity for the group.
 	 *
 	 * @see bp_blogs_record_blog()
 	 * @see bp_blogs_record_activity()
@@ -379,7 +379,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Record the blog creation activity
+	 * Record the blog creation activity.
 	 *
 	 * @see bp_blogs_record_blog()
 	 * @see bp_blogs_record_activity()
@@ -487,7 +487,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Record the blog post activity for the group
+	 * Record the blog post activity for the group.
 	 *
 	 * @see bp_groupblog_set_group_to_post_activity( $activity )
 	 *
@@ -694,7 +694,7 @@ class BP_Working_Papers_Activity {
 	/**
 	 * Record the blog activity for the group. Note: if the site is a CommentPress
 	 * site, then this method will be dropped in favour of the one internal to
-	 * CommentPress, because CommentPress needs to know the subpage of a comment
+	 * CommentPress, because CommentPress needs to know the subpage of a comment.
 	 *
 	 * @see bp_groupblog_set_group_to_post_activity()
 	 *
@@ -836,7 +836,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Set the name of the post type in an activity item
+	 * Set the name of the post type in an activity item.
 	 *
 	 * @param string $name The name of the post in an activity item
 	 * @param object $post_obj The post object that the comment has been left on
@@ -858,7 +858,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Set the action (at the top) of the activity item
+	 * Set the action (at the top) of the activity item.
 	 *
 	 * @param string $action The action of the activity item
 	 * @param object $activity The activity object
@@ -923,7 +923,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Filter the group activity feed on a working paper site to show only items from the group
+	 * Filter the group activity feed on a working paper site to show only items from the group.
 	 *
 	 * @param string $querystring The querystring
 	 * @param string $object The filtered querystring
@@ -1016,7 +1016,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Check if anonymous commenting is allowed
+	 * Check if anonymous commenting is allowed.
 	 *
 	 * @param bool $allowed whether commenting is is allowed or not
 	 * @return bool $allowed whether commenting is is allowed or not
@@ -1037,7 +1037,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * For working papers, if the user is a member of the group, allow unmoderated comments
+	 * For working papers, if the user is a member of the group, allow unmoderated comments.
 	 *
 	 * @param int $approved the comment status
 	 * @param array $commentdata the comment data
@@ -1078,7 +1078,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Override CommentPress "Reply To" link
+	 * Override CommentPress "Reply To" link.
 	 *
 	 * @param string $link the existing link
 	 * @param array $args the setup array
@@ -1124,7 +1124,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Decides whether or not to show comment form
+	 * Decides whether or not to show comment form.
 	 *
 	 * @param bool $show whether or not to show comment form
 	 * @return bool $show True if we should show the comment form, false otherwise
@@ -1164,7 +1164,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Override CommentPress TinyMCE Javascript setting
+	 * Override CommentPress TinyMCE Javascript setting.
 	 *
 	 * @param bool $tinymce whether TinyMCE is enabled or not
 	 * @return bool $tinymce whether TinyMCE is enabled or not
@@ -1212,7 +1212,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Override content of the reply to link
+	 * Override content of the reply to link.
 	 *
 	 * @param string $link_text the full text of the reply to link
 	 * @param string $paragraph_text paragraph text
@@ -1250,7 +1250,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Override content of the reply to link target
+	 * Override content of the reply to link target.
 	 *
 	 * @param string $href The existing target URL
 	 * @param string $text_sig The text signature of the paragraph
@@ -1287,7 +1287,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Override content of the reply to link
+	 * Override content of the reply to link.
 	 *
 	 * @return string $onclick the reply to onclick attribute
 	 */
@@ -1307,7 +1307,7 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Override the title of the Recent Posts section in the activity sidebar
+	 * Override the title of the Recent Posts section in the activity sidebar.
 	 *
 	 * @return string $title The title of the activity sidebar section
 	 */
@@ -1327,9 +1327,9 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Show working papers activity in sidebar
+	 * Show working papers activity in sidebar.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function get_activity_sidebar_section() {
 
@@ -1437,9 +1437,9 @@ class BP_Working_Papers_Activity {
 
 
 	/**
-	 * Show working papers activity in sidebar
+	 * Show working papers activity in sidebar.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function get_activity_item() {
 

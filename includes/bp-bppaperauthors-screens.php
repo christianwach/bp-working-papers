@@ -26,7 +26,7 @@ class BP_Working_Paper_Authors_Theme_Compat {
 	/**
 	 * Set up theme compatibility for the BuddyPress Working Papers component.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function __construct() {
 
@@ -40,7 +40,7 @@ class BP_Working_Paper_Authors_Theme_Compat {
 	/**
 	 * Are we looking at something that needs BuddyPress Working Paper Authors theme compatability?
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function is_bppaperauthors() {
 
@@ -70,12 +70,12 @@ class BP_Working_Paper_Authors_Theme_Compat {
 	/**
 	 * Add template hierarchy to theme compat for the BuddyPress Working Papers directory page.
 	 *
+	 * @since 0.1
+	 *
 	 * @param string $templates The templates from bp_get_theme_compat_templates().
 	 * @return array $templates Array of custom templates to look for.
 	 */
 	public function directory_template_hierarchy( $templates ) {
-
-		//die('here');
 
 		// set up our templates based on priority
 		$new_templates = apply_filters( 'bp_template_hierarchy_bppaperauthors_directory', array(
@@ -96,7 +96,7 @@ class BP_Working_Paper_Authors_Theme_Compat {
 	/**
 	 * Update the global $post with directory data.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function directory_dummy_post() {
 
@@ -122,6 +122,8 @@ class BP_Working_Paper_Authors_Theme_Compat {
 
 	/**
 	 * Filter the_content with the BuddyPress Working Papers index template part.
+	 *
+	 * @since 0.1
 	 *
 	 * @return string $content Buffered content
 	 */
@@ -150,7 +152,7 @@ new BP_Working_Papers_Theme_Compat();
 /**
  * Load the top-level BuddyPress Working Papers directory.
  *
- * @return void
+ * @since 0.1
  */
 function bppaperauthors_screen_index() {
 

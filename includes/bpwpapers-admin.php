@@ -34,9 +34,9 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * Initialises this object
+	 * Initialises this object.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	function __construct() {
 
@@ -49,9 +49,9 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * Register hooks on plugin init
+	 * Register hooks on plugin init.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function register_hooks() {
 
@@ -68,9 +68,9 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * Actions to perform on plugin activation
+	 * Actions to perform on plugin activation.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function activate() {
 
@@ -120,7 +120,7 @@ class BP_Group_Sites_Admin {
 	/**
 	 * Actions to perform on plugin deactivation (NOT deletion)
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function deactivate() {
 
@@ -134,9 +134,9 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * Add an admin page for this plugin
+	 * Add an admin page for this plugin.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function add_admin_menu() {
 
@@ -171,9 +171,9 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * Enqueue any styles and scripts needed by our admin page
+	 * Enqueue any styles and scripts needed by our admin page.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function add_admin_styles() {
 
@@ -193,9 +193,9 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * Update options based on content of form
+	 * Update options based on content of form.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function options_update() {
 
@@ -332,7 +332,7 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * Save array as site option
+	 * Save array as site option.
 	 *
 	 * @return bool Success or failure
 	 */
@@ -346,7 +346,7 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * Return a value for a specified option
+	 * Return a value for a specified option.
 	 *
 	 * @param string $option_name The name of the option
 	 * @return bool Whether or not the option exists
@@ -366,7 +366,7 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * Return a value for a specified option
+	 * Return a value for a specified option.
 	 *
 	 * @param string $option_name The name of the option
 	 * @param mixed $default The default value if the option does not exist
@@ -387,7 +387,7 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * Sets a value for a specified option
+	 * Sets a value for a specified option.
 	 *
 	 * @param string $option_name The name of the option
 	 * @param mixed $value The value of the option
@@ -412,7 +412,7 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * Deletes a specified option
+	 * Deletes a specified option.
 	 *
 	 * @param string $option_name The name of the option
 	 */
@@ -431,8 +431,9 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * General debugging utility
-	 * @return void
+	 * General debugging utility.
+	 *
+	 * @since 0.1
 	 */
 	public function do_debug() {
 
@@ -460,9 +461,9 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * Show our admin page
+	 * Show our admin page.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function _network_admin_form() {
 
@@ -684,7 +685,7 @@ class BP_Group_Sites_Admin {
 
 
 	/**
-	 * Get default values for this plugin
+	 * Get default values for this plugin.
 	 *
 	 * @return array $defaults The default values for this plugin
 	 */
@@ -752,7 +753,7 @@ Primary filters for overrides
 
 
 /**
- * Get group extension title
+ * Get group extension title.
  *
  * @return str $title The group extension title
  */
@@ -780,7 +781,7 @@ function bpwpapers_extension_title() {
 
 
 /**
- * Get group extension singular name
+ * Get group extension singular name.
  *
  * @return str $name The overridden name
  */
@@ -808,7 +809,7 @@ function bpwpapers_extension_name() {
 
 
 /**
- * Get group extension plural
+ * Get group extension plural.
  *
  * @return str $plural The overridden plural name
  */
@@ -836,7 +837,7 @@ function bpwpapers_extension_plural() {
 
 
 /**
- * Get group extension slug
+ * Get group extension slug.
  *
  * @return str $slug The overridden slug
  */
@@ -864,7 +865,7 @@ function bpwpapers_extension_slug() {
 
 
 /**
- * Override the name of the button on the BuddyPress Working Papers "sites" screen
+ * Override the name of the button on the BuddyPress Working Papers "sites" screen.
  *
  * @param array $button The existing button
  * @return array $button The overridden button
@@ -922,7 +923,7 @@ add_filter( 'bp_get_blogs_visit_blog_button', 'bpwpapers_get_visit_site_button',
 
 
 /**
- * Get author component title
+ * Get author component title.
  *
  * @return str $title The author component title
  */
@@ -950,7 +951,7 @@ function bppaperauthors_extension_title() {
 
 
 /**
- * Get author component singular name
+ * Get author component singular name.
  *
  * @return str $name The author component singular name
  */
@@ -975,7 +976,7 @@ function bppaperauthors_extension_name() {
 
 
 /**
- * Get author component plural
+ * Get author component plural.
  *
  * @return str $plural The  author component plural name
  */
@@ -1011,7 +1012,7 @@ Globally available utility functions
 
 
 /**
- * Test existence of a specified site option
+ * Test existence of a specified site option.
  *
  * @param str $option_name The name of the option
  * @return bool $exists Whether or not the option exists
@@ -1035,7 +1036,7 @@ function bpwpapers_site_option_exists( $option_name = '' ) {
 
 
 /**
- * Return a value for a specified site option
+ * Return a value for a specified site option.
  *
  * @param str $option_name The name of the option
  * @param str $default The default value of the option if it has no value
@@ -1056,7 +1057,7 @@ function bpwpapers_site_option_get( $option_name = '', $default = false ) {
 
 
 /**
- * Set a value for a specified site option
+ * Set a value for a specified site option.
  *
  * @param str $option_name The name of the option
  * @param mixed $value The value to set the option to

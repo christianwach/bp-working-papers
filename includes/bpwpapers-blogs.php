@@ -16,7 +16,9 @@ association, whilst retaining useful stuff like pagination.
 
 
 /**
- * Query only working paper blogs
+ * Query only working paper blogs.
+ *
+ * @since 0.1
  *
  * @param array $args Array of arguments with which the query was configured
  * @return bool $has_blogs Whether or not our modified query has found blogs
@@ -68,7 +70,9 @@ function bpwpapers_has_blogs( $args = '' ) {
 
 
 /**
- * Intercept the bp_has_blogs() query and exclude working paper sites
+ * Intercept the bp_has_blogs() query and exclude working paper sites.
+ *
+ * @since 0.1
  *
  * @param bool $has_blogs Whether or not this query has found blogs
  * @param object $blogs_template BuddyPress blogs template object
@@ -150,7 +154,9 @@ if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
 
 
 /**
- * Override the total number of sites, excluding working papers
+ * Override the total number of sites, excluding working papers.
+ *
+ * @since 0.1
  *
  * @return int $filtered_count The filtered total number of BuddyPress Groups
  */
@@ -187,7 +193,9 @@ if ( ! is_admin() OR ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) ) {
 
 
 /**
- * Override the total number of sites for a user, excluding working papers
+ * Override the total number of sites for a user, excluding working papers.
+ *
+ * @since 0.1
  *
  * @param int $count The total number of sites for a user
  * @return int $filtered_count The filtered total number of blogs for a user
@@ -227,7 +235,9 @@ Functions which may only be used in the loop
 
 
 /**
- * Copied from bp_blogs_pagination_count() and amended
+ * Copied from bp_blogs_pagination_count() and amended.
+ *
+ * @since 0.1
  */
 function bpwpapers_blogs_pagination_count() {
 	global $blogs_template;
@@ -258,7 +268,9 @@ function bpwpapers_blogs_pagination_count() {
 
 
 /**
- * Get all working paper IDs
+ * Get all working paper IDs.
+ *
+ * @since 0.1
  *
  * @return array $papers Array of all working paper site IDs
  */
@@ -287,7 +299,8 @@ function bpwpapers_get_papers() {
 
 /**
  * Get the total number of working papers being tracked.
- * copied from bp_total_blogs() and amended
+ *
+ * Copied from bp_total_blogs() and amended.
  *
  * @return int $count Total blog count.
  */
@@ -321,7 +334,9 @@ function bpwpapers_total_papers() {
 
 
 /**
- * Filter papers depending on their visibility
+ * Filter papers depending on their visibility.
+ *
+ * @since 0.1
  *
  * @param array $blog_authors The unfiltered list of author IDs, keyed by blog ID
  * @return array $blog_authors The filtered list of author IDs, keyed by blog ID
@@ -371,6 +386,8 @@ function bpwpapers_filter_total_papers_by_visibility( $blog_authors ) {
 
 /**
  * Output the total number of working papers on the site.
+ *
+ * @since 0.1
  */
 function bpwpapers_total_paper_count() {
 	echo bpwpapers_get_total_paper_count();
@@ -391,8 +408,11 @@ function bpwpapers_total_paper_count() {
 
 
 /**
- * Get the total number of working papers for a user
- * copied from bp_blogs_total_blogs_for_user() and amended
+ * Get the total number of working papers for a user.
+ *
+ * Copied from bp_blogs_total_blogs_for_user() and amended
+ *
+ * @since 0.1
  *
  * @return int $count Total blog count for a user
  */
@@ -424,7 +444,9 @@ function bpwpapers_total_papers_for_user( $user_id = 0 ) {
 
 
 /**
- * Output the total number of working papers for a user
+ * Output the total number of working papers for a user.
+ *
+ * @since 0.1
  */
 function bpwpapers_total_paper_count_for_user( $user_id = 0 ) {
 	echo bpwpapers_get_total_paper_count_for_user( $user_id );
@@ -447,7 +469,9 @@ function bpwpapers_total_paper_count_for_user( $user_id = 0 ) {
 
 
 /**
- * Check if blog is a groupblog
+ * Check if blog is a groupblog.
+ *
+ * @since 0.1
  *
  * @param int $blog_id the numeric ID of the blog
  * @return bool $return True if blog is a groupblog, false otherwise
@@ -476,7 +500,9 @@ function bpwpapers_is_groupblog( $blog_id ) {
 
 
 /**
- * Check if blog is a working paper
+ * Check if blog is a working paper.
+ *
+ * @since 0.1
  *
  * @param int $blog_id the numeric ID of the blog
  * @return bool $return True if blog is a working paper, false otherwise
@@ -502,10 +528,11 @@ function bpwpapers_is_working_paper( $blog_id ) {
 
 
 /**
- * Sever link and delete group when a site gets deleted
+ * Sever link and delete group when a site gets deleted.
+ *
+ * @since 0.1
  *
  * @param int $blog_id the numeric ID of the blog
- * @return void
  */
 function bpwpapers_blog_deleted( $blog_id, $drop = false ) {
 
@@ -548,11 +575,12 @@ add_action( 'delete_blog', 'bpwpapers_blog_deleted', 10, 1 );
 
 
 /**
- * Configure blog options
+ * Configure blog options.
+ *
+ * @since 0.1
  *
  * @param int $blog_id the numeric ID of the blog
  * @param int $group_id the numeric ID of the group
- * @return void
  */
 function bpwpapers_configure_blog_options( $blog_id, $group_id ) {
 
@@ -639,10 +667,11 @@ function bpwpapers_configure_blog_options( $blog_id, $group_id ) {
 
 
 /**
- * Unset blog options
+ * Unset blog options.
+ *
+ * @since 0.1
  *
  * @param int $blog_id the numeric ID of the blog
- * @return void
  */
 function bpwpapers_reset_blog_options( $blog_id ) {
 
@@ -669,10 +698,11 @@ function bpwpapers_reset_blog_options( $blog_id ) {
 
 
 /**
- * Publish blog
+ * Publish blog.
+ *
+ * @since 0.1
  *
  * @param int $blog_id the numeric ID of the blog
- * @return void
  */
 function bpwpapers_publish_blog( $blog_id ) {
 
@@ -695,10 +725,11 @@ function bpwpapers_publish_blog( $blog_id ) {
 
 
 /**
- * Unublish blog
+ * Unublish blog.
+ *
+ * @since 0.1
  *
  * @param int $blog_id the numeric ID of the blog
- * @return void
  */
 function bpwpapers_unpublish_blog( $blog_id ) {
 
