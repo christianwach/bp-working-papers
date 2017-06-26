@@ -34,15 +34,12 @@ class BP_Working_Papers_Follow {
 	/**
 	 * Initialises this object
 	 *
-	 * @return object
+	 * @return void
 	 */
 	function __construct() {
 
 		// register hooks
 		$this->register_hooks();
-
-		// --<
-		return $this;
 
 	}
 

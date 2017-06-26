@@ -36,16 +36,13 @@ class BP_Group_Sites_Admin {
 	/**
 	 * Initialises this object
 	 *
-	 * @return object
+	 * @return void
 	 */
 	function __construct() {
 
 		// get options array, if it exists
 		$this->bpwpapers_options = bpwpapers_site_option_get( 'bpwpapers_options', array() );
 		//print_r( $this->bpwpapers_options ); die();
-
-		// --<
-		return $this;
 
 	}
 

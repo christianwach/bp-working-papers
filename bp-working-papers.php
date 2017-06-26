@@ -72,7 +72,7 @@ class BP_Working_Papers {
 	/**
 	 * Initialises this object
 	 *
-	 * @return object
+	 * @return void
 	 */
 	function __construct() {
 
@@ -92,9 +92,6 @@ class BP_Working_Papers {
 
 		// action for Follow Blogs compatibility
 		add_action( 'bp_follow_blogs_loaded', array( $this, 'follow_blogs_init' ), 25 );
-
-		// --<
-		return $this;
 
 	}
 

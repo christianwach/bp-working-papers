@@ -49,8 +49,7 @@ class BP_Working_Papers_Template {
 	 */
 	function __construct() {
 
-		// --<
-		return $this;
+		// nothing
 
 	}
 

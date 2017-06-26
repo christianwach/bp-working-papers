@@ -40,8 +40,7 @@ class BP_Working_Papers_Activity {
 	 */
 	function __construct() {
 
-		// --<
-		return $this;
+		// nothing
 
 	}
 
